@@ -114,7 +114,7 @@ def main() -> None:
             "recorded": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "note": "Recorded run of the simulator; see README for how to run the live system."}))
     finally:
-        for p in procs:
+        for p in reversed(procs):          # stop producers first, the API server last
             if p.poll() is None:
                 p.send_signal(signal.SIGINT)
         for p in procs:

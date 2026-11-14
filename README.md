@@ -294,9 +294,13 @@ The dashboard covers the brief's four minimum requirements plus two additions:
 ![Vision and detail](docs/images/dashboard_vision_detail.png)
 ![Data quality](docs/images/dashboard_dq.png)
 
-One illustration from the run in these screenshots (an anecdote, not evidence; the statistics are under
-[Results](#results)). At the moment of capture the model gave S12's mistracking trip a median of ~4 h (likely 2–12 h)
-and said "inspect now". The belt tripped 3.5 h later, and the maintenance log then shows the repair and restart.
+The screenshots come from the [recorded replay](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)
+(frame 12, plus frame 52 for the maintenance log). One illustration from that run, an anecdote rather than evidence
+(the statistics are under [Results](#results)):
+* **S18 bearing.** At 16:40 site time the model gave a median of 6 h (likely 1–17 h) and said "inspect now". The
+  bearing failed 2.6 h later.
+* **S12 mistracking.** At the same moment the median was 28 h (likely 14–46 h). The belt tripped 17 h later.
+* **A miss.** Not every band held: at the start of the run S12's band was 26–64 h, and it tripped after 23 h.
 
 ## Problem breakdown: tool, model, agent, skipped
 

@@ -68,7 +68,7 @@ def main() -> None:
     except KeyboardInterrupt:
         pass
     finally:
-        for p in procs:
+        for p in reversed(procs):          # stop producers first, the API server last
             if p.poll() is None:
                 p.send_signal(signal.SIGINT)
         for p in procs:
