@@ -273,6 +273,10 @@ The dashboard covers the brief's four minimum requirements plus two additions:
 ![Vision and detail](docs/images/dashboard_vision_detail.png)
 ![Data quality](docs/images/dashboard_dq.png)
 
+One illustration from the run in these screenshots (an anecdote, not evidence; the statistics are under
+[Results](#results)). At the moment of capture the model gave S12's mistracking trip a median of ~4 h (likely 2–12 h)
+and said "inspect now". The belt tripped 3.5 h later, and the maintenance log then shows the repair and restart.
+
 ## Problem breakdown: tool, model, agent, skipped
 
 | Concern | Built as | Why |
