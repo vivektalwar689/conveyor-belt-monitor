@@ -3,7 +3,7 @@ __pycache__/
 *.pyc
 .pytest_cache/
 logs/
-data/
+/data/
 vision/runs/
 vision/artifacts/embeddings.npy
 vision/artifacts/explore/
