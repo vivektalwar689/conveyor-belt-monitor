@@ -64,9 +64,11 @@ class Analyzer:
         set_state(con, "running_now", int(bool(cl.running[-1])))
         set_state(con, "running_series", json.dumps({"t0": int(ts[0]), "step": GRID,
                                                      "running": cl.running[-288:].astype(int).tolist()}))
-        con.commit()
         self.last_cycle_s = time.time() - t_start
-        return {"now": int(now), "steps": len(ts) - i0, "seconds": round(self.last_cycle_s, 2)}
+        info = {"now": int(now), "steps": len(ts) - i0, "seconds": round(self.last_cycle_s, 2)}
+        set_state(con, "analysis_last", json.dumps(info))      # read by /api/overview, whichever process runs this
+        con.commit()
+        return info
 
     # ------------------------------------------------------------------ predictions
     def _predictions(self, cl, sig, last: int, warm_idx: int) -> list[dict]:

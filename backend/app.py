@@ -71,8 +71,10 @@ W = _Worker()
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     W.vision = VisionService(connect(DB_PATH))
-    th = threading.Thread(target=W.run, daemon=True)
-    th.start()
+    # The demo runs analysis as a separate process (backend/worker.py); a single process is simpler for tests.
+    if os.environ.get("BELT_INPROCESS_ANALYSIS", "1") != "0":
+        th = threading.Thread(target=W.run, daemon=True)
+        th.start()
     yield
     W.stop.set()
 
@@ -186,7 +188,7 @@ def overview():
         "status_counts": counts, "active_anomalies_by_severity": sev,
         "vision_tracks": vt,
         "ingest": {"received": tot[0], "accepted": tot[1], "duplicates": tot[2], "rejected": tot[3], "late": tot[4]},
-        "analysis": {"last": W.last, "error": W.error},
+        "analysis": {"last": json.loads(get_state(con, "analysis_last", "null") or "null"), "error": W.error},
     }
 
 

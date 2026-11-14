@@ -51,8 +51,8 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt -r requirement
 .venv/bin/python -m scripts.demo
 ```
 
-`make demo` starts the backend on a fresh database and backfills 8 simulated days through the real ingest API
-(~20 s). It then streams live at 120× real time (one simulated hour every 30 s), with the camera posting one pass
+`make demo` starts the API server and a separate analysis worker on a fresh database, and backfills 8 simulated
+days through the real ingest API (~20 s). It then streams live at 120× real time (one simulated hour every 30 s), with the camera posting one pass
 per belt revolution. Scripted events happen during the demo, on top of random background faults:
 * **S18** (second curve) is in late-stage bearing failure and fails 9–20 simulated hours in (5–10 minutes at the
   default speed).
@@ -84,7 +84,7 @@ flowchart LR
   CMMS -->|"POST /api/maintenance"| DB
   ING --> DB[("SQLite (WAL)")]
   VIS --> DB
-  DB --> AN["Analysis loop (every cycle)<br/>clean → peer + frozen self-baseline<br/>anomaly lifecycle · ML + trend predictions<br/>station status"]
+  DB --> AN["Analysis worker (own process)<br/>clean → peer + frozen self-baseline<br/>anomaly lifecycle · ML + trend predictions<br/>station status"]
   AN --> DB
   DB --> UI["Dashboard<br/>map · predictions · anomalies<br/>vision · data quality"]
 ```
@@ -353,12 +353,13 @@ The brief left these open, so I chose and documented them; details in [DESIGN §
 ```
 simulator/   config.py (belt, stations, channels) · engine.py (physics, failures) · faults.py (messy data)
              generate.py (offline belt-years → Parquet) · stream.py (live HTTP stream + camera thread)
-backend/     app.py (FastAPI) · db.py (schema) · ingest.py · quality.py · features.py · anomaly.py
-             predict.py (ML + trend + schedule) · analysis.py (the loop) · vision_service.py
+backend/     app.py (FastAPI) · worker.py (analysis process) · db.py (schema) · ingest.py · quality.py
+             features.py · anomaly.py · predict.py (ML + trend + schedule) · analysis.py · vision_service.py
 ml/          dataset.py (features + labels) · train.py · evaluate.py (event-level, figures)
 vision/      fetch_dataset.py · audit.py (leakage audit, re-split) · train_detector.py · edge_sim.py
              loop.py (belt register, localiser, tracker) · loop_eval.py · demo_images/ (MIT subset)
-dashboard/   index.html · app.js · styles.css (vanilla JS + SVG)
+dashboard/   index.html · app.js · styles.css (vanilla JS + SVG; also runs as a static replay)
+scripts/     demo.py · record_replay.py (→ docs/demo/, GitHub Pages) · screenshots.js
 models/      sensor_models.joblib · belt_damage_yolo11n.pt
 docs/        DESIGN.md · images/
 tests/       pytest suite

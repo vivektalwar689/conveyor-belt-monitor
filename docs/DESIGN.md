@@ -77,10 +77,15 @@ camera ───► edge node (YOLO, RFID) ────────────�
 CMMS ─────────────────────────────────────────────────────────────► /api/maintenance
                                                                          │
                                          SQLite (WAL): readings, dead_letter, anomalies,
-                                         predictions, station_status, vision_* ◄── analysis loop
+                                         predictions, station_status, vision_* ◄── analysis worker
+                                                                                   (separate process)
                                                                          │
                                                          dashboard (GET /api/*, auto-refresh)
 ```
+
+The API server and the analysis worker are separate processes. In one process, ingestion requests and the
+analysis cycle competed for Python's GIL and intake slowed to a quarter of the target rate. They share only the
+SQLite database (WAL mode, short write transactions).
 
 Message format (per gateway batch):
 
@@ -237,7 +242,7 @@ Method (`vision/loop_eval.py`):
 * **Scoring.** Ground truth for each defect is every labelled box in its image, mapped to the belt the same way as
   detections.
 
-Results:
+Results (baseline detector, confidence floor 0.25):
 
 | | RFID tags | Dead reckoning per pass | No fiducials |
 |---|---|---|---|
@@ -249,7 +254,8 @@ Dead reckoning does not just mislocate defects. Because the error changes betwee
 defect scatter, while unrelated detections coincide; both failure modes produce confident, wrong tracks.
 
 Tracker parameters: gates ±2.5 m along the belt and ±0.30 m across; confirm at 2 sightings on different passes; drop
-a tentative track after 2 imaged misses; mark a confirmed track repaired after 3 imaged misses. Lowering the gate is
+a tentative track after 2 imaged misses; mark a confirmed track repaired after 3 imaged misses; ignore detections
+below a 0.35 confidence floor (deployed detector). Lowering the gate is
 possible because tag-based localisation is good to ~0.1 m; the gate is wider than that because box centres
 jitter.
 
@@ -286,6 +292,12 @@ now?* Then: *what is wrong with the belt surface?* Then: *can I trust the data?*
 
 Dataviz rules followed: one axis per chart, no colour-only encoding, reserved status palette, hairline grids,
 text in ink colours, tooltips that never gate information, light and dark palettes.
+
+**Replay mode.** The same page can run without a backend: `scripts/record_replay.py` runs the real system on a
+fixed simulated clock and records every API response each simulated half hour into `docs/demo/`. With
+`window.BELT_REPLAY` set, the dashboard answers its API calls from those frames and adds play, pause and scrub
+controls. GitHub Pages serves it as a static site, so reviewers can try the system without installing anything.
+It is labelled as a recording everywhere it appears.
 
 ## 10. What is a tool, what is learned, what would be an agent
 

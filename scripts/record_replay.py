@@ -62,8 +62,10 @@ def main() -> None:
     procs = []
     c = httpx.Client(base_url=url, timeout=60)
     try:
+        env["BELT_INPROCESS_ANALYSIS"] = "0"
         procs.append(subprocess.Popen([sys.executable, "-m", "uvicorn", "backend.app:app", "--port", str(a.port),
                                        "--log-level", "warning"], cwd=ROOT, env=env))
+        procs.append(subprocess.Popen([sys.executable, "-m", "backend.worker"], cwd=ROOT, env=env))
         wait_for(lambda: c.get("/api/config").status_code == 200, 60, "backend")
         procs.append(subprocess.Popen([sys.executable, "-m", "simulator.stream", "--url", url, "--speed", str(a.speed),
                                        "--live-start", a.live_start], cwd=ROOT, env=env))
@@ -89,8 +91,11 @@ def main() -> None:
                 "dq": c.get("/api/data-quality").json(),
                 "maintenance": c.get("/api/maintenance?limit=30").json(),
             }
-            (out / "data" / "frames" / f"{i:04d}.json").write_text(json.dumps(f, separators=(",", ":")))
-            frames.append({"i": i, "now": f["overview"]["now"]})
+            if frames and frames[-1]["now"] == f["overview"]["now"]:
+                continue                                   # stream ran ahead: same moment, don't store it twice
+            k = len(frames)
+            (out / "data" / "frames" / f"{k:04d}.json").write_text(json.dumps(f, separators=(",", ":")))
+            frames.append({"i": k, "now": f["overview"]["now"]})
             print(f"  frame {i + 1}/{n}  {f['overview']['now_iso']}  status={f['overview']['status_counts']}", flush=True)
         # whole-run histories per station (the page slices the 72 h window for each frame)
         span_h = int((frames[-1]["now"] - live_start) / 3600) + 8 * 24 + 1

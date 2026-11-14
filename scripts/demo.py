@@ -45,8 +45,10 @@ def main() -> None:
     url = f"http://127.0.0.1:{a.port}"
     procs = []
     try:
+        env["BELT_INPROCESS_ANALYSIS"] = "0"      # analysis runs as its own process (no GIL contention)
         procs.append(subprocess.Popen([sys.executable, "-m", "uvicorn", "backend.app:app", "--port", str(a.port),
                                        "--log-level", "warning"], cwd=ROOT, env=env))
+        procs.append(subprocess.Popen([sys.executable, "-m", "backend.worker"], cwd=ROOT, env=env))
         for _ in range(60):
             try:
                 if httpx.get(url + "/api/config", timeout=1).status_code == 200:

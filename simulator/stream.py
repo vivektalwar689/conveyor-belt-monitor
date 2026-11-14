@@ -124,8 +124,7 @@ class Streamer:
         nxt = time.time()
         while True:
             recs, t = self.step()
-            for b in to_batches(recs, t):
-                self._post("/api/ingest", b)
+            self._post("/api/ingest/bulk", to_batches(recs, t))    # one request per step (all gateways)
             nxt += period
             time.sleep(max(0.0, nxt - time.time()))
 
