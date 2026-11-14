@@ -8,10 +8,10 @@ failure prediction (what, where, when) → camera edge node with a belt-damage d
 tracking → dashboard.**
 
 **▶ Try it without installing anything:**
-* **[Recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)**: the
+* **[Recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/docs/demo/)**: the
   real dashboard code replaying a 30-hour run of the system, with play/pause, scrubbing and drill-down. In it, a
   bearing fails, a belt trips on a curve, and a camera tracks belt damage.
-* **[Inspect your own belt photos](https://vivektalwar689.github.io/conveyor-belt-monitor/inspect/)**: upload
+* **[Inspect your own belt photos](https://vivektalwar689.github.io/conveyor-belt-monitor/docs/inspect/)**: upload
   images of a conveyor belt, and the project's damage detector marks wear and tear with class, confidence and
   severity. It runs in your browser, so nothing is uploaded. See [below](#inspect-your-own-belt-photos).
 
@@ -301,7 +301,7 @@ The dashboard covers the brief's four minimum requirements plus two additions:
 ![Vision and detail](docs/images/dashboard_vision_detail.png)
 ![Data quality](docs/images/dashboard_dq.png)
 
-The screenshots come from the [recorded replay](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)
+The screenshots come from the [recorded replay](https://vivektalwar689.github.io/conveyor-belt-monitor/docs/demo/)
 (frame 12, plus frame 52 for the maintenance log). One illustration from that run, an anecdote rather than evidence
 (the statistics are under [Results](#results)):
 * **S18 bearing.** At 16:40 site time the model gave a median of 6 h (likely 1–17 h) and said "inspect now". The
@@ -311,7 +311,7 @@ The screenshots come from the [recorded replay](https://vivektalwar689.github.io
 
 ## Inspect your own belt photos
 
-**[Open the inspection page](https://vivektalwar689.github.io/conveyor-belt-monitor/inspect/)** and drop in one
+**[Open the inspection page](https://vivektalwar689.github.io/conveyor-belt-monitor/docs/inspect/)** and drop in one
 or more photos of a conveyor belt. The belt-damage detector draws each defect with its class, confidence and
 severity, and summarises the batch. You can:
 * switch between the deployed and the baseline model;

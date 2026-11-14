@@ -1,0 +1,17 @@
+# GitHub Pages publishes this repository from its root: README.md becomes the landing page, and the static sites
+# live under docs/ (docs/demo/ = recorded dashboard replay, docs/inspect/ = in-browser image inspection).
+# Everything else is source code; keep it out of the Jekyll build.
+exclude:
+  - ai_usage
+  - backend
+  - dashboard
+  - ml
+  - models
+  - scripts
+  - simulator
+  - tests
+  - vision
+  - Makefile
+  - pytest.ini
+  - requirements.txt
+  - requirements-vision.txt
