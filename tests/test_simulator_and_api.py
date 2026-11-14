@@ -66,3 +66,36 @@ def test_api_roundtrip_with_messy_batch(tmp_path, monkeypatch):
         assert dq["ingest"]["accepted"] > 2000
         assert dq["reject_reasons"] == {"unknown_station": 1, "timestamp_without_timezone": 1}
         assert len(client.get("/api/stations").json()) == len(C.STATIONS)
+
+
+def test_inspection_page_is_served(tmp_path, monkeypatch):
+    """The live backend also serves the in-browser image inspection page (docs/inspect/)."""
+    monkeypatch.setenv("BELT_DB", str(tmp_path / "api.db"))
+    monkeypatch.setenv("BELT_INPROCESS_ANALYSIS", "0")
+    import importlib
+    import backend.app as appmod
+    importlib.reload(appmod)
+    with TestClient(appmod.app) as client:
+        page = client.get("/inspect/")
+        assert page.status_code == 200 and "inspect.js" in page.text
+        assert client.get("/demo/styles.css").status_code == 200           # the stylesheet the page borrows
+        wasm = client.get("/inspect/vendor/ort-wasm-simd-threaded.wasm")
+        assert wasm.headers["content-type"] == "application/wasm"           # needed for streaming compilation
+        assert client.get("/inspect/vendor/ort-wasm-simd-threaded.mjs").headers["content-type"].startswith("text/javascript")
+        assert client.get("/inspect/models/deployed.onnx").status_code == 200
+        back = client.get("/demo/", follow_redirects=False)                  # the page's "Dashboard" link
+        assert back.status_code in (302, 307) and back.headers["location"] == "/"
+
+
+def test_inspection_samples_match_the_exporter():
+    """The page's sample list, the exporter's list and the committed labels must not drift apart."""
+    import json
+    import re
+
+    from vision.export_web import SAMPLES, WEB
+    js = (WEB / "inspect.js").read_text()
+    in_js = re.findall(r'"([\w.]+\.jpg)"', js[js.index("const SAMPLES"):js.index("];", js.index("const SAMPLES"))])
+    labels = json.loads((WEB / "samples" / "labels.json").read_text())
+    assert in_js == SAMPLES == list(labels)
+    assert all((WEB / "samples" / f).exists() for f in SAMPLES)
+    assert (WEB / "models" / "baseline.onnx").exists()

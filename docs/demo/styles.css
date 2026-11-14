@@ -168,3 +168,5 @@ footer { margin-top: 8px; }
 .replay-bar input[type=range] { flex: 1; min-width: 200px; accent-color: var(--series-1); }
 .replay-bar select { font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--border);
   border-radius: 6px; }
+
+a { color: var(--series-1); }

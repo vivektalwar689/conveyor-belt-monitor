@@ -2,7 +2,7 @@
 
 Keeps: user messages, assistant text, tool calls (name + key inputs), tool results (truncated).
 Drops: hidden reasoning blocks, system attachments, internal bookkeeping records.
-Scrubs: e-mail addresses and the session's home/upload paths.
+Scrubs: e-mail addresses (also a bare local part such as "name@"), and the session's home/upload paths.
 """
 import json
 import re
@@ -12,10 +12,13 @@ src, dst = sys.argv[1], sys.argv[2]
 MAX_RESULT = 1200
 MAX_INPUT = 1500
 EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+# an address's local part on its own, e.g. inside a search pattern such as "name@|@provider"
+EMAIL_LOCAL = re.compile(r"\b[A-Za-z0-9][A-Za-z0-9._%+-]{2,}@(?![A-Za-z0-9-])")
 
 
 def scrub(s: str) -> str:
     s = EMAIL.sub("<email removed>", s)
+    s = EMAIL_LOCAL.sub("<email removed>", s)
     s = re.sub(r"/tmp/claude-0/[^\s'\"]*", "<scratchpad>", s)
     s = re.sub(r"/root/\.claude/uploads/[^\s'\"]*", "<uploaded file>", s)
     return s

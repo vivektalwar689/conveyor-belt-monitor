@@ -2,3 +2,4 @@
 # For a CPU-only torch wheel, install torch first:
 #   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 ultralytics>=8.3
+# `make inspect-web` (ONNX export for the in-browser page) also needs: pip install onnx onnxslim onnxruntime

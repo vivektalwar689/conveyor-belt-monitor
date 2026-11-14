@@ -299,6 +299,33 @@ fixed simulated clock and records every API response each simulated half hour in
 controls. GitHub Pages serves it as a static site, so reviewers can try the system without installing anything.
 It is labelled as a recording everywhere it appears.
 
+**Image inspection page (`docs/inspect/`).** A reviewer can also try the vision component on their own photos.
+Both detectors are exported to ONNX and run in the browser with ONNX Runtime Web (WebAssembly, single thread,
+because GitHub Pages is not cross-origin isolated). There is no server, so no upload endpoint to secure and no
+images leave the device. The live backend serves the same page at `/inspect/`.
+
+The page re-implements Ultralytics' pre- and post-processing in JavaScript:
+* letterbox to 512 px with grey padding;
+* best class per anchor;
+* per-class greedy NMS at IoU 0.5 (Ultralytics' predict default, not the 0.7 used in validation);
+* rescale and clip.
+
+`vision/export_web.py --check` runs the same steps in numpy against Ultralytics on the same ONNX file and gets
+identical boxes and confidences on 78 images. I checked the browser against Python separately in headless
+Chromium:
+* the JPEG decode is bit-identical;
+* the canvas resize differs from OpenCV's by under one grey level on 99 % of pixels;
+* detections at the 0.35 threshold match on 66 of 69 images (deployed) and 68 of 69 (baseline), with a median
+  confidence difference under 0.01.
+
+Every mismatch was a borderline box, at the confidence threshold or at the NMS overlap limit. Long thin tears
+also moved their box end by tens of pixels under these sub-grey-level changes. That is a robustness finding about
+the detector, not a page bug.
+
+The page shows single-image detections only. It keeps the class-based severity and states that on the belt an
+alert needs multi-pass confirmation, with size and growth feeding severity. Sample images carry the dataset's
+labels as dashed boxes, so the detector's misses are visible next to its hits.
+
 ## 10. What is a tool, what is learned, what would be an agent
 
 | Concern | Implemented as | Why |

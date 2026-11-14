@@ -580,6 +580,7 @@ async function initReplay() {
   const bar = el("div", { class: "replay-bar", role: "region", "aria-label": "Replay controls" },
     el("span", { class: "rp-tag", text: "Recorded replay" }),
     el("span", { class: "muted small", text: `of a ${R.index.hours}-hour run of the simulator (not live). Clone the repo and run make demo for the live system.` }),
+    el("a", { class: "small", href: "../inspect/", text: "Inspect your own belt photos →" }),
     el("button", { id: "rp-play", type: "button", onclick: () => setPlaying(!R.timer) }, "▶ Play"),
     el("input", { id: "rp-slider", type: "range", min: 0, max: n - 1, value: 0, "aria-label": "Replay position",
       oninput: (e) => { setPlaying(false); showFrame(Number(e.target.value)).catch(console.error); } }),

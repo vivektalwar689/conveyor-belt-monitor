@@ -7,11 +7,15 @@ happen. It runs from simulated sensor data to a live belt-health dashboard:
 failure prediction (what, where, when) → camera edge node with a belt-damage detector → belt-loop defect
 tracking → dashboard.**
 
-**▶ Try it without installing anything:
-[recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)**: the real
-dashboard code replaying a 30-hour run of the system, with play/pause, scrubbing and drill-down. In it, a bearing
-fails, a belt trips on a curve, and a camera tracks belt damage. To run the live system yourself, see
-[Quick start](#quick-start).
+**▶ Try it without installing anything:**
+* **[Recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)**: the
+  real dashboard code replaying a 30-hour run of the system, with play/pause, scrubbing and drill-down. In it, a
+  bearing fails, a belt trips on a curve, and a camera tracks belt damage.
+* **[Inspect your own belt photos](https://vivektalwar689.github.io/conveyor-belt-monitor/inspect/)**: upload
+  images of a conveyor belt, and the project's damage detector marks wear and tear with class, confidence and
+  severity. It runs in your browser, so nothing is uploaded. See [below](#inspect-your-own-belt-photos).
+
+To run the live system yourself, see [Quick start](#quick-start).
 
 The full design document is **[docs/DESIGN.md](docs/DESIGN.md)**. This README is the summary: the decisions, the
 results, and what I would do differently.
@@ -28,6 +32,7 @@ results, and what I would do differently.
 - [The continuous loop: what it breaks and how it is handled](#the-continuous-loop-what-it-breaks-and-how-it-is-handled)
 - [Results](#results)
 - [Dashboard screenshots](#dashboard-screenshots)
+- [Inspect your own belt photos](#inspect-your-own-belt-photos)
 - [Problem breakdown: tool, model, agent, skipped](#problem-breakdown-tool-model-agent-skipped)
 - [Assumptions](#assumptions)
 - [What I would do differently](#what-i-would-do-differently)
@@ -61,14 +66,16 @@ per belt revolution. Scripted events happen during the demo, on top of random ba
 * **Sensor faults:** a temperature sensor drifts (S10), a sensor sticks (S03), and a station goes offline (S20).
 
 Scripted faults use low-noise degradation so these times hold whatever time of day you start. Without torch: `make demo-novision`.
+The same server also hosts the image inspection page at http://localhost:8000/inspect/.
 
 | Command | What it does | Time |
 |---|---|---|
-| `make test` | 23 tests: ingestion, data quality, loop geometry, tracker, scheduling, alert rule, simulator, API | 4 s |
+| `make test` | 25 tests: ingestion, data quality, loop geometry, tracker, scheduling, alert rule, simulator, API | 5 s |
 | `make train` | simulate 5 belt-years, build features through the production code, train, evaluate, plot | ~5 min |
 | `make vision-data` | fetch the dataset at a pinned commit, audit it, re-split it | ~2 min |
 | `make vision-train` | train the YOLO11n damage detector on CPU (weights are committed) | ~3 h |
 | `make vision-eval` | belt-loop evaluation against ground truth, 30 revolutions | ~5 min |
+| `make inspect-web` | export both detectors to ONNX for the inspection page, and check its maths against Ultralytics | ~1 min |
 
 ## The approach in one picture
 
@@ -302,6 +309,40 @@ The screenshots come from the [recorded replay](https://vivektalwar689.github.io
 * **S12 mistracking.** At the same moment the median was 28 h (likely 14–46 h). The belt tripped 17 h later.
 * **A miss.** Not every band held: at the start of the run S12's band was 26–64 h, and it tripped after 23 h.
 
+## Inspect your own belt photos
+
+**[Open the inspection page](https://vivektalwar689.github.io/conveyor-belt-monitor/inspect/)** and drop in one
+or more photos of a conveyor belt. The belt-damage detector draws each defect with its class, confidence and
+severity, and summarises the batch. You can:
+* switch between the deployed and the baseline model;
+* move the confidence threshold;
+* download the results as CSV.
+
+The model runs in the browser (ONNX Runtime Web), so images never leave your device. **Try 8 sample images** loads
+held-out test scenes with the dataset's own labels drawn as dashed boxes. You can see where the detector is right
+and where it is wrong.
+
+![Inspection page](docs/images/inspect_samples.jpg)
+
+* **What the samples show (deployed model, threshold 0.35).**
+  * It finds the tear in 3 of the 4 images labelled with tears, overlapping the labelled tear (IoU 0.68–0.84).
+  * It finds the worn patch but calls it a tear.
+  * It misses the hole, the punctures, and the impact damage.
+  * It stays quiet on both healthy belts.
+
+  The samples cover every class plus two healthy belts; eight images are an illustration, not a measurement. On
+  unseen scenes the detector is weak overall (box mAP@0.5 0.06–0.12; see [Results](#results)).
+* **One photo is one look.** On the belt, a detection becomes an alert only when it is seen again at the same belt
+  position on a later revolution, and severity also uses the defect's size and growth. The page shows raw
+  single-image detections with the class-based severity only.
+* **Same model, same maths.** `make inspect-web` exports both detectors to ONNX and runs the page's pre- and
+  post-processing in numpy against Ultralytics. Boxes and confidences match exactly on 78 test images.
+* **What still differs in the browser.** In Chromium the JPEG decode is bit-identical to OpenCV's. The canvas
+  resize differs by under one grey level on 99 % of pixels. On 69 test images of four shapes (square, 4:3,
+  portrait, 2016×1512), detections at the 0.35 threshold match on 66 for the deployed model and on 68 for the
+  baseline. The median confidence difference is under 0.01. Each mismatch is a borderline box: right at the
+  confidence threshold, or right at the 0.5 overlap limit where one box suppresses another.
+
 ## Problem breakdown: tool, model, agent, skipped
 
 | Concern | Built as | Why |
@@ -362,10 +403,12 @@ backend/     app.py (FastAPI) · worker.py (analysis process) · db.py (schema) 
 ml/          dataset.py (features + labels) · train.py · evaluate.py (event-level, figures)
 vision/      fetch_dataset.py · audit.py (leakage audit, re-split) · train_detector.py · edge_sim.py
              loop.py (belt register, localiser, tracker) · loop_eval.py · demo_images/ (MIT subset)
+             export_web.py (ONNX export + parity check for the inspection page)
 dashboard/   index.html · app.js · styles.css (vanilla JS + SVG; also runs as a static replay)
 scripts/     demo.py · record_replay.py (→ docs/demo/, GitHub Pages) · screenshots.js
 models/      sensor_models.joblib · belt_damage_yolo11n.pt
-docs/        DESIGN.md · images/
+docs/        DESIGN.md · images/ · demo/ (recorded replay, GitHub Pages)
+             inspect/ (in-browser detector: ONNX models, ONNX Runtime Web, samples)
 tests/       pytest suite
 ai_usage/    AI chat logs (see below)
 ```
@@ -396,5 +439,9 @@ places where a first version was wrong and was caught by an explicit check rathe
   of 8 at the same floor), so the deployed model was chosen on the system-level metric.
 * **Slow training run.** A training run took 10× too long because OpenMP and PyTorch were oversubscribing 4
   cores. Found with `py-spy` and fixed with `OMP_NUM_THREADS=1`.
+* **Browser port of the detector.** The first JavaScript post-processing did not match Ultralytics. It used the
+  NMS overlap limit of validation (0.7) instead of prediction (0.5), did not clip boxes, and had been compared
+  with a different inference path (rectangular PyTorch input). Caught by checking against Ultralytics on the same
+  ONNX file, now `make inspect-web`; after the fix, boxes and confidences match exactly.
 
 <!-- Candidate: add your own notes here - what you reviewed, questioned or overrode, and what you would have decided differently. -->

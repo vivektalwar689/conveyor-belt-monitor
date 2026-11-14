@@ -4,7 +4,7 @@ Source: https://github.com/FernandoN23/Implementation-of-Object-Detection-for-Co
 (MIT licence; images aggregated by the author from Roboflow Universe and academic
 sources, homogenised to 5 classes, 640x640, YOLO labels).
 
-Only the ``Dataset/`` folder is checked out (sparse, blob-filtered clone), so the
+Only the ``Dataset/`` folder and the licence are checked out (sparse, blob-filtered clone), so the
 download is ~200 MB instead of the full ~765 MB repository.
 
 Usage:
@@ -35,7 +35,7 @@ def fetch(dest: Path = DEFAULT_DEST) -> Path:
     dest.mkdir(parents=True, exist_ok=True)
     run(["git", "init", "-q"], cwd=dest)
     run(["git", "remote", "add", "origin", REPO_URL], cwd=dest)
-    run(["git", "sparse-checkout", "set", "--no-cone", "/Dataset/"], cwd=dest)
+    run(["git", "sparse-checkout", "set", "--no-cone", "/Dataset/", "/LICENSE"], cwd=dest)
     run(["git", "fetch", "--depth", "1", "--filter=blob:none", "origin", PINNED_COMMIT], cwd=dest)
     run(["git", "-c", "advice.detachedHead=false", "checkout", PINNED_COMMIT], cwd=dest)
     return dataset_dir

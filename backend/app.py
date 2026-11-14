@@ -10,6 +10,7 @@ Analysis:    a background thread runs Analyzer.cycle() whenever new data arrived
 from __future__ import annotations
 
 import json
+import mimetypes
 import os
 import threading
 import time
@@ -20,7 +21,7 @@ from pathlib import Path
 import numpy as np
 import pandas as pd
 from fastapi import Body, FastAPI, HTTPException
-from fastapi.responses import FileResponse, Response
+from fastapi.responses import FileResponse, RedirectResponse, Response
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
@@ -393,6 +394,25 @@ def maintenance_log(limit: int = 50):
 DASH = ROOT / "dashboard"
 if DASH.exists():
     app.mount("/static", StaticFiles(directory=DASH), name="static")
+
+# The in-browser image inspection page (also published on GitHub Pages). It runs the detector client-side, so the
+# backend only serves files; the page borrows the dashboard stylesheet from ../demo/styles.css.
+INSPECT = ROOT / "docs" / "inspect"
+if INSPECT.exists():
+    mimetypes.add_type("application/wasm", ".wasm")      # older system MIME tables lack these
+    mimetypes.add_type("text/javascript", ".mjs")
+    app.mount("/inspect", StaticFiles(directory=INSPECT, html=True), name="inspect")
+
+
+@app.get("/demo/styles.css", include_in_schema=False)
+def inspect_stylesheet():
+    return FileResponse(DASH / "styles.css")
+
+
+@app.get("/demo/", include_in_schema=False)
+def demo_to_live():
+    # the page's "Dashboard" link points at the recorded replay (../demo/); here the live dashboard is the target
+    return RedirectResponse("/")
 
 
 @app.get("/")

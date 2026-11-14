@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inspect belt images: conveyor wear &amp; tear detector</title>
+  <link rel="stylesheet" href="../demo/styles.css">
+  <link rel="stylesheet" href="inspect.css">
+</head>
+<body>
+<div class="viz-root">
+  <header class="top">
+    <div>
+      <h1>Inspect conveyor-belt images for wear &amp; tear</h1>
+      <p class="sub">The project's belt-damage detector (YOLO11n), running <strong>in your browser</strong>. Your
+        images are not uploaded anywhere.</p>
+    </div>
+    <div class="clock small"><a href="../demo/">← Dashboard</a> · <a href="https://github.com/vivektalwar689/conveyor-belt-monitor">Repository</a></div>
+  </header>
+
+  <section class="card controls">
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose or drop images">
+      <input type="file" id="file" accept="image/*" multiple hidden>
+      <strong>Drop belt photos here</strong> or <span class="linklike">choose files</span>
+      <div class="muted small">JPEG / PNG / WebP, one or many. Close-ups of the belt surface work best.</div>
+    </div>
+    <div class="row">
+      <button id="samples" type="button">Try 8 sample images</button>
+      <button id="clear" type="button">Clear</button>
+      <fieldset class="model">
+        <legend class="muted small">Model</legend>
+        <label><input type="radio" name="model" value="deployed" checked> Deployed: fewer false alarms</label>
+        <label><input type="radio" name="model" value="baseline"> Baseline: more sensitive</label>
+      </fieldset>
+      <label class="thr">Confidence ≥ <output id="thrv">0.35</output>
+        <input type="range" id="thr" min="0.10" max="0.90" step="0.05" value="0.35" aria-label="Confidence threshold"></label>
+      <label><input type="checkbox" id="gt" checked> Show the dataset's labels on samples</label>
+    </div>
+    <p class="muted small" id="status">Loading the model…</p>
+  </section>
+
+  <section class="card" id="summary-card" hidden>
+    <div class="card-head"><h2>Summary</h2><div class="legend" id="legend"></div></div>
+    <div id="summary"></div>
+    <p class="small"><button id="csv" type="button" class="linkbtn">Download results as CSV</button></p>
+  </section>
+
+  <section id="results" class="results"></section>
+
+  <section class="card notes">
+    <h2>How to read the result</h2>
+    <ul>
+      <li><strong>Severity</strong> follows the dashboard's rules for a confirmed belt defect: tear or hole = high,
+        puncture or impact damage = medium, wear = low. On the belt, severity also rises with the defect's physical
+        size and growth over revolutions. A single photo has no scale and no history, so those are not used here.</li>
+      <li><strong>One photo is one look.</strong> On the conveyor, a detection becomes an alert only after it is seen
+        again at the same belt position on another revolution, which filters out most one-off false positives. Here
+        you see raw single-image detections.</li>
+      <li><strong>Expect mistakes.</strong> On scenes it never saw in training, the detector reaches only 0.06–0.12
+        box mAP@0.5. It often finds the damaged region but draws a different box or class, and it misses some
+        damage. The <em>deployed</em> model was fine-tuned on defect-free crops: it raises far fewer false alarms on
+        healthy belt but is less sensitive. The <em>baseline</em> sees more and is wrong more often. See the
+        <a href="https://github.com/vivektalwar689/conveyor-belt-monitor#vision-leakage-free-test-split-make-vision-eval">evaluation</a>.</li>
+      <li><strong>Samples</strong> are held-out test scenes from the public dataset (MIT licence), never used for
+        training. Their dashed boxes are the dataset's own labels, so you can see where the detector is right, where it
+        misses damage, and where it picks a different class. The file names keep the dataset's original split
+        prefixes (train_, valid_, test_). That split leaked near-duplicate scenes between training and test, so the
+        project re-split the data by scene, and all eight are in the new test split.</li>
+      <li>The browser resizes images a little differently from OpenCV (by under one grey level on 99% of pixels).
+        Confidences therefore differ from the Python pipeline by about 0.01, and a borderline box can appear or
+        disappear. Long, thin tears are the most sensitive: their box can end tens of pixels earlier or
+        later.</li>
+    </ul>
+  </section>
+</div>
+<div id="tooltip" role="tooltip" hidden></div>
+<script src="vendor/ort.wasm.min.js"></script>
+<script type="module" src="inspect.js"></script>
+</body>
+</html>

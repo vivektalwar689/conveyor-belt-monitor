@@ -6797,7 +6797,7 @@ While the fine-tune finishes, I'll test the transcript export into the scratchpa
 <details><summary>Tool: Bash</summary>
 
 ```
-$ cd /home/user && python3 <scratchpad> /root/.claude/projects/-home-user/51c75686-4237-55f8-99b1-79cf88427aac.jsonl <scratchpad> && F=<scratchpad> && du -h $F && grep -c "^## User" $F && grep -c "^## Claude" $F && grep -c "Tool:" $F && grep -n -i -E "gmail|vivektalwar689@|@gmail|GH_TOKEN=|ghp_|sk-ant" $F | head -5; echo "--- scan done"; grep -n "^## User" -A3 $F | head -30
+$ cd /home/user && python3 <scratchpad> /root/.claude/projects/-home-user/51c75686-4237-55f8-99b1-79cf88427aac.jsonl <scratchpad> && F=<scratchpad> && du -h $F && grep -c "^## User" $F && grep -c "^## Claude" $F && grep -c "Tool:" $F && grep -n -i -E "gmail|<email removed>|@gmail|GH_TOKEN=|ghp_|sk-ant" $F | head -5; echo "--- scan done"; grep -n "^## User" -A3 $F | head -30
 # Test-export the transcript and scan it for personal data
 ```
 </details>
@@ -6812,7 +6812,7 @@ wrote <scratchpad>
 249
 5756:$ git grep --cached -n -i -E "vivek|gmail|@[a-z0-9.-]+\.(com|io)|ghp_|token|secret|password" -- . ':!*.jpg' ':!*.png' ':!*.joblib' | grep -v -E "noreply|avartanlabs|anthropic" | head -20; echo "--- scan done"
 6293:$ git add -A && git status --porcelain | awk '{print $1, $2}' && git grep --cached -n -i -E "vivek|gmail|ghp_" -- . ':!*.jpg' ':!*.png' ':!*.joblib' ':!*.pt' | head -3; git commit -q -F - <<'EOF'
-6901:$ cd /home/user && python3 <scratchpad> /root/.claude/projects/-home-user/51c75686-4237-55f8-99b1-79cf88427aac.jsonl <scratchpad> && F=<scratchpad> && du -h $F && grep -c "^## User" $F && grep -c "^## Claude" $F && grep -c "Tool:" $F && grep -n -i -E "gmail|vivektalwar689@|@gmail|GH_TOKEN=|ghp_|sk-ant" $F | head -5; echo "--- scan done"; grep -n "^## User" -A3 $F | head -30
+6901:$ cd /home/user && python3 <scratchpad> /root/.claude/projects/-home-user/51c75686-4237-55f8-99b1-79cf88427aac.jsonl <scratchpad> && F=<scratchpad> && du -h $F && grep -c "^## User" $F && grep -c "^## Claude" $F && grep -c "Tool:" $F && grep -n -i -E "gmail|<email removed>|@gmail|GH_TOKEN=|ghp_|sk-ant" $F | head -5; echo "--- scan done"; grep -n "^## User" -A3 $F | head -30
 --- scan done
 4:## User
 5-
@@ -7363,10 +7363,10 @@ loop_eval_clean frames {'defect': 0.879, 'healthy': 0.454, 'dirt': 0.542}
    conf 0.55 recall 0.43 fp 0.0754 confirmed 7/11
    conf 0.65 recall 0.233 fp 0.0193 confirmed 4/11
    conf 0.75 recall 0.03 fp 0.0008 confirmed 1/11
-   track@ 0.25 11/11 phantoms 16
-   track@ 0.35 9/11 phantoms 8
-   track@ 0.45 8/11 phantoms 4
-   track@ 0.55 7/11 phantoms 1
+   <email removed> 0.25 11/11 phantoms 16
+   <email removed> 0.35 9/11 phantoms 8
+   <email removed> 0.45 8/11 phantoms 4
+   <email removed> 0.55 7/11 phantoms 1
 loop_eval_hardneg frames {'defect': 0.652, 'healthy': 0.169, 'dirt': 0.175}
    conf 0.25 recall 0.652 fp 0.1693 confirmed 9/11
    conf 0.35 recall 0.452 fp 0.0796 confirmed 9/11
@@ -7374,10 +7374,10 @@ loop_eval_hardneg frames {'defect': 0.652, 'healthy': 0.169, 'dirt': 0.175}
    conf 0.55 recall 0.243 fp 0.0042 confirmed 3/11
    conf 0.65 recall 0.213 fp 0.0 confirmed 3/11
    conf 0.75 recall 0.148 fp 0.0 confirmed 2/11
-   track@ 0.25 9/11 phantoms 2
-   track@ 0.35 8/11 phantoms 0
-   track@ 0.45 4/11 phantoms 0
-   track@ 0.55 3/11 phantoms 0
+   <email removed> 0.25 9/11 phantoms 2
+   <email removed> 0.35 8/11 phantoms 0
+   <email removed> 0.45 4/11 phantoms 0
+   <email removed> 0.55 3/11 phantoms 0
 ```
 </details>
 
@@ -8281,7 +8281,7 @@ $ ls -la /root/.claude/projects/*/ 2>/dev/null | grep -E "jsonl|^/" ; for f in /
 <details><summary>Tool: Bash</summary>
 
 ```
-$ python3 <scratchpad> /root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl ai_usage/claude_code_session.md && F=ai_usage/claude_code_session.md && du -h $F && echo "user turns: $(grep -c '^## User' $F), claude msgs: $(grep -c '^## Claude' $F), tool calls: $(grep -c 'Tool:' $F)" && echo "--- email/secret scan:" && grep -n -o -i -E "[a-z0-9._%+-]+@gmail\.com|vivektalwar689@[a-z.]+|ghp_[A-Za-z0-9]{10,}|github_pat_[A-Za-z0-9_]{10,}|sk-ant-[A-Za-z0-9-]{10,}|hf_[A-Za-z0-9]{20,}|Bearer [A-Za-z0-9._-]{20,}" $F | head; echo "--- user messages:"; grep -A2 "^## User" $F | grep -v -E "^--$|^## User|^$"
+$ python3 <scratchpad> /root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl ai_usage/claude_code_session.md && F=ai_usage/claude_code_session.md && du -h $F && echo "user turns: $(grep -c '^## User' $F), claude msgs: $(grep -c '^## Claude' $F), tool calls: $(grep -c 'Tool:' $F)" && echo "--- email/secret scan:" && grep -n -o -i -E "[a-z0-9._%+-]+@gmail\.com|<email removed>[a-z.]+|ghp_[A-Za-z0-9]{10,}|github_pat_[A-Za-z0-9_]{10,}|sk-ant-[A-Za-z0-9-]{10,}|hf_[A-Za-z0-9]{20,}|Bearer [A-Za-z0-9._-]{20,}" $F | head; echo "--- user messages:"; grep -A2 "^## User" $F | grep -v -E "^--$|^## User|^$"
 # Export the transcript to ai_usage/ and scan it for personal data and secrets
 ```
 </details>
@@ -8357,5 +8357,3860 @@ open(p,"w").write(s)
 EOF
 cd /home/user/conveyor-belt-monitor && python3 <scratchpad> /root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl ai_usage/claude_code_session.md >/dev/null && grep -A2 "^## User" ai_usage/claude_code_session.md | grep -v -E "^--$|^$"; gr
 … [299 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+## User
+@"<uploaded file>"
+## User
+https://github.com/vivektalwar689/conveyor-belt-monitor.git
+## User
+ok, ping me when the final push is done
+## User
+Why some images like dashboard in Readme.MD are giving 404 error. Pls resolve them
+## User
+Can I run the dashboard live on a host so when I share the assignment people can actually feel the demo?
+## User (sent while Claude was working)
+Try again
+8
+scan done
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cp <scratchpad> scripts/export_transcript.py && cat > ai_usage/README.md <<'EOF'
+# AI usage
+
+| File | What it is |
+|---|---|
+| [`claude_code_session.md`](claude_code_session.md) | Transcript of the Claude Code session that built this repository |
+| [`links.md`](links.md) | Links to any other AI conversations (ChatGPT share links, Claude.ai exports) |
+
+How the transcript was produced: `python scripts/export_transcript.py <session.jsonl> ai_usage/claude_code_session.md`
+converts the session log to markdown.
+* **Kept:** every user message, every Claude message, and every tool call and result. Long outputs are truncated.
+  Answers to Claude's multiple-choice questions appear in the "Result" blocks right after the question.
+* **Left out:** Claude's internal reasoning blocks and system attachments.
+* **Relabelled:** automated events (background-task completions, a worker restart, a stop hook) are marked as
+  system events, not user messages.
+* **Scrubbed:** e-mail addresses and local scratch and upload paths.
+* **Timing:** it was exported near the end of the session, so the final export-and-push steps are not in it.
+
+The README's ["How AI was used"](../README.md#how-ai-was-used) section summarises where a first version was wrong
+and how that was caught.
+EOF
+OMP_NUM_THREADS=1 .venv/bin/python -m pytest -q 2>&1 | tail -1 && git add -A && git status --short && git commit -q -F - <<
+… [679 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+23 passed, 1 warning in 3.81s
+M  ai_usage/README.md
+A  ai_usage/claude_code_session.md
+A  scripts/export_transcript.py
+   6781799..524f8bc  main -> main
+## main...origin/main
+524f8bc Add the Claude Code session transcript to ai_usage/
+6781799 Replay: do not prefetch past the last frame (removes a 404 in the console)
+bfc170f Include the replay's recorded data (fix over-broad .gitignore)
+524f8bcf8cfef989fec37d6973de6eec724a1ed5	refs/heads/main
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ git ls-tree -r --name-only origin/main > <scratchpad> && for ref in $(grep -ohE "\]\(([a-zA-Z_./-]+)\)" README.md | sed -E 's/\]\((.*)\)/\1/' | grep -v "^#" | sort -u) $(grep -ohE "\]\((\.\./[^)#]+|images/[^)]+)\)" docs/DESIGN.md | sed -E 's/\]\((.*)\)/\1/' | sed 's|^\.\./||; s|^images/|docs/images/|' | sort -u); do p=${ref%/}; if grep -qx "$p" <scratchpad> || grep -q "^$p/" <scratchpad> then echo "OK      $p"; else echo "MISSING $p"; fi; done; echo "files in repo: $(wc -l < <scratchpad>"; du -sh .git
+# Verify every README/DESIGN link target exists in the pushed tree
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+OK      ai_usage
+OK      docs/DESIGN.md
+OK      docs/images/dashboard_dq.png
+OK      docs/images/dashboard_top.png
+OK      docs/images/dashboard_vision_detail.png
+OK      docs/images/detector_examples.jpg
+OK      docs/images/example_bearing.png
+OK      docs/images/loop_localisation_error.png
+OK      docs/images/tradeoff_bearing.png
+OK      docs/images/vision_leakage_examples.jpg
+OK      README.md
+files in repo: 324
+46M	.git
+```
+</details>
+
+## Claude
+
+Every link target exists in the pushed tree (324 files). Marking the remaining tasks done and sending you the ping you asked for:
+
+<details><summary>Tool: TaskUpdate</summary>
+
+```
+{"taskId": "8", "status": "completed"}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Updated task #8 status
+```
+</details>
+
+<details><summary>Tool: TaskUpdate</summary>
+
+```
+{"taskId": "9", "status": "completed"}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Updated task #9 status
+```
+</details>
+
+<details><summary>Tool: ToolSearch</summary>
+
+```
+{"query": "select:PushNotification", "max_results": 1}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+[image]
+```
+</details>
+
+<details><summary>Tool: PushNotification</summary>
+
+```
+{"message": "Final push done (524f8bc). To make the live demo link work: GitHub repo → Settings → Pages → Deploy from branch: main, folder /docs (repo must be public).", "status": "proactive"}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Mobile push requested.
+```
+</details>
+
+## Claude
+
+The final version is pushed to `main`: https://github.com/vivektalwar689/conveyor-belt-monitor (latest commit `524f8bc`). Every image and link the README uses exists in the repo, and all 23 tests pass.
+
+**What you need to do:**
+1. **Turn on GitHub Pages so the demo link works.** In the repo: Settings → Pages → "Deploy from a branch" → `main`, folder `/docs` → Save. The repo must be public, or you need GitHub Pro. A minute or two later this opens: https://vivektalwar689.github.io/conveyor-belt-monitor/demo/. The README links to it at the top.
+2. **Make the write-up yours.** Reread "What I would do differently" and "How AI was used". There's a hidden placeholder for your own notes on what you reviewed or would decide differently. Reviewers grade how *you* steered the AI.
+3. **Optional: commit author.** Commits are authored as "Claude". Tell me if you want a different author.
+
+**What reviewers can try without installing anything.** The demo page is the real dashboard replaying a recorded 29-hour run, with play, pause and drag-to-scrub, labelled as a recording. During it, S18's bearing fails and is repaired, S12's belt mistracks until it trips, and S07 is still predicted at the end. You can click any station for its charts. `make demo` still runs the live system.
+
+**What changed since my last update:**
+- **Detector choice.** Retraining with 1,199 defect-free crops made the standard box-accuracy score worse (0.12 → 0.06) but made the system better: 8 of 11 belt defects found with 0 false ones, against 9 of 11 with 8 false ones before. I deployed the retrained model and wrote up why the system-level number is the one that matters.
+- **Speed.** Analysis now runs as its own process. Inside the web server it was slowing data intake to about a quarter of the target speed.
+- **AI log.** The session transcript is in `ai_usage/`. It contains your six messages, my messages and tool calls, with my internal reasoning left out and no email addresses or keys.
+
+**Weak points a reviewer may raise, and the README states them openly:**
+- The failure-prediction numbers come from my own simulator, so they show the method works, not real-world accuracy.
+- The image detector is weak on scenes it hasn't seen, and on a real belt it would still produce too many false detections.
+- One of the predicted time ranges in the recording was too optimistic: S12 tripped after 23 h when the range said 26–64 h.
+
+## User
+
+the recording is giving 404 error
+
+## Claude
+
+Let me find out exactly why. I'll check what GitHub Pages is serving at that URL, whether Pages is enabled and from which folder, and whether the repo is public:
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ for u in https://vivektalwar689.github.io/conveyor-belt-monitor/demo/ https://vivektalwar689.github.io/conveyor-belt-monitor/ https://vivektalwar689.github.io/conveyor-belt-monitor/docs/demo/; do echo "$(curl -s -o /dev/null -w '%{http_code}' --max-time 20 "$u") $u"; done; echo "--- repo"; curl -s --max-time 20 https://api.github.com/repos/vivektalwar689/conveyor-belt-monitor | python3 -c "import sys,json; d=json.load(sys.stdin); print({k:d.get(k) for k in ['private','visibility','has_pages','default_branch','message']})"; echo "--- pages"; curl -s --max-time 20 https://api.github.com/repos/vivektalwar689/conveyor-belt-monitor/pages | python3 -c "import sys,json; d=json.load(sys.stdin); print({k:d.get(k) for k in ['status','html_url','source','build_type','message']})"; cd /home/user/conveyor-belt-monitor && git ls-tree --name-only origin/main docs/ | head -10
+# Check the Pages URL status, repo visibility and Pages configuration
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+000 https://vivektalwar689.github.io/conveyor-belt-monitor/demo/
+000 https://vivektalwar689.github.io/conveyor-belt-monitor/
+000 https://vivektalwar689.github.io/conveyor-belt-monitor/docs/demo/
+--- repo
+{'private': False, 'visibility': 'public', 'has_pages': False, 'default_branch': 'main', 'message': None}
+--- pages
+{'status': None, 'html_url': None, 'source': None, 'build_type': None, 'message': 'Access to this GitHub API path is not permitted through this proxy.'}
+docs/.nojekyll
+docs/DESIGN.md
+docs/demo
+docs/images
+docs/index.html
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ for u in "https://raw.githack.com/vivektalwar689/conveyor-belt-monitor/main/docs/demo/index.html" "https://rawcdn.githack.com/vivektalwar689/conveyor-belt-monitor/524f8bc/docs/demo/index.html"; do echo "$(curl -s -o /dev/null -w '%{http_code} %{content_type}' --max-time 20 "$u") $u"; done
+# Test whether a GitHub-file CDN fallback is reachable
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+000  https://raw.githack.com/vivektalwar689/conveyor-belt-monitor/main/docs/demo/index.html
+000  https://rawcdn.githack.com/vivektalwar689/conveyor-belt-monitor/524f8bc/docs/demo/index.html
+```
+</details>
+
+## Claude
+
+The recording 404s because GitHub Pages isn't turned on for the repo yet. GitHub reports `has_pages: false`. The replay files are all on `main` under `docs/`, and the repo is public. Repository settings can't be changed from this session, so this one step is yours:
+
+1. Open https://github.com/vivektalwar689/conveyor-belt-monitor/settings/pages
+2. Under **Build and deployment**, set **Source** to **Deploy from a branch**.
+3. Set **Branch** to **`main`** and the folder to **`/docs`**, not `/ (root)`, then **Save**.
+4. Wait 1–2 minutes; the repo's Actions tab shows a "pages build and deployment" run. Then open https://vivektalwar689.github.io/conveyor-belt-monitor/demo/
+
+If you choose `/ (root)` by mistake, the link stays a 404, because the site lives in the `docs` folder.
+
+I can't open github.io from here, but tell me once you've saved the setting and I'll confirm through GitHub's API that Pages is on.
+
+## User
+
+still 404 error while the page is build
+
+## Claude
+
+A 404 while the first build is still running is normal; GitHub serves nothing until the first deployment finishes. Let me check through GitHub's API whether Pages is now enabled and how the build is going:
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ curl -s --max-time 20 https://api.github.com/repos/vivektalwar689/conveyor-belt-monitor | python3 -c "import sys,json; d=json.load(sys.stdin); print('has_pages:', d.get('has_pages'), '| visibility:', d.get('visibility'))"; echo "--- workflow runs"; curl -s --max-time 20 "https://api.github.com/repos/vivektalwar689/conveyor-belt-monitor/actions/runs?per_page=5" | python3 -c "
+import sys,json; d=json.load(sys.stdin)
+if 'workflow_runs' not in d: print(d.get('message'))
+for r in d.get('workflow_runs', []): print(r['name'], '|', r['status'], '|', r['conclusion'], '|', r['created_at'], '|', r['head_sha'][:7])"; echo "--- deployments"; curl -s --max-time 20 "https://api.github.com/repos/vivektalwar689/conveyor-belt-monitor/deployments?environment=github-pages&per_page=3" | python3 -c "
+import sys,json; d=json.load(sys.stdin)
+print(d if isinstance(d, dict) else [(x['id'], x['sha'][:7], x['created_at']) for x in d])"
+# Check Pages enablement, Actions build runs and deployments via the API
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+has_pages: True | visibility: public
+--- workflow runs
+pages build and deployment | completed | success | 2026-11-14T15:18:06Z | 524f8bc
+--- deployments
+[(7789498114, '524f8bc', '2026-11-14T15:18:38Z')]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ curl -s --max-time 20 "https://api.github.com/repos/vivektalwar689/conveyor-belt-monitor/deployments/7789498114/statuses" | python3 -c "
+import sys,json; d=json.load(sys.stdin)
+print(d if isinstance(d, dict) else [(s['state'], s.get('environment_url'), s['created_at']) for s in d])"; date -u +%H:%M:%S
+# Get the Pages deployment state and published URL
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+[('success', 'https://vivektalwar689.github.io/conveyor-belt-monitor/', '2026-11-14T15:18:51Z'), ('in_progress', '', '2026-11-14T15:18:42Z'), ('queued', '', '2026-11-14T15:18:41Z'), ('queued', '', '2026-11-14T15:18:41Z'), ('waiting', '', '2026-11-14T15:18:39Z')]
+15:19:58
+```
+</details>
+
+## Claude
+
+The 404 was from before the first deployment finished. The site went live at 15:18:51 UTC, about a minute ago:
+- GitHub Pages is now enabled on the repo.
+- The "pages build and deployment" run for commit `524f8bc` finished successfully.
+- The deployment is published at https://vivektalwar689.github.io/conveyor-belt-monitor/
+
+Open **https://vivektalwar689.github.io/conveyor-belt-monitor/demo/** now (the root URL above also redirects there).
+
+If you still see a 404, your browser or GitHub's cache is serving the old error page. Reload with **Ctrl+Shift+R** (Cmd+Shift+R on Mac) or open the link in a private window; GitHub can keep serving a cached 404 for up to about 10 minutes.
+
+GitHub's address is blocked from this environment, so I've confirmed the deployment through GitHub's API but haven't loaded the live page myself. If it still fails after a hard refresh, tell me what you see.
+
+## User
+
+can we do a demo in which I upload a set of images of wear & tear of conveyor belt and the output is the outcome
+
+## Claude
+
+Yes, and it can live on the same GitHub Pages site. I'll add an "Inspect your own images" page where the trained detector runs **in the visitor's browser**, so there's no server to host and images never leave their computer. It will offer:
+- **Upload or try:** upload one or several photos, or use bundled sample images.
+- **Results:** each image with boxes drawn, class, confidence and severity, plus a summary across the set.
+- **Model choice:** the deployed model (fewer false alarms) or the more sensitive baseline, with an adjustable confidence threshold, so reviewers can see the trade-off for themselves.
+
+First the feasibility checks: exporting the detector to ONNX (the format browsers can run) and sizing the browser runtime.
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ .venv/bin/pip install -q onnx onnxslim onnxruntime 2>&1 | tail -2; mkdir -p <scratchpad> && cd <scratchpad> && npm view onnxruntime-web version 2>&1 | tail -1 && npm install --silent onnxruntime-web@1.20.1 2>&1 | tail -2; ls -la node_modules/onnxruntime-web/dist/ 2>/dev/null | grep -E "ort\.(wasm\.)?min\.js|\.wasm$|\.mjs$" | awk '{print $5, $9}' | head -20
+# Install ONNX export tools; fetch onnxruntime-web and check file sizes
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+npm notice
+46839 ort-wasm-simd-threaded.jsep.mjs
+21663894 ort-wasm-simd-threaded.jsep.wasm
+24618 ort-wasm-simd-threaded.mjs
+11246032 ort-wasm-simd-threaded.wasm
+775869 ort.all.bundle.min.mjs
+731232 ort.all.min.mjs
+5500236 ort.all.mjs
+468451 ort.bundle.min.mjs
+446284 ort.min.js
+1948261 ort.min.js.map
+446164 ort.min.mjs
+3637153 ort.mjs
+22658 ort.node.min.mjs
+49026 ort.wasm.min.js
+304922 ort.wasm.min.js.map
+48904 ort.wasm.min.mjs
+539003 ort.wasm.mjs
+421036 ort.webgl.min.mjs
+3380789 ort.webgl.mjs
+377970 ort.webgpu.bundle.min.mjs
+Shell cwd was reset to /home/user/conveyor-belt-monitor
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ mkdir -p docs/inspect/models docs/inspect/vendor docs/inspect/samples && OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF' 2>&1 | grep -v -E "^\s*$|Ultralytics|PyTorch:|ONNX:|requirements" | tail -12
+import shutil
+from pathlib import Path
+from ultralytics import YOLO
+for src, dst in (("models/belt_damage_yolo11n.pt", "docs/inspect/models/deployed.onnx"),
+                 ("models/belt_damage_yolo11n_baseline.pt", "docs/inspect/models/baseline.onnx")):
+    m = YOLO(src)
+    out = m.export(format="onnx", imgsz=512, opset=17, simplify=True, dynamic=False, verbose=False)
+    shutil.move(out, dst)
+    print(dst, round(Path(dst).stat().st_size / 1e6, 2), "MB", m.names)
+EOF
+O=<scratchpad> cp $O/ort.wasm.min.js $O/ort-wasm-simd-threaded.wasm $O/ort-wasm-simd-threaded.mjs docs/inspect/vendor/ && cp <scratchpad> docs/inspect/vendor/LICENSE-onnxruntime-web.txt && ls -la docs/inspect/models docs/inspect/vendor | awk '{print $5, $9}'; .venv/bin/python -c "
+import onnxruntime as ort
+s=ort.InferenceSession('docs/inspect/models/deployed.onnx')
+print([(i.name,i.shape) for i in s.get_inputs()], [(o.name,o.shape) for o in s.get_outputs()])"
+# Export both detectors to ONNX and vendor the browser runtime
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Results saved to [1m/home/user/conveyor-belt-monitor/models/belt_damage_yolo11n.onnx[0m
+Predict:         yolo predict task=detect model=models/belt_damage_yolo11n.onnx imgsz=512 
+Validate:        yolo val task=detect model=models/belt_damage_yolo11n.onnx imgsz=512 data=/home/user/conveyor-belt-monitor/data/processed/belt_damage_clean_neg/data.yaml 
+Visualize:       https://netron.app
+docs/inspect/models/deployed.onnx 10.61 MB {0: 'Hole', 1: 'Impact Damage', 2: 'Puncture', 3: 'Tear', 4: 'Wear'}
+YOLO11n summary (fused): 101 layers, 2,598,023 parameters, 0 gradients, 4.1 GFLOPs
+Export complete (0.9s)
+Results saved to [1m/home/user/conveyor-belt-monitor/models/belt_damage_yolo11n_baseline.onnx[0m
+Predict:         yolo predict task=detect model=models/belt_damage_yolo11n_baseline.onnx imgsz=512 
+Validate:        yolo val task=detect model=models/belt_damage_yolo11n_baseline.onnx imgsz=512 data=/home/user/conveyor-belt-monitor/data/processed/belt_damage_clean/data.yaml 
+Visualize:       https://netron.app
+docs/inspect/models/baseline.onnx 10.61 MB {0: 'Hole', 1: 'Impact Damage', 2: 'Puncture', 3: 'Tear', 4: 'Wear'}
+cp: cannot stat '<scratchpad>
+… [173 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ ls -la docs/inspect/vendor | awk '{print $5, $9}'; P=<scratchpad> ls $P; node -e "const p=require('$P/package.json'); console.log(p.name, p.version, p.license)"; ls $P/../onnxruntime-common 2>/dev/null | head -3
+# Verify vendored runtime files and find its licence
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+4096 .
+4096 ..
+24618 ort-wasm-simd-threaded.mjs
+11246032 ort-wasm-simd-threaded.wasm
+49026 ort.wasm.min.js
+README.md
+dist
+docs
+lib
+package.json
+types.d.ts
+onnxruntime-web 1.20.1 MIT
+README.md
+dist
+lib
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cat > docs/inspect/vendor/NOTICE.md <<'EOF'
+`ort.wasm.min.js`, `ort-wasm-simd-threaded.mjs` and `ort-wasm-simd-threaded.wasm` are from
+[onnxruntime-web](https://www.npmjs.com/package/onnxruntime-web) 1.20.1, Copyright (c) Microsoft Corporation,
+released under the MIT License (https://github.com/microsoft/onnxruntime/blob/main/LICENSE).
+They are vendored so the page works without a CDN.
+EOF
+OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF'
+import numpy as np, onnxruntime as ort
+from PIL import Image
+from pathlib import Path
+from ultralytics import YOLO
+
+def letterbox(im, size=512):
+    w, h = im.size
+    s = min(size / w, size / h)
+    nw, nh = round(w * s), round(h * s)
+    px, py = (size - nw) / 2, (size - nh) / 2
+    canvas = Image.new("RGB", (size, size), (114, 114, 114))
+    canvas.paste(im.resize((nw, nh), Image.BILINEAR), (round(px - 0.1), round(py - 0.1)))
+    x = np.asarray(canvas, dtype=np.float32).transpose(2, 0, 1)[None] / 255.0
+    return x, s, round(px - 0.1), round(py - 0.1)
+
+def iou(a, b):
+    x0, y0 = np.maximum(a[0], b[:, 0]), np.maximum(a[1], b[:, 1])
+    x1, y1 = np.minimum(a[2], b[:, 2]), np.minimum(a[3], b[:, 3])
+    inter = np.clip(x1 - x0, 0, None) * np.clip(y1 - y0, 0, None)
+    return inter / ((a[2] - a[0]) * (a[3] - a[1]) + (b[:, 2] - b[:, 0]) * (b[:, 3] - b[:, 1]) - inter + 1e-9)
+
+def decode(out, conf, s, px, py, iou_thr=0.7):
+    o = out[0].T                                   # (5376, 9)
+    sc = o[:, 4:]; cls = sc.argmax(1); score = sc.max(1)
+    kee
+… [1800 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+test_2261.jpg ours 0 ultralytics 1 classes False max conf diff -
+test_2264.jpg ours 0 ultralytics 0 classes True max conf diff -
+test_2271.jpg ours 0 ultralytics 0 classes True max conf diff -
+train_0015.jpg ours 0 ultralytics 0 classes True max conf diff -
+train_0087.jpg ours 0 ultralytics 0 classes True max conf diff -
+train_0292.jpg ours 0 ultralytics 0 classes True max conf diff -
+train_0293.jpg ours 2 ultralytics 1 classes False max conf diff -
+train_0294.jpg ours 1 ultralytics 1 classes True max conf diff 0.144
+train_0297.jpg ours 1 ultralytics 1 classes True max conf diff 0.183
+train_0298.jpg ours 2 ultralytics 2 classes True max conf diff 0.082
+train_0469.jpg ours 0 ultralytics 1 classes False max conf diff -
+train_0482.jpg ours 3 ultralytics 3 classes True max conf diff 0.008
+worst box coordinate difference (px): 999.0
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF'
+import numpy as np, onnxruntime as ort, cv2
+from PIL import Image
+from pathlib import Path
+from ultralytics import YOLO
+
+def iou(a, b):
+    x0, y0 = np.maximum(a[0], b[:, 0]), np.maximum(a[1], b[:, 1])
+    x1, y1 = np.minimum(a[2], b[:, 2]), np.minimum(a[3], b[:, 3])
+    inter = np.clip(x1 - x0, 0, None) * np.clip(y1 - y0, 0, None)
+    return inter / ((a[2] - a[0]) * (a[3] - a[1]) + (b[:, 2] - b[:, 0]) * (b[:, 3] - b[:, 1]) - inter + 1e-9)
+
+def decode(out, conf, s, px, py, iou_thr=0.7):
+    o = out[0].T
+    sc = o[:, 4:]; cls = sc.argmax(1); score = sc.max(1)
+    keep = score >= conf
+    o, cls, score = o[keep], cls[keep], score[keep]
+    xyxy = np.column_stack([o[:, 0] - o[:, 2] / 2, o[:, 1] - o[:, 3] / 2, o[:, 0] + o[:, 2] / 2, o[:, 1] + o[:, 3] / 2])
+    order = score.argsort()[::-1]; kept = []
+    for i in order:
+        if all(not (cls[j] == cls[i] and iou(xyxy[i], xyxy[[j]])[0] > iou_thr) for j in kept):
+            kept.append(i)
+    b = xyxy[kept].copy()
+    b[:, [0, 2]] = (b[:, [0, 2]] - px) / s; b[:, [1, 3]] = (b[:, [1, 3]] - py) / s
+    return b, cls[kept], score[kept]
+
+def cv_letterbox(bgr, size=512):
+    h, w = bgr.shape[:2]
+    r = min(size / h, size / w)
+    nw, nh = int(round(w * r)), int(round(h * r))
+    dw, dh = (size - nw) / 2, (size - nh) / 2
+    img = cv2.resize(bgr, (nw, nh), interpolation=cv2.INTER_LINEAR) if (w, h) != (nw, nh) else bgr
+    top, bottom, left, right = int(round(dh - 0.1)), int(round(dh + 0.
+… [1371 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+MISMATCH test_2261.jpg 0 1
+MISMATCH train_0292.jpg 1 0
+MISMATCH train_0293.jpg 2 1
+MISMATCH train_0469.jpg 0 1
+MISMATCH train_0598.jpg 5 4
+mismatched images: 5; worst box diff 25.990 px; worst conf diff 0.1703
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF' 2>&1 | grep -v -E "Loading|ONNX|onnxruntime" 
+import numpy as np, onnxruntime as ort, cv2
+from pathlib import Path
+from ultralytics import YOLO
+
+def iou(a, b):
+    x0, y0 = np.maximum(a[0], b[:, 0]), np.maximum(a[1], b[:, 1])
+    x1, y1 = np.minimum(a[2], b[:, 2]), np.minimum(a[3], b[:, 3])
+    inter = np.clip(x1 - x0, 0, None) * np.clip(y1 - y0, 0, None)
+    return inter / ((a[2] - a[0]) * (a[3] - a[1]) + (b[:, 2] - b[:, 0]) * (b[:, 3] - b[:, 1]) - inter + 1e-9)
+
+def decode(out, conf, s, px, py, iou_thr=0.7):
+    o = out[0].T
+    sc = o[:, 4:]; cls = sc.argmax(1); score = sc.max(1)
+    keep = score >= conf
+    o, cls, score = o[keep], cls[keep], score[keep]
+    xyxy = np.column_stack([o[:, 0] - o[:, 2] / 2, o[:, 1] - o[:, 3] / 2, o[:, 0] + o[:, 2] / 2, o[:, 1] + o[:, 3] / 2])
+    order = score.argsort()[::-1]; kept = []
+    for i in order:
+        if all(not (cls[j] == cls[i] and iou(xyxy[i], xyxy[[j]])[0] > iou_thr) for j in kept):
+            kept.append(i)
+    b = xyxy[kept].copy()
+    b[:, [0, 2]] = (b[:, [0, 2]] - px) / s; b[:, [1, 3]] = (b[:, [1, 3]] - py) / s
+    return b, cls[kept], score[kept]
+
+def cv_letterbox(bgr, size=512):
+    h, w = bgr.shape[:2]
+    r = min(size / h, size / w)
+    nw, nh = int(round(w * r)), int(round(h * r))
+    dw, dh = (size - nw) / 2, (size - nh) / 2
+    img = cv2.resize(bgr, (nw, nh), interpolation=cv2.INTER_LINEAR) if (w, h) != (nw, nh) else bgr
+    top, bottom, left, right = int(round(dh - 
+… [1480 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+MISMATCH train_0293.jpg 2 1
+MISMATCH train_0293.jpg 2 1
+MISMATCH train_0297.jpg 2 1
+MISMATCH train_0482.jpg 4 3
+MISMATCH train_0598.jpg 3 1
+MISMATCH train_0598.jpg 5 3
+MISMATCH train_0848.jpg 2 1
+MISMATCH train_0848.jpg 2 1
+MISMATCH train_0850.jpg 3 2
+MISMATCH valid_1712.jpg 2 1
+MISMATCH valid_1982.jpg 3 1
+MISMATCH valid_1982.jpg 4 2
+78 images: mismatched 12; worst box diff 65.712 px; worst conf diff 0.00000
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF' 2>&1 | grep -v -E "Loading|onnxruntime"
+import inspect, numpy as np, cv2
+from ultralytics import YOLO
+from ultralytics.utils import ops
+import ultralytics
+print("ultralytics", ultralytics.__version__)
+src = inspect.getsource(ops.non_max_suppression) if hasattr(ops, "non_max_suppression") else ""
+for kw in ("agnostic", "iou_thres", "max_wh", "nms(", "TorchNMS", "fast_nms", "end2end", "rotated"):
+    print(kw, kw in src)
+from ultralytics.cfg import get_cfg
+cfg = get_cfg()
+print("defaults: iou", cfg.iou, "agnostic_nms", cfg.agnostic_nms, "max_det", cfg.max_det)
+# which NMS implementation is actually used?
+try:
+    from ultralytics.utils import nms as nmsmod
+    print("nms module:", [n for n in dir(nmsmod) if not n.startswith("_")][:10])
+    print(inspect.getsource(nmsmod.non_max_suppression)[:2500])
+except Exception as e:
+    print("no ultralytics.utils.nms", e)
+EOF
+# Inspect Ultralytics' NMS implementation and defaults
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ultralytics 8.4.212
+agnostic False
+iou_thres False
+max_wh False
+nms( False
+TorchNMS False
+fast_nms False
+end2end False
+rotated False
+defaults: iou None agnostic_nms False max_det 300
+nms module: ['LOGGER', 'PREDICT_IOU', 'TorchNMS', 'batch_probiou', 'box_iou', 'nms_boxes', 'non_max_suppression', 'sys', 'time', 'torch']
+def non_max_suppression(
+    prediction,
+    conf_thres: float = 0.25,
+    iou_thres: float = PREDICT_IOU,
+    classes=None,
+    agnostic: bool = False,
+    multi_label: bool = False,
+    max_det: int = 300,
+    nc: int = 0,  # number of classes (optional)
+    max_time_img: float = 0.05,
+    max_nms: int = 30000,
+    max_wh: int = 7680,
+    rotated: bool = False,
+    end2end: bool = False,
+    return_idxs: bool = False,
+):
+    """Perform non-maximum suppression (NMS) on prediction results.
+
+    Applies NMS to filter overlapping bounding boxes based on confidence and IoU thresholds. Supports multiple detection
+    formats including standard boxes, rotated boxes, and masks. End-to-end outputs are only filtered by confidence,
+    class, and max_det.
+
+    Args:
+        prediction (torch.Tensor | list | tuple): Predictions with shape (batch_size, 4 + num_classes + num_ext
+… [1620 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ OMP_NUM_THREADS=2 .venv/bin/python -c "from ultralytics.utils.nms import PREDICT_IOU; print('PREDICT_IOU =', PREDICT_IOU)" && OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF' 2>&1 | grep -v -E "Loading|onnxruntime"
+import numpy as np, onnxruntime as ort, cv2
+from pathlib import Path
+from ultralytics import YOLO
+from ultralytics.utils.nms import PREDICT_IOU
+
+def iou(a, b):
+    x0, y0 = np.maximum(a[0], b[:, 0]), np.maximum(a[1], b[:, 1])
+    x1, y1 = np.minimum(a[2], b[:, 2]), np.minimum(a[3], b[:, 3])
+    inter = np.clip(x1 - x0, 0, None) * np.clip(y1 - y0, 0, None)
+    return inter / ((a[2] - a[0]) * (a[3] - a[1]) + (b[:, 2] - b[:, 0]) * (b[:, 3] - b[:, 1]) - inter + 1e-9)
+
+def decode(out, conf, s, px, py, iou_thr):
+    o = out[0].T
+    sc = o[:, 4:]; cls = sc.argmax(1); score = sc.max(1)
+    keep = score >= conf
+    o, cls, score = o[keep], cls[keep], score[keep]
+    xyxy = np.column_stack([o[:, 0] - o[:, 2] / 2, o[:, 1] - o[:, 3] / 2, o[:, 0] + o[:, 2] / 2, o[:, 1] + o[:, 3] / 2])
+    order = score.argsort()[::-1]; kept = []
+    for i in order:
+        if all(not (cls[j] == cls[i] and iou(xyxy[i], xyxy[[j]])[0] > iou_thr) for j in kept):
+            kept.append(i)
+    b = xyxy[kept].copy()
+    b[:, [0, 2]] = (b[:, [0, 2]] - px) / s; b[:, [1, 3]] = (b[:, [1, 3]] - py) / s
+    return b, cls[kept], score[kept]
+
+def cv_letterbox(bgr, size=512):
+    h, w = bgr.shape[:2]
+    r = min(size / h, size / w)
+    nw, nh = int(round(w * r)), int(round(h * r))
+    dw, dh = (size - nw) / 2,
+… [1627 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+PREDICT_IOU = 0.5
+Using ONNX Runtime 1.32.0 with CPUExecutionProvider
+78 images: mismatched 0; worst box diff 65.7116 px; worst conf diff 0.000000
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF' 2>&1 | grep -v -E "Loading|onnxruntime|Using ONNX"
+import numpy as np, onnxruntime as ort, cv2
+from pathlib import Path
+from ultralytics import YOLO
+
+def iou(a, b):
+    x0, y0 = np.maximum(a[0], b[:, 0]), np.maximum(a[1], b[:, 1])
+    x1, y1 = np.minimum(a[2], b[:, 2]), np.minimum(a[3], b[:, 3])
+    inter = np.clip(x1 - x0, 0, None) * np.clip(y1 - y0, 0, None)
+    return inter / ((a[2] - a[0]) * (a[3] - a[1]) + (b[:, 2] - b[:, 0]) * (b[:, 3] - b[:, 1]) - inter + 1e-9)
+
+def decode(out, conf, s, px, py, W, H, iou_thr=0.5):
+    o = out[0].T
+    sc = o[:, 4:]; cls = sc.argmax(1); score = sc.max(1)
+    keep = score >= conf
+    o, cls, score = o[keep], cls[keep], score[keep]
+    xyxy = np.column_stack([o[:, 0] - o[:, 2] / 2, o[:, 1] - o[:, 3] / 2, o[:, 0] + o[:, 2] / 2, o[:, 1] + o[:, 3] / 2])
+    order = score.argsort()[::-1]; kept = []
+    for i in order:
+        if all(not (cls[j] == cls[i] and iou(xyxy[i], xyxy[[j]])[0] > iou_thr) for j in kept):
+            kept.append(i)
+    b = xyxy[kept].copy()
+    b[:, [0, 2]] = np.clip((b[:, [0, 2]] - px) / s, 0, W)
+    b[:, [1, 3]] = np.clip((b[:, [1, 3]] - py) / s, 0, H)
+    return b, cls[kept], score[kept]
+
+def cv_letterbox(bgr, size=512):
+    h, w = bgr.shape[:2]
+    r = min(size / h, size / w)
+    nw, nh = int(round(w * r)), int(round(h * r))
+    dw, dh = (size - nw) / 2, (size - nh) / 2
+    img = cv2.resize(bgr, (nw, nh), interpolation=cv2.INTER_LINEAR) if (w, h) != (nw, nh) else bgr
+  
+… [1464 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+78 images: mismatched 0; worst box diff 0.0000 px; worst conf diff 0.000000
+```
+</details>
+
+<details><summary>Tool: Write</summary>
+
+```
+file: /home/user/conveyor-belt-monitor/docs/inspect/index.html (3726 chars)
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+File created successfully at: /home/user/conveyor-belt-monitor/docs/inspect/index.html (file state is current in your context — no need to Read it back)
+```
+</details>
+
+<details><summary>Tool: Write</summary>
+
+```
+file: /home/user/conveyor-belt-monitor/docs/inspect/inspect.js (12564 chars)
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+File created successfully at: /home/user/conveyor-belt-monitor/docs/inspect/inspect.js (file state is current in your context — no need to Read it back)
+```
+</details>
+
+<details><summary>Tool: Write</summary>
+
+```
+file: /home/user/conveyor-belt-monitor/docs/inspect/inspect.css (1753 chars)
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+File created successfully at: /home/user/conveyor-belt-monitor/docs/inspect/inspect.css (file state is current in your context — no need to Read it back)
+```
+</details>
+
+## Claude
+
+Now the sample images. I'll pick a varied set from the held-out demo images, covering every damage class plus defect-free belt, rather than the arbitrary names I put in the list:
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+CL=["Hole","Impact Damage","Puncture","Tear","Wear"]
+for img in sorted(Path("vision/demo_images/images").glob("*.jpg")):
+    lab=Path("vision/demo_images/labels")/f"{img.stem}.txt"
+    cls=[CL[int(l.split()[0])] for l in lab.read_text().splitlines() if l.strip()]
+    print(img.name, sorted(set(cls)) or ["HEALTHY"], len(cls))
+EOF
+# List demo images with their labelled classes
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+test_2261.jpg ['Wear'] 1
+test_2264.jpg ['Hole'] 1
+test_2271.jpg ['Hole', 'Tear'] 4
+train_0015.jpg ['Wear'] 1
+train_0087.jpg ['Impact Damage', 'Tear'] 4
+train_0292.jpg ['Puncture', 'Tear'] 25
+train_0293.jpg ['Puncture', 'Tear'] 13
+train_0294.jpg ['Puncture', 'Tear'] 17
+train_0297.jpg ['Puncture', 'Tear'] 14
+train_0298.jpg ['Puncture', 'Tear'] 8
+train_0469.jpg ['Puncture', 'Tear'] 21
+train_0482.jpg ['Tear'] 1
+train_0560.jpg ['HEALTHY'] 0
+train_0561.jpg ['HEALTHY'] 0
+train_0598.jpg ['Tear'] 1
+train_0618.jpg ['Tear'] 1
+train_0620.jpg ['Wear'] 1
+train_0624.jpg ['Wear'] 1
+train_0625.jpg ['Hole'] 1
+train_0633.jpg ['Hole'] 1
+train_0634.jpg ['Hole'] 1
+train_0848.jpg ['Tear'] 1
+train_0850.jpg ['Tear'] 2
+train_0882.jpg ['Puncture', 'Tear'] 2
+train_0966.jpg ['Wear'] 1
+train_1437.jpg ['HEALTHY'] 0
+train_1445.jpg ['HEALTHY'] 0
+train_1527.jpg ['Wear'] 3
+valid_1637.jpg ['Impact Damage', 'Tear'] 5
+valid_1699.jpg ['Tear'] 1
+valid_1712.jpg ['Puncture', 'Tear'] 17
+valid_1776.jpg ['Hole'] 1
+valid_1787.jpg ['HEALTHY'] 0
+valid_1807.jpg ['Hole'] 1
+valid_1808.jpg ['Hole'] 1
+valid_1866.jpg ['HEALTHY'] 0
+valid_1897.jpg ['Wear'] 1
+valid_1982.jpg ['Tear'] 1
+valid_2015.jpg ['Wear'] 1
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ for f in train_0598 valid_1982 test_2264 train_0293 train_0087 test_2261 train_0560 valid_1787; do cp vision/demo_images/images/$f.jpg docs/inspect/samples/; done && cat > docs/inspect/samples/NOTICE.md <<'EOF'
+Sample images: held-out test scenes from the dataset in
+https://github.com/FernandoN23/Implementation-of-Object-Detection-for-Conveyor-Belt-Defect-Detection
+(commit b3e7f2e1880084724e0080247f679023020aeef7), MIT licence, Copyright (c) 2025 Fernando Navarrete.
+They were never used to train the detector (scene-grouped split, see vision/audit.py).
+EOF
+python3 - <<'EOF'
+p="/home/user/conveyor-belt-monitor/docs/inspect/inspect.js"; s=open(p).read()
+old='''const SAMPLES = ["test_2264.jpg", "train_0293.jpg", "train_0482.jpg", "train_0598.jpg", "valid_1712.jpg",
+  "valid_1982.jpg", "train_0848.jpg", "test_2271.jpg"];'''
+new='''// held-out test scenes: tear x2, hole, puncture+tear, impact damage+tear, wear, and two defect-free belts
+const SAMPLES = ["train_0598.jpg", "valid_1982.jpg", "test_2264.jpg", "train_0293.jpg", "train_0087.jpg",
+  "test_2261.jpg", "train_0560.jpg", "valid_1787.jpg"];'''
+assert old in s; s=s.replace(old,new); open(p,"w").write(s)
+EOF
+node --check docs/inspect/inspect.js && echo "syntax ok"; ls docs/inspect/samples; du -sh docs/inspect
+# Copy sample images with licence notice; update the sample list
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+syntax ok
+NOTICE.md
+test_2261.jpg
+test_2264.jpg
+train_0087.jpg
+train_0293.jpg
+train_0560.jpg
+train_0598.jpg
+valid_1787.jpg
+valid_1982.jpg
+32M	docs/inspect
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && (cd docs && nohup python3 -m http.server 8033 > /dev/null 2>&1 &) && timeout 30 bash -c 'until curl -s -o /dev/null localhost:8033/inspect/; do sleep 1; done' && cat > $T/inspect_test.js <<'EOF'
+const { chromium } = require('playwright');
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1 });
+  const errors = [];
+  page.on('pageerror', e => errors.push(e.message));
+  page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
+  page.on('response', r => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
+  await page.goto('http://localhost:8033/inspect/', { waitUntil: 'load' });
+  const t0 = Date.now();
+  await page.evaluate(() => window.__inspect.ready);
+  const loadMs = Date.now() - t0;
+  await page.click('#samples');
+  await page.waitForFunction(() => window.__inspect.items.length === 8 && window.__inspect.busy === 0, null, { timeout: 120000 });
+  const dump = (model) => page.evaluate((m) => window.__inspect.items.map(i => ({ name: i.name, ms: Math.round(i.ms[m] || 0),
+    dets: (i.dets[m] || []).map(d => ({ cls: d.cls, conf: +d.conf.toFixed(4), box: [d.x0, d.y0, d.x1, d.y1].map(v => +v.toFixed(1)) })) })), model);
+  const deployed = await dump('deployed');
+  // real upload path
+  await page.setInputFiles('#file', [process.argv[2],
+… [1213 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Exit code 1
+node:internal/process/promises:394
+    triggerUncaughtException(err, true /* fromPromise */);
+    ^
+
+page.evaluate: Error: no available backend found. ERR: [wasm] TypeError: Failed to resolve module specifier 'vendor/ort-wasm-simd-threaded.mjs'
+    at Ee (http://localhost:8033/inspect/vendor/ort.wasm.min.js:6:1842)
+    at async t.create (http://localhost:8033/inspect/vendor/ort.wasm.min.js:6:19445)
+    at <scratchpad> {
+  log: []
+}
+
+Node.js v22.23.4
+Traceback (most recent call last):
+  File "<string>", line 2, in <module>
+    import json; d=json.load(open('<scratchpad>'))
+                   ~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.13/json/__init__.py", line 298, in load
+    return loads(fp.read(),
+        cls=cls, object_hook=object_hook,
+        parse_float=parse_float, parse_int=parse_int,
+        parse_constant=parse_constant, object_pairs_hook=obje
+… [565 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+p="/home/user/conveyor-belt-monitor/docs/inspect/inspect.js"; s=open(p).read()
+old='''ort.env.wasm.wasmPaths = "vendor/";'''
+new='''// must be an absolute URL: the runtime import()s its loader from here, and bare paths are not valid module specifiers
+ort.env.wasm.wasmPaths = new URL("vendor/", import.meta.url).href;'''
+assert old in s; s=s.replace(old,new); open(p,"w").write(s)
+EOF
+T=<scratchpad> timeout 300 node $T/inspect_test.js vision/demo_images/images/train_0848.jpg vision/demo_images/images/train_1437.jpg > $T/inspect_out.json 2> $T/inspect_err.txt; tail -3 $T/inspect_err.txt; python3 -c "
+import json; d=json.load(open('$T/inspect_out.json'))
+print('model load ms', d['loadMs'], '| errors', d['errors'])
+for it in d['deployed']: print('deployed', it['name'][:22].ljust(22), str(it['ms']).rjust(4),'ms', [(x['cls'], x['conf']) for x in it['dets'] if x['conf']>=0.25][:4])
+print('verdicts (baseline view):'); [print('  ', v[:100]) for v in d['verdicts']]
+"
+# Use an absolute wasm path and re-run the browser test
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+model load ms 625 | errors []
+deployed sample: train_0598.jpg  312 ms [('Tear', 0.3617)]
+deployed sample: valid_1982.jpg  259 ms [('Tear', 0.4405)]
+deployed sample: test_2264.jpg   155 ms []
+deployed sample: train_0293.jpg  202 ms [('Tear', 0.6098)]
+deployed sample: train_0087.jpg  221 ms []
+deployed sample: test_2261.jpg   154 ms [('Tear', 0.3955)]
+deployed sample: train_0560.jpg  263 ms []
+deployed sample: valid_1787.jpg  253 ms []
+verdicts (baseline view):
+   sample: train_0598.jpg!Damage found: Tear (high severity)
+   sample: valid_1982.jpg!Damage found: Tear (high severity)
+   sample: test_2264.jpg✓No damage above the threshold
+   sample: train_0293.jpg!Damage found: Tear (high severity)
+   sample: train_0087.jpg✓No damage above the threshold
+   sample: test_2261.jpg!Damage found: Wear (low severity)
+   sample: train_0560.jpg✓No damage above the threshold
+   sample: valid_1787.jpg✓No damage above the threshold
+   train_0848.jpg!Damage found: Tear (high severity)
+   train_1437.jpg✓No damage above the threshold
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && OMP_NUM_THREADS=2 .venv/bin/python - "$T/inspect_out.json" <<'EOF' 2>&1 | grep -v -E "Loading|Using ONNX"
+import json, sys, cv2, numpy as np
+from ultralytics import YOLO
+d = json.load(open(sys.argv[1]))
+for model, key in (("deployed", "deployed"), ("baseline", "baseline")):
+    y = YOLO(f"docs/inspect/models/{model}.onnx", task="detect")
+    same_set = 0; conf_diffs = []; rows = d[key]
+    for it in rows:
+        f = it["name"].replace("sample: ", "")
+        path = f"docs/inspect/samples/{f}" if it["name"].startswith("sample") else f"vision/demo_images/images/{f}"
+        r = y.predict(cv2.imread(path), imgsz=512, conf=0.25, verbose=False)[0]
+        ref = sorted(zip([y.names[int(c)] for c in r.boxes.cls], r.boxes.conf.numpy().round(4)))
+        web = sorted((x["cls"], x["conf"]) for x in it["dets"] if x["conf"] >= 0.25)
+        if [c for c, _ in ref] == [c for c, _ in web]:
+            same_set += 1
+            conf_diffs += [abs(a[1] - b[1]) for a, b in zip(ref, web)]
+        else:
+            print(f"  {model} {f}: python {ref} vs browser {web}")
+    print(f"{model}: identical class sets on {same_set}/{len(rows)} images; "
+          f"median |conf diff| {np.median(conf_diffs) if conf_diffs else 0:.3f}, max {max(conf_diffs) if conf_diffs else 0:.3f}")
+EOF
+# Compare browser detections with the Python reference on the same images
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+deployed: identical class sets on 8/8 images; median |conf diff| 0.005, max 0.015
+  baseline valid_1982.jpg: python [('Tear', np.float32(0.483)), ('Tear', np.float32(0.5528))] vs browser [('Tear', 0.3658), ('Tear', 0.4798), ('Tear', 0.5523)]
+baseline: identical class sets on 7/8 images; median |conf diff| 0.005, max 0.022
+```
+</details>
+
+## User
+
+This session is being continued from a previous conversation that ran out of context. The summary below covers the earlier portion of the conversation.
+
+
+Summary:
+1. Primary Request and Intent:
+   - **Original task:** the user uploaded an "AI Systems Engineer — Take-Home Assessment" PDF. The brief:
+     - Build an end-to-end system that monitors a multi-km mining conveyor belt and predicts failures, submitted as a GitHub repo by Nov 17, 2026, 11:59 PM IST.
+     - Five components: (1) a design document (in the README or linked from it); (2) a backend that receives, stores and analyses data; (3) a prediction model; (4) a vision component that detects belt wear and tear from images; (5) a dashboard.
+     - Sensor data must come only from a self-written Python simulator.
+     - Vision data comes from a public dataset, documented with where it came from and why it was chosen.
+   - **Dashboard minimums:**
+     - status of every sensor point (normal / abnormal / predicted failure);
+     - active anomalies with location, type and severity;
+     - model predictions: what, where, when;
+     - vision detections.
+   - **Vision challenge:** the belt is a continuous loop. Identify the consequences, handle them, and explain what was not solved.
+   - **README must cover:** design decisions, the vision dataset (source and why), the approach, dashboard screenshots, and what I'd do differently.
+   - **ai_usage/ folder** with AI chat logs.
+   - **Rubric:** problem breakdown (what becomes a tool, what stays in the agent, what's skipped), messy input, build vs skip, writing, AI usage.
+   - **Later user requests:**
+     - Push to their repo: https://github.com/vivektalwar689/conveyor-belt-monitor.git (done).
+     - "ok, ping me when the final push is done" (done with PushNotification after 524f8bc).
+     - Fix README dashboard images giving 404 (done).
+     - Host the dashboard live so reviewers can feel the demo. Chose "GitHub Pages replay (Recommended)" (done; Pages enabled and deployed).
+     - "the recording is giving 404 error" and "still 404 error while the page is build". Explained that Pages wasn't enabled at first; then verified via the API that the deployment succeeded (15:18:51Z) and suggested a hard refresh.
+     - **Latest:** "can we do a demo in which I upload a set of images of wear & tear of conveyor belt and the output is the outcome" (in progress).
+   - **Constraints:**
+     - Commit or push only when asked; the user did ask to push to their repo, and a stop hook requires committing and pushing uncommitted changes.
+     - Keep the user's email private: never include it in external requests or files. The transcript was scrubbed.
+     - Don't fabricate the user's involvement in the AI-usage notes.
+
+2. Key Technical Concepts:
+   - **Simulator:** P-F curve degradation (HF envelope → vibration RMS → temperature), exponential health index, misalignment drift, transport delay of load, 18 h/day duty with planned stops 00:00–06:00 IST.
+   - **Messy-data injection:** loss, gateway and station outages, store-and-forward, duplicates, sentinels, unit and alias variants, three timestamp formats, stuck and drifting sensors, spikes.
+   - **Ingestion and quality:** "never silently guess" ingestion with a dead-letter table and idempotent primary key; Hampel-like spike detection using the next sample; stuck detection.
+   - **Anomaly detection:** peer-relative plus a frozen sequential self-baseline (accepted hours only, 24 h lag, re-learn after 7 days); robust z-scores; anomaly lifecycle with debounce and level hysteresis; frozen while the belt is stopped.
+   - **Prediction:**
+     - HistGradientBoosting classifier for P(fail ≤ 72 h);
+     - quantile regressors for time to failure, with conformalized quantile regression (CQR) calibrated on a validation belt-year;
+     - drive trend-to-threshold with load normalisation and a slope t-stat ≥ 3;
+     - running-to-calendar time conversion;
+     - alert persistence of 2 consecutive hourly decisions.
+   - **
+… [13910 more characters truncated]
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ git status --short | head -30 && echo "---" && (ss -ltnp 2>/dev/null | grep -E ":8033|:8000" || echo "no servers on 8033/8000") && echo "---" && du -sh docs/inspect docs/inspect/* && git log --oneline -5
+# Check repo status, running servers and inspect folder size
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+?? docs/inspect/
+---
+no servers on 8033/8000
+---
+32M	docs/inspect
+524f8bc Add the Claude Code session transcript to ai_usage/
+6781799 Replay: do not prefetch past the last frame (removes a 404 in the console)
+bfc170f Include the replay's recorded data (fix over-broad .gitignore)
+623c926 Add the recorded replay site for GitHub Pages and refresh screenshots
+0f2a7e5 Run analysis as a separate worker process
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ wc -l docs/inspect/inspect.js && cat docs/inspect/inspect.js
+# Show the in-browser inspection script
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+238 docs/inspect/inspect.js
+// Belt wear & tear detector running in the browser (ONNX Runtime Web, WebAssembly).
+// Pre- and post-processing mirror Ultralytics' ONNX inference exactly: letterbox to 512 with grey (114) padding,
+// argmax class, per-class NMS at IoU 0.5, rescale, clip. In Python the same steps reproduce Ultralytics' boxes,
+// classes and confidences exactly on 78 test images; the only difference here is the browser's image resize.
+// User text never goes through innerHTML (file names are untrusted).
+
+const CLASSES = ["Hole", "Impact Damage", "Puncture", "Tear", "Wear"];
+const SEVERITY = { Tear: "high", Hole: "high", Puncture: "medium", "Impact Damage": "medium", Wear: "low" };
+const SEV_META = {
+  high: { cls: "critical", icon: "!", label: "High", rank: 2 },
+  medium: { cls: "serious", icon: "!", label: "Medium", rank: 1 },
+  low: { cls: "warning", icon: "!", label: "Low", rank: 0 },
+};
+const CLASS_COLOR = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"];   // categorical slots, one per class
+const S = 512, IOU = 0.5, FLOOR = 0.10;
+const MODELS = { deployed: "models/deployed.onnx", baseline: "models/baseline.onnx" };
+// held-out test scenes: tear x2, hole, pun
+… [11648 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cat docs/inspect/samples/NOTICE.md && echo "---" && sed -n 1,60p vision/make_demo_subset.py && echo "---" && ls vision/demo_images | head && ls vision/demo_images/images | wc -l && ls vision/demo_images/labels 2>/dev/null | head -3
+# Check sample provenance notes and demo subset script
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Sample images: held-out test scenes from the dataset in
+https://github.com/FernandoN23/Implementation-of-Object-Detection-for-Conveyor-Belt-Defect-Detection
+(commit b3e7f2e1880084724e0080247f679023020aeef7), MIT licence, Copyright (c) 2025 Fernando Navarrete.
+They were never used to train the detector (scene-grouped split, see vision/audit.py).
+---
+"""Copy a small subset of the held-out TEST split into vision/demo_images/ (committed),
+so `make demo` works without downloading the full dataset. Images keep their original
+MIT licence (see vision/demo_images/NOTICE.md)."""
+from __future__ import annotations
+
+import random
+import shutil
+from pathlib import Path
+
+from vision.edge_sim import CLASSES, CLEAN, DEMO_IMG
+
+PER_CLASS = 8
+
+
+def main() -> None:
+    src = CLEAN / "test"
+    rng = random.Random(0)
+    by_cls: dict[str, list[Path]] = {}
+    healthy = []
+    for img in sorted((src / "images").glob("*.jpg")):
+        lines = [l.split() for l in (src / "labels" / f"{img.stem}.txt").read_text().splitlines() if l.strip()]
+        if not lines:
+            healthy.append(img)
+            continue
+        cls = [int(l[0]) for l in lines]
+        by_cls.setdefault(CLASSES[max(set(cls), key=c
+… [1138 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ for f in train_0598 valid_1982 test_2264 train_0293 train_0087 test_2261 train_0560 valid_1787; do printf "%s: " $f; if [ -f vision/demo_images/labels/$f.txt ]; then awk '{print $1}' vision/demo_images/labels/$f.txt | sort | uniq -c | tr '\n' ' '; else echo -n "NOT IN demo_images"; fi; echo; done; echo; grep -n "CLASSES" vision/edge_sim.py | head -3; grep -rn -i "severity" backend/vision_service.py vision/loop.py | head -20
+# Show ground-truth classes for the 8 samples and severity rules
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+train_0598:       1 3 
+valid_1982:       1 3 
+test_2264:       1 0 
+train_0293:       9 2       4 3 
+train_0087:       2 1       2 3 
+test_2261:       1 4 
+train_0560: 
+valid_1787: 
+
+38:CLASSES = ["Hole", "Impact Damage", "Puncture", "Tear", "Wear"]
+69:        defects.append((img, CLASSES[max(set(cls), key=cls.count)]))
+backend/vision_service.py:82:            "growth_mm_per_day, severity, history, crop) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+backend/vision_service.py:85:             t.growth_mm_per_day(), t.severity(), json.dumps(t.history[-50:]), t.crop))
+vision/loop.py:31:   which feeds severity (a growing tear is worse than a large stable patch).
+vision/loop.py:44:SEVERITY_BY_CLASS = {"Tear": "high", "Hole": "high", "Puncture": "medium", "Impact Damage": "medium", "Wear": "low"}
+vision/loop.py:194:    def severity(self) -> str:
+vision/loop.py:195:        sev = SEVERITY_BY_CLASS.get(self.cls, "medium")
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 185,215p vision/loop.py
+# Read the belt tracker's severity rule
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+def growth_mm_per_day(self) -> float | None:
+        if len(self.history) < 4:
+            return None
+        t = np.array([h["ts"] for h in self.history]) / 86400
+        y = np.array([h["length"] for h in self.history]) * 1000
+        if np.ptp(t) < 0.25:
+            return None
+        return float(np.polyfit(t, y, 1)[0])
+
+    def severity(self) -> str:
+        sev = SEVERITY_BY_CLASS.get(self.cls, "medium")
+        g = self.growth_mm_per_day()
+        if self.length_m >= 0.5 or (g is not None and g > 20):
+            sev = {"low": "medium", "medium": "high", "high": "critical", "critical": "critical"}[sev]
+        if self.cls == "Tear" and self.length_m >= 1.0:
+            sev = "critical"                         # longitudinal rip risk
+        return sev
+
+
+class BeltTracker:
+    MIN_CONF = 0.35           # per-detection confidence floor for the deployed detector (sweep in vision/loop_eval.py)
+    GATE_POS_M = 2.5          # along-belt association gate (localisation error + box-centre jitter)
+    GATE_LAT_M = 0.30
+    MERGE_IN_PASS_M = 0.8     # boxes of the same defect within one pass
+    CONFIRM_SEEN = 2
+    DROP_TENTATIVE_MISSES = 2
+    RESOLVE_CONFIRMED_MISSES = 3
+
+    def
+… [88 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && ls -la $T | head -40 && ls docs/inspect/models docs/inspect/vendor docs/inspect/samples && grep -rln "onnx" --include=*.py . 2>/dev/null | grep -v .venv | head
+# List scratchpad scripts and check for an ONNX export script in the repo
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+total 5412
+drwx------ 5 root root    4096 Nov 14 15:29 .
+drwx------ 4 root root    4096 Nov 14 14:50 ..
+-rw-r--r-- 1 root root 5483546 Nov 14 13:12 belt_damage_yolo11n_det_clean_neg_ft.pt
+-rw-r--r-- 1 root root    4427 Nov 14 15:14 export_transcript.py
+-rw-r--r-- 1 root root       0 Nov 14 15:29 inspect_err.txt
+-rw-r--r-- 1 root root    4555 Nov 14 15:29 inspect_out.json
+-rw-r--r-- 1 root root    1836 Nov 14 15:29 inspect_test.js
+drwxr-xr-x 3 root root    4096 Nov 14 15:22 ortweb
+drwxr-xr-x 3 root root    4096 Nov 14 15:13 pages_check
+-rw-r--r-- 1 root root    1329 Nov 14 15:00 postprocess_replay.py
+drwxr-xr-x 2 root root    4096 Nov 14 15:12 shots52
+-rw-r--r-- 1 root root   10061 Nov 14 15:15 tree.txt
+docs/inspect/models:
+baseline.onnx
+deployed.onnx
+
+docs/inspect/samples:
+NOTICE.md
+test_2261.jpg
+test_2264.jpg
+train_0087.jpg
+train_0293.jpg
+train_0560.jpg
+train_0598.jpg
+valid_1787.jpg
+valid_1982.jpg
+
+docs/inspect/vendor:
+NOTICE.md
+ort-wasm-simd-threaded.mjs
+ort-wasm-simd-threaded.wasm
+ort.wasm.min.js
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ J=/root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl && python3 - "$J" <<'EOF'
+import json, sys, re
+hits = []
+for line in open(sys.argv[1]):
+    try: o = json.loads(line)
+    except Exception: continue
+    msg = o.get("message") or {}
+    content = msg.get("content")
+    if not isinstance(content, list): continue
+    for c in content:
+        if c.get("type") == "tool_use":
+            s = json.dumps(c.get("input"))
+            if "format=" in s and "onnx" in s or "ortweb" in s or "def reference" in s or "letterbox" in s and "python" in s:
+                hits.append(c["input"].get("command", s)[:3000])
+for h in hits[-6:]:
+    print("=" * 100); print(h)
+EOF
+# Find the earlier ONNX export and parity commands in the session log
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+====================================================================================================
+cat > docs/inspect/vendor/NOTICE.md <<'EOF'
+`ort.wasm.min.js`, `ort-wasm-simd-threaded.mjs` and `ort-wasm-simd-threaded.wasm` are from
+[onnxruntime-web](https://www.npmjs.com/package/onnxruntime-web) 1.20.1, Copyright (c) Microsoft Corporation,
+released under the MIT License (https://github.com/microsoft/onnxruntime/blob/main/LICENSE).
+They are vendored so the page works without a CDN.
+EOF
+OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF'
+import numpy as np, onnxruntime as ort
+from PIL import Image
+from pathlib import Path
+from ultralytics import YOLO
+
+def letterbox(im, size=512):
+    w, h = im.size
+    s = min(size / w, size / h)
+    nw, nh = round(w * s), round(h * s)
+    px, py = (size - nw) / 2, (size - nh) / 2
+    canvas = Image.new("RGB", (size, size), (114, 114, 114))
+    canvas.paste(im.resize((nw, nh), Image.BILINEAR), (round(px - 0.1), round(py - 0.1)))
+    x = np.asarray(canvas, dtype=np.float32).transpose(2, 0, 1)[None] / 255.0
+    return x, s, round(px - 0.1), round(py - 0.1)
+
+def iou(a, b):
+    x0, y0 = np.maximum(a[0], b[:, 0]), np.maximum(a[1], b[:, 1])
+    x1, y1 = np.mi
+… [14743 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ J=/root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl && python3 - "$J" <<'EOF'
+import json, sys
+for line in open(sys.argv[1]):
+    try: o = json.loads(line)
+    except Exception: continue
+    content = (o.get("message") or {}).get("content")
+    if not isinstance(content, list): continue
+    for c in content:
+        if c.get("type") == "tool_use":
+            s = c.get("input", {}).get("command", "")
+            if ".export(" in s or "npm pack" in s or "onnxruntime-web" in s and "cp " in s:
+                print("=" * 80); print(s[:1800])
+EOF
+# Find the ONNX export and runtime vendoring commands in the session log
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+================================================================================
+mkdir -p docs/inspect/models docs/inspect/vendor docs/inspect/samples && OMP_NUM_THREADS=2 .venv/bin/python - <<'EOF' 2>&1 | grep -v -E "^\s*$|Ultralytics|PyTorch:|ONNX:|requirements" | tail -12
+import shutil
+from pathlib import Path
+from ultralytics import YOLO
+for src, dst in (("models/belt_damage_yolo11n.pt", "docs/inspect/models/deployed.onnx"),
+                 ("models/belt_damage_yolo11n_baseline.pt", "docs/inspect/models/baseline.onnx")):
+    m = YOLO(src)
+    out = m.export(format="onnx", imgsz=512, opset=17, simplify=True, dynamic=False, verbose=False)
+    shutil.move(out, dst)
+    print(dst, round(Path(dst).stat().st_size / 1e6, 2), "MB", m.names)
+EOF
+O=<scratchpad> cp $O/ort.wasm.min.js $O/ort-wasm-simd-threaded.wasm $O/ort-wasm-simd-threaded.mjs docs/inspect/vendor/ && cp <scratchpad> docs/inspect/vendor/LICENSE-onnxruntime-web.txt && ls -la do
+… [944 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ ls <scratchpad> && cat requirements*.txt 2>/dev/null | head -40; ls; .venv/bin/pip list 2>/dev/null | grep -i -E "^onnx|onnxslim|onnxruntime"
+# Check runtime licence file, requirements and ONNX packages
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+README.md
+dist
+docs
+lib
+package.json
+types.d.ts
+# Vision: detector training/inference on the edge node (CPU is fine).
+# For a CPU-only torch wheel, install torch first:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+ultralytics>=8.3
+# Core: simulator, backend, sensor models, dashboard API
+numpy>=2.0
+pandas>=2.2
+scipy>=1.13
+scikit-learn>=1.5
+joblib>=1.4
+pyarrow>=16
+fastapi>=0.115
+uvicorn>=0.30
+pydantic>=2.7
+httpx>=0.27
+pillow>=10.4
+matplotlib>=3.8
+pytest>=8.2
+Makefile
+README.md
+ai_usage
+backend
+dashboard
+data
+docs
+logs
+ml
+models
+pytest.ini
+requirements-vision.txt
+requirements.txt
+runs
+scripts
+simulator
+tests
+vision
+onnx                   1.23.2
+onnxruntime            1.32.0
+onnxslim               0.1.99
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ grep -rn -i "agpl\|licen" README.md docs/DESIGN.md vision/*.md vision/demo_images/NOTICE.md 2>/dev/null | head -20; ls vision/ | head -30; python3 -c "import json;print(json.load(open('<scratchpad>'))['license'])"; head -c 400 docs/inspect/vendor/ort.wasm.min.js; echo
+# Check licence mentions and runtime package licence header
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+README.md:135:* it is reachable and has a clear licence.
+vision/demo_images/NOTICE.md:3:(commit b3e7f2e1880084724e0080247f679023020aeef7), MIT licence, Copyright (c) 2025 Fernando Navarrete.
+__init__.py
+__pycache__
+add_negatives.py
+artifacts
+audit.py
+demo_images
+edge_sim.py
+fetch_dataset.py
+loop.py
+loop_eval.py
+make_demo_subset.py
+plot_predictions.py
+runs
+train_detector.py
+MIT
+/*!
+ * ONNX Runtime Web v1.20.1
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+"use strict";var ort=(()=>{var He=Object.defineProperty;var Or=Object.getOwnPropertyDescriptor;var vr=Object.getOwnPropertyNames;var xr=Object.prototype.hasOwnProperty;var je=(t=>typeof require<"u"?require:typeof Proxy<"u"?new Proxy(t,{get:(e,n)=>(typeof require<"u"?r
+```
+</details>
+
+<details><summary>Tool: ToolSearch</summary>
+
+```
+{"query": "select:TaskCreate,TaskUpdate,PushNotification", "max_results": 3}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+[image]
+[image]
+[image]
+```
+</details>
+
+<details><summary>Tool: TaskCreate</summary>
+
+```
+{"subject": "Image-upload inspection demo (docs/inspect) — finish, link, push", "description": "Dataset labels on samples, reproducible export script with parity check, licence files, browser-vs-Python parity on all demo images, screenshot, README/DESIGN/dashboard links, FastAPI /inspect mount, tests, commit + push, verify Pages.", "activeForm": "Finishing the image-upload inspection demo"}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Task #10 created successfully: Image-upload inspection demo (docs/inspect) — finish, link, push
+```
+</details>
+
+<details><summary>Tool: TaskUpdate</summary>
+
+```
+{"taskId": "10", "status": "in_progress"}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Updated task #10 status
+```
+</details>
+
+## Claude
+
+I'm now adding the dataset's own labels to the sample images, so you can compare them with what the detector finds. I'm also adding a script that rebuilds the page's model files.
+
+<details><summary>Tool: Write</summary>
+
+```
+file: /home/user/conveyor-belt-monitor/vision/export_web.py (6976 chars)
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+File created successfully at: /home/user/conveyor-belt-monitor/vision/export_web.py (file state is current in your context — no need to Read it back)
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ md5sum docs/inspect/models/*.onnx && OMP_NUM_THREADS=2 timeout 600 .venv/bin/python -m vision.export_web 2>&1 | grep -v -E "^\s*$|Loading .*onnx|Using ONNX|requirements|onnxslim|PyTorch:|ONNX:|Ultralytics [0-9]" | tail -15; echo "exit=${PIPESTATUS[0]}"; md5sum docs/inspect/models/*.onnx; git status --short
+# Run the new export script and its parity check
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+f101e35397a61cd3acb901742e49023a  docs/inspect/models/baseline.onnx
+13984bb4ded7995811412fa3f02520af  docs/inspect/models/deployed.onnx
+Results saved to [1m/home/user/conveyor-belt-monitor/models/belt_damage_yolo11n.onnx[0m
+Predict:         yolo predict task=detect model=/home/user/conveyor-belt-monitor/models/belt_damage_yolo11n.onnx imgsz=512 
+Validate:        yolo val task=detect model=/home/user/conveyor-belt-monitor/models/belt_damage_yolo11n.onnx imgsz=512 data=/home/user/conveyor-belt-monitor/data/processed/belt_damage_clean_neg/data.yaml 
+Visualize:       https://netron.app
+docs/inspect/models/deployed.onnx  10.6 MB
+YOLO11n summary (fused): 101 layers, 2,598,023 parameters, 0 gradients, 4.1 GFLOPs
+Export complete (0.9s)
+Results saved to [1m/home/user/conveyor-belt-monitor/models/belt_damage_yolo11n_baseline.onnx[0m
+Predict:         yolo predict task=detect model=/home/user/conveyor-belt-monitor/models/belt_damage_yolo11n_baseline.onnx imgsz=512 
+Validate:        yolo val task=detect model=/home/user/conveyor-belt-monitor/models/belt_damage_yolo11n_baseline.onnx imgsz=512 data=/home/user/conveyor-belt-monitor/data/processed/belt_damage_clean/data.yaml 
+Visualize:       h
+… [554 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cat docs/inspect/samples/labels.json | python3 -c "import json,sys; d=json.load(sys.stdin); [print(k, [(b[0]) for b in v]) for k,v in d.items()]" && ls models/ && cat .gitignore
+# Show generated sample labels and confirm no leftover ONNX in models
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+train_0598.jpg ['Tear']
+valid_1982.jpg ['Tear']
+test_2264.jpg ['Hole']
+train_0293.jpg ['Tear', 'Puncture', 'Puncture', 'Puncture', 'Puncture', 'Tear', 'Tear', 'Tear', 'Puncture', 'Puncture', 'Puncture', 'Puncture', 'Puncture']
+train_0087.jpg ['Tear', 'Tear', 'Impact Damage', 'Impact Damage']
+test_2261.jpg ['Wear']
+train_0560.jpg []
+valid_1787.jpg []
+belt_damage_yolo11n.pt
+belt_damage_yolo11n_baseline.pt
+sensor_models.joblib
+yolo11n-cls.pt
+yolo11n.pt
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+logs/
+/data/
+vision/runs/
+vision/artifacts/embeddings.npy
+vision/artifacts/explore/
+models/yolo11n.pt
+models/yolo11n-cls.pt
+*.db
+*.db-wal
+*.db-shm
+.DS_Store
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/inspect/index.html"); s = p.read_text()
+old_row = """      <button id="samples" type="button">Try 8 sample images</button>
+"""
+new_row = """      <button id="samples" type="button">Try 8 sample images</button>
+      <button id="clear" type="button">Clear</button>
+"""
+assert old_row in s; s = s.replace(old_row, new_row)
+old_thr = """        <input type="range" id="thr" min="0.10" max="0.90" step="0.05" value="0.35" aria-label="Confidence threshold"></label>
+"""
+new_thr = """        <input type="range" id="thr" min="0.10" max="0.90" step="0.05" value="0.35" aria-label="Confidence threshold"></label>
+      <label><input type="checkbox" id="gt" checked> Show the dataset's labels on samples</label>
+"""
+assert old_thr in s; s = s.replace(old_thr, new_thr)
+old_sum = """    <div class="card-head"><h2>Summary</h2><div class="legend" id="legend"></div></div>
+    <div id="summary"></div>
+"""
+new_sum = """    <div class="card-head"><h2>Summary</h2><div class="legend" id="legend"></div></div>
+    <div id="summary"></div>
+    <p class="small"><button id="csv" type="button" class="linkbtn">Download results as CSV</button></p>
+"""
+assert old_sum in s; s = s.replace(old_sum, new_sum)
+old_note = """      <li>Sample images are held-out test scenes from the public dataset (MIT licence), never used for training.</li>
+"""
+new_note = """      <li><strong>Samples</strong> are held-out test scenes from the public dataset (MIT licence), never
+… [813 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cat >> docs/inspect/inspect.css <<'EOF'
+.controls button:disabled { opacity: 0.5; cursor: default; }
+.linkbtn { font: inherit; background: none; border: none; padding: 0; color: var(--series-1); text-decoration: underline;
+  cursor: pointer; }
+.sw.gt { background: transparent; border: 1.5px dashed var(--text-primary); box-sizing: border-box; }
+.result .gt { margin: 0 0 6px; }
+EOF
+grep -n "series-1\|--text-primary\|--axis\|--border\b" docs/demo/styles.css | head -8
+# Add styles for the new controls and dataset-label swatch
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+7:  --text-primary: #0b0b0b;
+11:  --axis: #c3c2b7;
+12:  --border: rgba(11, 11, 11, 0.10);
+13:  --series-1: #2a78d6;
+29:    --text-primary: #f0efec;
+33:    --axis: #383835;
+34:    --border: rgba(255, 255, 255, 0.10);
+35:    --series-1: #3987e5;
+```
+</details>
+
+## Claude
+
+Now the script changes: dataset labels on samples, clear, CSV export, readable label text.
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/inspect/inspect.js"); s = p.read_text()
+
+def rep(old, new, count=1):
+    global s
+    assert s.count(old) == count, (old[:80], s.count(old))
+    s = s.replace(old, new)
+
+rep("""// argmax class, per-class NMS at IoU 0.5, rescale, clip. In Python the same steps reproduce Ultralytics' boxes,
+// classes and confidences exactly on 78 test images; the only difference here is the browser's image resize.
+""", """// argmax class, per-class NMS at IoU 0.5, rescale, clip. vision/export_web.py --check runs the same steps in numpy
+// and reproduces Ultralytics' boxes, classes and confidences exactly on 78 test images; the only difference here is
+// the browser's image resize (canvas instead of OpenCV), worth about 0.01 in confidence.
+""")
+rep("""const CLASS_COLOR = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"];   // categorical slots, one per class
+""", """const CLASS_COLOR = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4"];   // categorical slots, one per class
+const LABEL_TEXT = ["#ffffff", "#0b0b0b", "#0b0b0b", "#0b0b0b", "#0b0b0b"];     // higher-contrast text on each fill
+""")
+rep("""const state = { model: "deployed", thr: 0.35, sessions: {}, items: [], busy: 0 };
+""", """const state = { model: "deployed", thr: 0.35, showGt: true, sessions: {}, items: [], busy: 0 };
+""")
+rep("""  for (const { name, blob } of entries) {
+    try {
+      const bitmap = await createImageBitmap(blob, { imageOrientation: "from-ima
+… [5183 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ grep -n "status\|busy\|gen" docs/inspect/inspect.js
+# Locate status and busy handling in the page script
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+28:const state = { model: "deployed", thr: 0.35, showGt: true, sessions: {}, items: [], busy: 0 };
+50:      $("status").textContent = `${name === "deployed" ? "Deployed" : "Baseline"} model loaded in ` +
+122:  state.busy += entries.length;
+134:    state.busy -= 1;
+225:  $("legend").replaceChildren(...CLASSES.map((c, k) => el("span", { class: "chip" }, el("span", { class: "sw", style: `background:${CLASS_COLOR[k]}` }), c)),
+228:  if (state.busy) $("status").textContent = `Analysing… ${state.busy} image${state.busy > 1 ? "s" : ""} left`;
+252:for (const ev of ["dragover", "dragenter"]) $("drop").addEventListener(ev, (e) => { e.preventDefault(); $("drop").classList.add("over"); });
+266:    state.busy += state.items.filter((i) => !i.error && !i.dets[state.model]).length;
+271:      state.busy -= 1;
+277:  $("status").textContent = `Could not load the model in this browser (${e.message}). WebAssembly is required.`;
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/inspect/inspect.js"); s = p.read_text()
+
+def rep(old, new):
+    global s
+    assert s.count(old) == 1, (old[:90], s.count(old))
+    s = s.replace(old, new)
+
+rep("""const state = { model: "deployed", thr: 0.35, showGt: true, sessions: {}, items: [], busy: 0 };
+""", """// gen increments on Clear, so analyses still in flight drop their results instead of adding them back
+const state = { model: "deployed", thr: 0.35, showGt: true, sessions: {}, loadS: {}, items: [], busy: 0, gen: 0,
+  fatal: null };
+const MODEL_NAME = { deployed: "deployed", baseline: "baseline" };
+""")
+rep("""    state.sessions[name] = ort.InferenceSession.create(MODELS[name], { executionProviders: ["wasm"] }).then((s) => {
+      $("status").textContent = `${name === "deployed" ? "Deployed" : "Baseline"} model loaded in ` +
+        `${((performance.now() - t0) / 1000).toFixed(1)} s. Images are processed on this device.`;
+      return s;
+    });
+""", """    state.sessions[name] = ort.InferenceSession.create(MODELS[name], { executionProviders: ["wasm"] }).then((s) => {
+      state.loadS[name] = (performance.now() - t0) / 1000;
+      render();
+      return s;
+    });
+""")
+# input: push after analysis, separate read errors from model errors, follow a model switch made mid-analysis
+start = s.index("async function addBlobs(entries) {")
+end = s.index("async function loadSamples() {")
+s = s[:start] + """async function addBlobs(entries) {
+  const gen = state.gen
+… [3253 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+syntax ok
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 20,60p docs/inspect/inspect.js && echo ..... && sed -n 118,165p docs/inspect/inspect.js && echo ..... && sed -n 215,320p docs/inspect/inspect.js
+# Review the edited sections of the page script
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+const SAMPLES = ["train_0598.jpg", "valid_1982.jpg", "test_2264.jpg", "train_0293.jpg", "train_0087.jpg",
+  "test_2261.jpg", "train_0560.jpg", "valid_1787.jpg"];
+
+// must be an absolute URL: the runtime import()s its loader from here, and bare paths are not valid module specifiers
+ort.env.wasm.wasmPaths = new URL("vendor/", import.meta.url).href;
+ort.env.wasm.numThreads = 1;        // GitHub Pages is not cross-origin isolated: no SharedArrayBuffer threads
+
+const $ = (id) => document.getElementById(id);
+// gen increments on Clear, so analyses still in flight drop their results instead of adding them back
+const state = { model: "deployed", thr: 0.35, showGt: true, sessions: {}, loadS: {}, items: [], busy: 0, gen: 0,
+  fatal: null };
+const MODEL_NAME = { deployed: "deployed", baseline: "baseline" };
+window.__inspect = state;           // used by the end-to-end test
+
+function el(tag, attrs = {}, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (v === null || v === undefined) continue;
+    if (k === "class") e.className = v;
+    else if (k === "text") e.textContent = v;
+    else e.setAttribute(k, v);
+  }
+  for (const k of kids.fl
+… [7987 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/inspect/inspect.js"); s = p.read_text()
+
+def rep(old, new):
+    global s
+    assert s.count(old) == 1, (old[:90], s.count(old))
+    s = s.replace(old, new)
+
+rep("""const MODEL_NAME = { deployed: "deployed", baseline: "baseline" };
+""", "")
+s = s.replace("${MODEL_NAME[state.model]}", "${state.model}")
+assert "MODEL_NAME" not in s
+rep("""      el("p", { class: "muted small", text: Object.keys(counts).length
+        ? "By class: " + CLASSES.filter((c) => counts[c]).map((c) => `${c} ${counts[c]}`).join(" · ")
+        : "No detections at this threshold." }));
+  }
+""", """      el("p", { class: "muted small", text: Object.keys(counts).length
+        ? "By class: " + CLASSES.filter((c) => counts[c]).map((c) => `${c} ${counts[c]}`).join(" · ")
+        : "No detections at this threshold." }));
+  } else {
+    $("summary").replaceChildren(el("p", { class: "muted small", text: state.busy ? "Analysing…" : "No image could be analysed." }));
+  }
+""")
+rep("""  const q = (v) => `"${String(v).replaceAll('"', '""')}"`;          // file names are untrusted: always quote
+""", """  const q = (v) => {                       // file names are untrusted: quote, and defuse spreadsheet formulas
+    const t = String(v);
+    return `"${(/^[=+\\-@\\t\\r]/.test(t) ? "'" + t : t).replaceAll('"', '""')}"`;
+  };
+""")
+p.write_text(s)
+print("ok")
+EOF
+grep -n "const q = " -A 3 docs/inspect/inspect.js
+# Remove a redundant map, fix stale summary and harden
+… [12 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+249:  const q = (v) => {                       // file names are untrusted: quote, and defuse spreadsheet formulas
+250-    const t = String(v);
+251-    return `"${(/^[=+\-@\t\r]/.test(t) ? "'" + t : t).replaceAll('"', '""')}"`;
+252-  };
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 -c "
+from PIL import Image; import glob, os
+for f in sorted(glob.glob('docs/images/*.png')): im=Image.open(f); print(f, im.size, round(os.path.getsize(f)/1e3), 'kB')
+" && sed -n 1,40p scripts/screenshots.js && cat <scratchpad>
+# Check existing screenshot sizes and the earlier browser test
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+docs/images/dashboard_dq.png (2880, 870) 232 kB
+docs/images/dashboard_top.png (2880, 2334) 643 kB
+docs/images/dashboard_vision_detail.png (2880, 2404) 584 kB
+docs/images/detector_training_clean.png (2400, 1200) 374 kB
+docs/images/example_bearing.png (1080, 1005) 118 kB
+docs/images/example_misalignment.png (1080, 772) 101 kB
+docs/images/loop_localisation_error.png (960, 540) 79 kB
+docs/images/tradeoff_bearing.png (960, 570) 67 kB
+docs/images/tradeoff_misalignment.png (960, 570) 60 kB
+// Capture README screenshots of a running dashboard (Playwright).
+//   node scripts/screenshots.js http://localhost:8000 docs/images
+const { chromium } = require('playwright');
+const path = require('path');
+
+(async () => {
+  const url = process.argv[2] || 'http://localhost:8000';
+  const out = process.argv[3] || 'docs/images';
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 2 });
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(url, { waitUntil: 'networkidle' });
+  await page.waitForTimeout(7000);
+  const box = async (sel) => (await page.$(sel)).boundingBox();
+  con
+… [2624 more characters truncated]
+```
+</details>
+
+## Claude
+
+The page changes are written. Next I'm testing it in a headless browser: all 39 demo images on both models, plus clear and CSV download, checked against the Python pipeline.
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && cat > $T/inspect_full.js <<'EOF'
+// Full browser check of docs/inspect: samples + labels, all demo images on both models, clear, CSV.
+const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
+(async () => {
+  const [base, imgDir, outJson] = process.argv.slice(2);
+  const browser = await chromium.launch();
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: 1, acceptDownloads: true });
+  const page = await ctx.newPage();
+  const errors = [];
+  page.on('pageerror', (e) => errors.push('pageerror ' + e.message));
+  page.on('console', (m) => { if (m.type() === 'error') errors.push('console ' + m.text()); });
+  page.on('response', (r) => { if (r.status() >= 400) errors.push(`${r.status()} ${r.url()}`); });
+  await page.goto(base + '/inspect/', { waitUntil: 'load' });
+  await page.evaluate(() => window.__inspect.ready);
+  const status0 = await page.textContent('#status');
+  const idle = (n) => page.waitForFunction((k) => window.__inspect.items.length === k && window.__inspect.busy === 0, n, { timeout: 300000 });
+
+  // 1. samples, twice (second click must not duplicate)
+  await page.click('#samples'); await idle(8);
+  await page.click('#samples'); await page.waitForTimeout(500);
+  const nAfterDouble = await page.evaluate(() => window.__inspect.items.length);
+  const gtLines = await page.$$eval(
+… [2824 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+{
+ "errors": [],
+ "status0": "The deployed model loaded in 0.6 s. Images are processed on this device.",
+ "statusSamples": "8 images analysed with the deployed model, on this device.",
+ "statusEnd": "39 images analysed with the baseline model, on this device.",
+ "nAfterDouble": 8,
+ "gtLines": [
+  "Dataset label (dashed): 1 Tear",
+  "Dataset label (dashed): 1 Tear",
+  "Dataset label (dashed): 1 Hole",
+  "Dataset label (dashed): 9 Puncture · 4 Tear",
+  "Dataset label (dashed): 2 Impact Damage · 2 Tear",
+  "Dataset label (dashed): 1 Wear",
+  "Dataset label: no damage",
+  "Dataset label: no damage"
+ ],
+ "legend": "HoleImpact DamagePunctureTearWearDataset label",
+ "legendNoGt": "HoleImpact DamagePunctureTearWear",
+ "gtNoDash": [
+  "Dataset label: 1 Tear"
+ ],
+ "verdicts": [
+  "sample: train_0598.jpg!Damage found: Tear (high severity)",
+  "sample: valid_1982.jpg!Damage found: Tear (high severity)",
+  "sample: test_2264.jpg✓No damage above the threshold",
+  "sample: train_0293.jpg!Damage found: Tear (high severity)",
+  "sample: train_0087.jpg✓No damage above the threshold",
+  "sample: test_2261.jpg!Damage found: Tear (high severity)",
+  "sample: train_0560.jpg✓No damage above the threshold
+… [679 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && OMP_NUM_THREADS=2 .venv/bin/python - "$T/inspect_full.json" <<'EOF' 2>&1 | grep -v -E "Loading|Using ONNX"
+import json, sys, cv2, numpy as np
+from ultralytics import YOLO
+d = json.load(open(sys.argv[1]))
+for model in ("deployed", "baseline"):
+    y = YOLO(f"docs/inspect/models/{model}.onnx", task="detect")
+    for thr in (0.25, 0.35):
+        same = 0; diffs = []; boxd = []; notes = []
+        for it in d[model]:
+            r = y.predict(cv2.imread(f"vision/demo_images/images/{it['name']}"), imgsz=512, conf=thr, verbose=False)[0]
+            ref = sorted(zip([y.names[int(c)] for c in r.boxes.cls], r.boxes.conf.numpy().tolist(), r.boxes.xyxy.numpy().tolist()))
+            web = sorted((x["cls"], x["conf"], x["box"]) for x in it["dets"] if x["conf"] >= thr)
+            if [c for c, *_ in ref] == [c for c, *_ in web]:
+                same += 1
+                for a, b in zip(ref, web):
+                    diffs.append(abs(a[1] - b[1])); boxd.append(max(abs(p - q) for p, q in zip(a[2], b[2])))
+            else:
+                notes.append(f"{it['name']}: python {[(c, round(s, 3)) for c, s, _ in ref]} vs browser {[(c, round(s, 3)) for c, s, _ in web]}")
+        print(f"{model} @ {thr}: same detections on {same}/{len(d[model])} images; |conf diff| median {np.median(diffs):.4f} "
+              f"p95 {np.percentile(diffs, 95):.4f} max {max(diffs):.4f}; box diff median {np.median(bo
+… [263 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+deployed @ 0.25: same detections on 39/39 images; |conf diff| median 0.0081 p95 0.0317 max 0.0491; box diff median 0.8 px max 51.5 px
+deployed @ 0.35: same detections on 37/39 images; |conf diff| median 0.0066 p95 0.0213 max 0.0304; box diff median 0.7 px max 19.6 px
+    train_1437.jpg: python [('Tear', 0.362)] vs browser []
+    train_1445.jpg: python [] vs browser [('Tear', 0.365)]
+   browser inference: median 196 ms per image
+baseline @ 0.25: same detections on 35/39 images; |conf diff| median 0.0036 p95 0.0201 max 0.0254; box diff median 0.8 px max 405.9 px
+    train_0292.jpg: python [('Tear', 0.264), ('Tear', 0.49), ('Tear', 0.541)] vs browser [('Tear', 0.256), ('Tear', 0.263), ('Tear', 0.493), ('Tear', 0.535)]
+    train_0848.jpg: python [('Tear', 0.251), ('Tear', 0.38), ('Tear', 0.612), ('Tear', 0.701)] vs browser [('Tear', 0.351), ('Tear', 0.606), ('Tear', 0.701)]
+    valid_1807.jpg: python [('Wear', 0.315), ('Wear', 0.373), ('Wear', 0.413)] vs browser [('Wear', 0.376), ('Wear', 0.408)]
+    valid_1982.jpg: python [('Tear', 0.483), ('Tear', 0.553)] vs browser [('Tear', 0.366), ('Tear', 0.48), ('Tear', 0.552)]
+baseline @ 0.35: same detections on 38/39 images; |conf diff| median
+… [235 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && .venv/bin/python - <<'EOF'
+from PIL import Image; import glob, collections
+c = collections.Counter(Image.open(f).size for f in glob.glob("vision/demo_images/images/*.jpg"))
+print("demo image sizes:", dict(c))
+EOF
+mkdir -p $T/nonsquare && .venv/bin/python - "$T/nonsquare" <<'EOF'
+import sys, cv2, glob
+out = sys.argv[1]
+files = sorted(glob.glob("vision/demo_images/images/*.jpg"))[::4][:10]
+for f in files:
+    im = cv2.imread(f); stem = f.split("/")[-1][:-4]
+    land = im[80:560]                                   # 640x480
+    port = im[:, 80:560]                                # 480x640
+    big = cv2.resize(land, (2016, 1512), interpolation=cv2.INTER_CUBIC)   # phone-sized
+    cv2.imwrite(f"{out}/{stem}_land.jpg", land, [cv2.IMWRITE_JPEG_QUALITY, 95])
+    cv2.imwrite(f"{out}/{stem}_port.jpg", port, [cv2.IMWRITE_JPEG_QUALITY, 95])
+    cv2.imwrite(f"{out}/{stem}_big.jpg", big, [cv2.IMWRITE_JPEG_QUALITY, 92])
+print(len(files) * 3, "test images")
+EOF
+# Make landscape, portrait and phone-sized test images
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+demo image sizes: {(640, 640): 39}
+30 test images
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && cat > $T/inspect_ns.js <<'EOF'
+const { chromium } = require('playwright');
+const fs = require('fs'); const path = require('path');
+(async () => {
+  const [base, imgDir, outJson] = process.argv.slice(2);
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+  await page.goto(base + '/inspect/', { waitUntil: 'load' });
+  await page.evaluate(() => window.__inspect.ready);
+  const files = fs.readdirSync(imgDir).filter((f) => f.endsWith('.jpg')).sort().map((f) => path.join(imgDir, f));
+  await page.setInputFiles('#file', files);
+  await page.waitForFunction((k) => window.__inspect.items.length === k && window.__inspect.busy === 0, files.length, { timeout: 300000 });
+  const dump = (m) => page.evaluate((model) => window.__inspect.items.map((i) => ({ name: i.name, W: i.bitmap.width, H: i.bitmap.height,
+    ms: i.ms[model], dets: (i.dets[model] || []).map((d) => ({ cls: d.cls, conf: d.conf, box: [d.x0, d.y0, d.x1, d.y1] })) })), m);
+  const deployed = await dump('deployed');
+  await page.check('input[value=baseline]');
+  await page.waitForFunction(() => window.__inspect.busy === 0 && window.__inspect.items.every((i) => i.dets.baseline), null, { timeout: 300
+… [2642 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+{"errors":[],"n":30}
+deployed @ 0.25: same detections on 30/30; |conf diff| median 0.0081 max 0.0311; box diff median 2.2 px, p95 81.1 px (images up to 1.2x the model's 512 px)
+deployed @ 0.35: same detections on 29/30; |conf diff| median 0.0087 max 0.0311; box diff median 0.6 px, p95 120.3 px (images up to 1.2x the model's 512 px)
+    valid_1897_port.jpg: python [] vs browser [('Tear', 0.35)]
+baseline @ 0.25: same detections on 29/30; |conf diff| median 0.0037 max 0.0213; box diff median 0.5 px, p95 73.4 px (images up to 1.2x the model's 512 px)
+    train_0297_big.jpg: python [('Tear', 0.6)] vs browser [('Tear', 0.592), ('Wear', 0.252)]
+baseline @ 0.35: same detections on 30/30; |conf diff| median 0.0048 max 0.0213; box diff median 0.5 px, p95 23.6 px (images up to 1.2x the model's 512 px)
+--- square demo images, nearest-box matching:
+Traceback (most recent call last):
+  File "<scratchpad>", line 11, in <module>
+KeyError: 'W'
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && OMP_NUM_THREADS=2 .venv/bin/python - $T/inspect_ns.json $T/nonsquare <<'EOF' 2>&1 | grep -v -E "Loading|Using ONNX"
+import json, sys, cv2, numpy as np
+from ultralytics import YOLO
+data, img_dir = json.load(open(sys.argv[1])), sys.argv[2]
+model = "deployed"; thr = 0.25
+y = YOLO(f"docs/inspect/models/{model}.onnx", task="detect")
+for it in data[model]:
+    im = cv2.imread(f"{img_dir}/{it['name']}")
+    r = y.predict(im, imgsz=512, conf=thr, verbose=False)[0]
+    ref = [(y.names[int(c)], round(float(s), 3), [round(v) for v in b.tolist()]) for c, s, b in zip(r.boxes.cls, r.boxes.conf, r.boxes.xyxy.numpy())]
+    web = [(x["cls"], round(x["conf"], 3), [round(v) for v in x["box"]]) for x in it["dets"] if x["conf"] >= thr]
+    s = max(it["W"], it["H"]) / 512
+    worst = 0
+    for c, sc, b in ref:
+        cand = [max(abs(p - q) for p, q in zip(b, wb)) for wc, ws, wb in web if wc == c]
+        if cand: worst = max(worst, min(cand) / s)
+    if worst > 3:
+        print(f"{it['name']} ({it['W']}x{it['H']}) worst {worst:.1f} model-px\n   python  {ref}\n   browser {web}")
+EOF
+# Inspect images where browser and Python boxes differ most
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+train_0966_big.jpg (2016x1512) worst 50.0 model-px
+   python  [('Tear', 0.421, [764, 631, 1980, 962])]
+   browser [('Tear', 0.397, [567, 629, 1981, 961])]
+train_0966_land.jpg (640x480) worst 40.8 model-px
+   python  [('Tear', 0.348, [96, 200, 629, 305])]
+   browser [('Tear', 0.323, [45, 200, 630, 305])]
+valid_1897_land.jpg (640x480) worst 48.0 model-px
+   python  [('Tear', 0.483, [263, 195, 632, 309]), ('Tear', 0.316, [167, 190, 628, 370])]
+   browser [('Tear', 0.454, [261, 195, 632, 309]), ('Tear', 0.296, [107, 190, 628, 382])]
+valid_1897_port.jpg (480x640) worst 3.2 model-px
+   python  [('Tear', 0.343, [5, 281, 474, 414])]
+   browser [('Tear', 0.35, [5, 281, 474, 418])]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && mkdir -p docs/inspect/_tmp && cp $T/nonsquare/train_0966_land.jpg $T/nonsquare/train_0966_big.jpg docs/inspect/_tmp/ && cat > $T/pixels.js <<'EOF'
+const { chromium } = require('playwright');
+const fs = require('fs');
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage();
+  await page.goto('http://127.0.0.1:8033/inspect/', { waitUntil: 'load' });
+  const res = {};
+  for (const f of ['train_0966_land.jpg', 'train_0966_big.jpg']) {
+    res[f] = await page.evaluate(async (file) => {
+      const blob = await (await fetch(`_tmp/${file}`)).blob();
+      const bm = await createImageBitmap(blob, { imageOrientation: 'from-image' });
+      const grab = (w, h, draw) => {
+        const c = document.createElement('canvas'); c.width = w; c.height = h;
+        const ctx = c.getContext('2d', { willReadFrequently: true }); draw(ctx);
+        return Array.from(ctx.getImageData(0, 0, w, h).data);
+      };
+      const out = { W: bm.width, H: bm.height, native: grab(bm.width, bm.height, (ctx) => ctx.drawImage(bm, 0, 0)) };
+      const S = 512, r = Math.min(S / bm.height, S / bm.width), nw = Math.round(bm.width * r), nh = Math.round(bm.height * r);
+      const left = Math.round((S - nw) / 2 - 0.1), top = Math.round((S - nh) / 2 - 0.1);
+      for (const q of ['low', 'medium', 'high']) {
+        out[q] = grab(S, S, (ctx) => { ctx.fillStyle = 'rgb(114,114,114
+… [1790 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+train_0966_land.jpg 640x480: JPEG decode, browser vs OpenCV: mean |diff| 0.000, max 0
+   letterbox 'low': mean |diff| vs OpenCV 0.277, p99 1
+   letterbox 'medium': mean |diff| vs OpenCV 0.072, p99 1
+   letterbox 'high': mean |diff| vs OpenCV 0.072, p99 1
+   resize only ('low' vs OpenCV on browser-decoded pixels): mean |diff| 0.277
+train_0966_big.jpg 2016x1512: JPEG decode, browser vs OpenCV: mean |diff| 0.000, max 0
+   letterbox 'low': mean |diff| vs OpenCV 0.215, p99 1
+   letterbox 'medium': mean |diff| vs OpenCV 0.502, p99 4
+   letterbox 'high': mean |diff| vs OpenCV 0.502, p99 4
+   resize only ('low' vs OpenCV on browser-decoded pixels): mean |diff| 0.215
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/inspect/index.html"); s = p.read_text()
+old = """      <li>The browser resizes images slightly differently from OpenCV, so confidences can differ from the Python
+        pipeline by about 0.01, and a box right at the threshold can appear or disappear.</li>
+"""
+new = """      <li>The browser resizes images a little differently from OpenCV (by under one grey level on 99% of pixels).
+        Confidences therefore differ from the Python pipeline by about 0.01, and a box right at the threshold can
+        appear or disappear. Long, thin tears are the most sensitive: their box can end tens of pixels earlier or
+        later.</li>
+"""
+assert old in s; s = s.replace(old, new); p.write_text(s)
+
+p = Path("docs/inspect/inspect.js"); s = p.read_text()
+old = """// argmax class, per-class NMS at IoU 0.5, rescale, clip. vision/export_web.py --check runs the same steps in numpy
+// and reproduces Ultralytics' boxes, classes and confidences exactly on 78 test images; the only difference here is
+// the browser's image resize (canvas instead of OpenCV), worth about 0.01 in confidence.
+"""
+new = """// argmax class, per-class NMS at IoU 0.5, rescale, clip. vision/export_web.py --check runs the same steps in numpy
+// and reproduces Ultralytics' boxes, classes and confidences exactly on 78 test images. In Chromium the JPEG decode
+// is bit-identical to OpenCV's; the canvas resize differs by under one grey level on 99% of pixels, which moves
+… [598 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+10:**▶ Try it without installing anything:
+11:[recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)**: the real
+23:## Contents
+37:## Quick start
+73:## The approach in one picture
+92:## Design decisions
+123:## Vision dataset: source and why
+152:| Same-scene frames (CNN-embedding cosine ≥ 0.97, threshold set by inspecting pairs per band) | 32,749 pairs |
+163:## The continuous loop: what it breaks and how it is handled
+185:## Results
+187:### Sensor-based prediction (held-out belt-years, `make train`)
+228:### Vision (leakage-free test split, `make vision-eval`)
+281:## Dashboard screenshots
+297:The screenshots come from the [recorded replay](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)
+300:* **S18 bearing.** At 16:40 site time the model gave a median of 6 h (likely 1–17 h) and said "inspect now". The
+305:## Problem breakdown: tool, model, agent, skipped
+320:## Assumptions
+335:## What I would do differently
+355:## Repository map
+366:scripts/     demo.py · record_replay.py (→ docs/demo/, GitHub Pages) · screenshots.js
+373:## How AI was used
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 1,36p README.md && echo ..... && sed -n 228,305p README.md && echo ..... && sed -n 350,375p README.md
+# Read the README sections to update
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+# Conveyor belt health: monitoring and failure prediction for a 6 km overland conveyor
+
+An end-to-end system that watches a simulated multi-kilometre mining conveyor and predicts failures before they
+happen. It runs from simulated sensor data to a live belt-health dashboard:
+
+**sensor simulator → messy radio network → FastAPI/SQLite backend → data-quality layer → anomaly detection →
+failure prediction (what, where, when) → camera edge node with a belt-damage detector → belt-loop defect
+tracking → dashboard.**
+
+**▶ Try it without installing anything:
+[recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)**: the real
+dashboard code replaying a 30-hour run of the system, with play/pause, scrubbing and drill-down. In it, a bearing
+fails, a belt trips on a curve, and a camera tracks belt damage. To run the live system yourself, see
+[Quick start](#quick-start).
+
+The full design document is **[docs/DESIGN.md](docs/DESIGN.md)**. This README is the summary: the decisions, the
+results, and what I would do differently.
+
+![Dashboard](docs/images/dashboard_top.png)
+
+---
+
+## Contents
+- [Quick start](#quick-start)
+- [The approach in one picture](#the
+… [7092 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && cat > $T/shot_inspect.js <<'EOF'
+const { chromium } = require('playwright');
+(async () => {
+  const [url, out, dpr] = process.argv.slice(2);
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1440, height: 1000 }, deviceScaleFactor: Number(dpr || 2) });
+  const errors = [];
+  page.on('pageerror', (e) => errors.push(e.message));
+  await page.goto(url, { waitUntil: 'load' });
+  await page.evaluate(() => window.__inspect.ready);
+  await page.click('#samples');
+  await page.waitForFunction(() => window.__inspect.items.length === 8 && window.__inspect.busy === 0, null, { timeout: 120000 });
+  await page.waitForTimeout(300);
+  const cards = await page.$$('.result');
+  const boxes = await Promise.all(cards.map((c) => c.boundingBox()));
+  const firstRowBottom = Math.max(...boxes.filter((b) => b.y === boxes[0].y).map((b) => b.y + b.height));
+  const perRow = boxes.filter((b) => b.y === boxes[0].y).length;
+  await page.screenshot({ path: out, fullPage: true, clip: { x: 0, y: 0, width: 1440, height: firstRowBottom + 12 } });
+  console.log(JSON.stringify({ errors, perRow, height: firstRowBottom + 12 }));
+  await browser.close();
+})();
+EOF
+NODE_PATH=$(npm root -g) node $T/shot_inspect.js http://127.0.0.1:8033/inspect/ $T/inspect_preview.png 1
+# Take a preview screenshot of the inspection page with samples loaded
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+Permission for this command was denied by a built-in Claude Code safety check, not by the user. The check stops removals that can delete far more than intended: a system, home or workspace directory, or a target it cannot resolve, such as a shell variable that, if unset or empty, turns this into `rm -rf /` or `rm -rf /*`. Only a person may approve such a removal, and no person did (the permission prompt timed out, or none was shown). The command was NOT run; do not claim it succeeded. Do not work around the check by splitting, scripting, or re-issuing the removal through another tool or shell: the check exists because a removal like this can destroy the user's data, and getting past it would not make it safe. If the text below suggests a safe rewrite, run that instead; it goes through the same check. Otherwise finish the rest of the task without this removal, tell the user what you wanted to delete and why, and leave the removal to them. What was flagged: This command could not be checked for dangerous rm operations: the shell may read it differently than it was parsed. This requires explicit approval.
+```
+</details>
+
+<details><summary>Tool: Write</summary>
+
+```
+file: <scratchpad> (1289 chars)
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+File created successfully at: <scratchpad> (file state is current in your context — no need to Read it back)
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ NODE_PATH=$(npm root -g) node <scratchpad> http://127.0.0.1:8033/inspect/ <scratchpad> 1
+# Take a preview screenshot of the inspection page
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+{"errors":[],"perRow":2,"height":1155.359375}
+```
+</details>
+
+<details><summary>Tool: Read</summary>
+
+```
+{"file_path": "<scratchpad>"}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+[image]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/inspect/inspect.js"); s = p.read_text()
+old = """  const dets = visible(item);
+  const maxW = 440, scale = Math.min(1, maxW / item.bitmap.width);
+  const c = el("canvas", { width: Math.round(item.bitmap.width * scale), height: Math.round(item.bitmap.height * scale),
+    role: "img", "aria-label": `${item.name}: ${dets.length} detections` });
+  const ctx = c.getContext("2d");
+  ctx.drawImage(item.bitmap, 0, 0, c.width, c.height);
+  if (item.gt && state.showGt) {            // dataset label: white dashes on a dark outline, visible on any belt
+    for (const [, x0, y0, x1, y1] of item.gt) {
+      const x = x0 * scale, y = y0 * scale, w = (x1 - x0) * scale, h = (y1 - y0) * scale;
+      ctx.setLineDash([]); ctx.lineWidth = 3; ctx.strokeStyle = "rgba(0,0,0,0.7)"; ctx.strokeRect(x, y, w, h);
+      ctx.setLineDash([5, 4]); ctx.lineWidth = 1.5; ctx.strokeStyle = "#ffffff"; ctx.strokeRect(x, y, w, h);
+    }
+    ctx.setLineDash([]);
+  }
+  ctx.font = "600 12px system-ui, -apple-system, Segoe UI, sans-serif";
+  for (const d of dets) {
+    const k = CLASSES.indexOf(d.cls), col = CLASS_COLOR[k];
+    const x = d.x0 * scale, y = d.y0 * scale, w = (d.x1 - d.x0) * scale, h = (d.y1 - d.y0) * scale;
+    ctx.lineWidth = 2; ctx.strokeStyle = col; ctx.strokeRect(x, y, w, h);
+    const label = `${d.cls} ${d.conf.toFixed(2)}`;
+    const tw = ctx.measureText(label).width + 8, ty = y > 18 ? y - 18 : y;
+    ctx.fillStyle = col; ctx.fillRect(x, t
+… [2901 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+{"errors":[],"perRow":3,"height":1130.6875}
+```
+</details>
+
+<details><summary>Tool: Read</summary>
+
+```
+{"file_path": "<scratchpad>"}
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+[image]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ S=<scratchpad> && NODE_PATH=$(npm root -g) node $S/shot_inspect.js http://127.0.0.1:8033/inspect/ $S/inspect_2x.png 2 && .venv/bin/python -c "
+from PIL import Image; import os
+im = Image.open('$S/inspect_2x.png').convert('RGB'); print(im.size, round(os.path.getsize('$S/inspect_2x.png')/1e3), 'kB png')
+im.save('docs/images/inspect_samples.jpg', quality=85, optimize=True, progressive=True)
+print(round(os.path.getsize('docs/images/inspect_samples.jpg')/1e3), 'kB jpg')"
+# Capture the README screenshot at 2x and save it as JPEG
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+{"errors":[],"perRow":3,"height":1129.25}
+(2880, 2258) 1555 kB png
+472 kB jpg
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ grep -n "^#" docs/DESIGN.md | head -60 && grep -n "copy\|app.js\|styles.css\|index.html" scripts/record_replay.py | head -20 && diff <(sed 's/[[:space:]]*$//' dashboard/app.js) <(sed 's/[[:space:]]*$//' docs/demo/app.js) && echo "app.js identical" ; diff dashboard/styles.css docs/demo/styles.css && echo "styles identical"; diff dashboard/index.html docs/demo/index.html | head -20
+# Inspect DESIGN headings and how the replay copies dashboard files
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+1:# Design document: monitoring and failure prediction for a multi-kilometre conveyor
+9:## 1. Context and assumptions
+24:## 2. What can fail, and what we monitor
+43:## 3. Sensor suite and placement
+70:## 4. Data path
+100:## 5. Messy data: what goes wrong and what the system does
+121:## 6. Anomaly detection
+154:## 7. Prediction: what, where, when
+198:## 8. Vision: belt wear and tear on a continuous loop
+200:### 8.1 Dataset and detector
+208:### 8.2 Edge/backend split
+214:### 8.3 Consequences of the loop, and handling
+231:### 8.4 Evaluation
+276:## 9. Dashboard
+302:## 10. What is a tool, what is learned, what would be an agent
+316:## 11. Production path (what changes for real)
+330:## 12. Limitations (honest list)
+3:    python -m scripts.record_replay              # -> docs/demo/ (open docs/demo/index.html via any static server)
+126:    html = (ROOT / "dashboard" / "index.html").read_text()
+127:    html = html.replace('href="/static/styles.css"', 'href="styles.css"')
+128:    html = html.replace('<script type="module" src="/static/app.js"></script>',
+129:                        '<script>window.BELT_REPLAY = {base: "data/"};</script>\n<script type="module" src="app.js"></script>')
+131:   
+… [548 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 1,30p dashboard/index.html && grep -n "replay-bar\|replaybar\|class=\"replay\|Recorded replay\|recorded replay" dashboard/app.js | head -10
+# Read the dashboard header and the replay bar code
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CV-01 belt health</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="viz-root">
+  <header class="top">
+    <div>
+      <h1>Overland conveyor CV-01 · belt health</h1>
+      <p class="sub">6.0 km route · 12.05 km steel-cord loop · 1,600 mm · 5 m/s · 24 sensor stations · 1 belt camera</p>
+    </div>
+    <div class="clock">
+      <div id="clock-time">waiting for data…</div>
+      <div id="clock-state" class="muted"></div>
+    </div>
+  </header>
+
+  <section class="kpis" id="kpis" aria-label="Key figures"></section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>Status of every sensor station</h2>
+      <div class="legend" id="map-legend"></div>
+    </div>
+    <div id="beltmap" class="beltmap"></div>
+    <details class="tableview"><summary>Table view</summary><div id="station-table"></div></details>
+556:    ? `Recorded replay · frame ${R.idx + 1} of ${R.index.frames.length} · data up to ${fmtTime(ov.now)}`
+580:  const bar = el("div", { class: "replay-bar", role: "region", "aria-label": "Replay
+… [79 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 570,610p dashboard/app.js && grep -n "vision\|Vision" dashboard/index.html | head -10 && grep -n "replay-bar\|rp-" dashboard/styles.css | head
+# Read the replay bar construction and vision section markup
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+$("rp-play").textContent = on ? "❚❚ Pause" : "▶ Play";
+  if (!on) return;
+  R.timer = setInterval(() => {
+    if (R.idx >= R.index.frames.length - 1) { setPlaying(false); return; }
+    showFrame(R.idx + 1).catch(console.error);
+  }, 1000 / R.fps);
+}
+async function initReplay() {
+  R.index = await loadJSON(`${REPLAY.base}index.json`);
+  const n = R.index.frames.length;
+  const bar = el("div", { class: "replay-bar", role: "region", "aria-label": "Replay controls" },
+    el("span", { class: "rp-tag", text: "Recorded replay" }),
+    el("span", { class: "muted small", text: `of a ${R.index.hours}-hour run of the simulator (not live). Clone the repo and run make demo for the live system.` }),
+    el("button", { id: "rp-play", type: "button", onclick: () => setPlaying(!R.timer) }, "▶ Play"),
+    el("input", { id: "rp-slider", type: "range", min: 0, max: n - 1, value: 0, "aria-label": "Replay position",
+      oninput: (e) => { setPlaying(false); showFrame(Number(e.target.value)).catch(console.error); } }),
+    el("label", { class: "muted small" }, "speed ",
+      (() => { const sel = el("select", { onchange: (e) => { R.fps = Number(e.target.value); if (R.timer) setPlaying(true); } },
+     
+… [1604 more characters truncated]
+```
+</details>
+
+## Claude
+
+The README screenshot is done. Now I'm adding links to the new page from the README, the dashboard's vision panel and the replay bar. The live backend will also serve the page at /inspect/.
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ grep -n "StaticFiles\|mount\|FileResponse\|@app.get(\"/\")\|def index" backend/app.py | head && sed -n 40,52p dashboard/index.html
+# Check how the backend serves the dashboard
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+23:from fastapi.responses import FileResponse, Response
+24:from fastapi.staticfiles import StaticFiles
+395:    app.mount("/static", StaticFiles(directory=DASH), name="static")
+398:@app.get("/")
+399:def index():
+400:    return FileResponse(DASH / "index.html")
+      <div id="anomalies"></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>Belt surface wear &amp; tear (vision)</h2>
+      <div class="legend" id="loop-legend"></div>
+    </div>
+    <p class="muted small" id="vision-summary"></p>
+    <div id="loopstrip" class="loopstrip"></div>
+    <div id="vision-table"></div>
+  </section>
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 385,402p backend/app.py && grep -n "^ROOT\|^DASH" backend/app.py
+# Read the static-file mounting code
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+return {"ingest": dict(zip(keys, tot)), "reject_reasons": reasons, "stations": stations, "active_issues": dq}
+
+
+@app.get("/api/maintenance")
+def maintenance_log(limit: int = 50):
+    return [dict(r) for r in db().execute("SELECT * FROM maintenance_log ORDER BY ts DESC LIMIT ?", (limit,))]
+
+
+DASH = ROOT / "dashboard"
+if DASH.exists():
+    app.mount("/static", StaticFiles(directory=DASH), name="static")
+
+
+@app.get("/")
+def index():
+    return FileResponse(DASH / "index.html")
+33:ROOT = Path(__file__).resolve().parents[1]
+393:DASH = ROOT / "dashboard"
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ .venv/bin/python -c "
+import mimetypes, sys; print(sys.version.split()[0]); print([mimetypes.guess_type('x'+e)[0] for e in ('.wasm', '.mjs', '.onnx', '.js', '.json', '.jpg')])"
+# Check MIME types Python serves for the page's files
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+3.13.18
+['application/wasm', 'text/javascript', None, 'text/javascript', 'application/json', 'image/jpeg']
+```
+</details>
+
+<details><summary>Tool: Edit</summary>
+
+```
+file: /home/user/conveyor-belt-monitor/backend/app.py
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+The file /home/user/conveyor-belt-monitor/backend/app.py has been updated successfully.
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 1,32p backend/app.py | grep -n "^import\|^from" 
+# Check the backend's imports
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+10:from __future__ import annotations
+12:import json
+13:import os
+14:import threading
+15:import time
+16:from contextlib import asynccontextmanager
+17:from datetime import datetime, timezone
+18:from pathlib import Path
+20:import numpy as np
+21:import pandas as pd
+22:from fastapi import Body, FastAPI, HTTPException
+23:from fastapi.responses import FileResponse, Response
+24:from fastapi.staticfiles import StaticFiles
+25:from pydantic import BaseModel, Field
+27:from backend.analysis import Analyzer, alert_state
+28:from backend.db import DEFAULT_DB, connect, get_state
+29:from backend.ingest import normalize, store
+30:from backend.vision_service import VisionService
+31:from simulator import config as C
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("backend/app.py"); s = p.read_text()
+old = "import json\nimport os\n"
+assert s.count(old) == 1
+s = s.replace(old, "import json\nimport mimetypes\nimport os\n")
+p.write_text(s)
+
+# inspect page: when served by the live backend, link back to the live dashboard instead of the replay
+p = Path("docs/inspect/index.html"); s = p.read_text()
+old = """    <div class="clock small"><a href="../demo/">← Dashboard replay</a> · <a href="https://github.com/vivektalwar689/conveyor-belt-monitor">Repository</a></div>
+"""
+new = """    <div class="clock small"><a id="back" href="../demo/">← Dashboard replay</a> · <a href="https://github.com/vivektalwar689/conveyor-belt-monitor">Repository</a></div>
+"""
+assert old in s; s = s.replace(old, new); p.write_text(s)
+p = Path("docs/inspect/inspect.js"); s = p.read_text()
+old = """state.ready = session("deployed").catch((e) => {
+"""
+new = """if (location.pathname.startsWith("/inspect/")) {      // served by the live backend (GitHub Pages adds a repo prefix)
+  $("back").href = "/";
+  $("back").textContent = "← Live dashboard";
+}
+state.ready = session("deployed").catch((e) => {
+"""
+assert s.count(old) == 1; s = s.replace(old, new); p.write_text(s)
+
+# dashboard: link from the vision panel (relative path works live, at /, and in the replay, at /<repo>/demo/)
+for f in ("dashboard/index.html", "docs/demo/index.html"):
+    p = Path(f); s = p.read_text()
+    old = """      <h2>Belt surface wear &amp; tear (vis
+… [1363 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+app.js still identical
+97:.ic.nodata { background: var(--nodata); }
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ grep -n 'el("a"\|<a ' dashboard/app.js dashboard/index.html | head && printf '\na { color: var(--series-1); }\n' | tee -a dashboard/styles.css >> docs/demo/styles.css && diff dashboard/styles.css docs/demo/styles.css && echo "styles identical" && tail -3 dashboard/styles.css
+# Give dashboard links the palette colour in both copies
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+dashboard/app.js:583:    el("a", { class: "small", href: "../inspect/", text: "Inspect your own belt photos →" }),
+dashboard/index.html:50:    <p class="small"><a href="../inspect/">Try the belt-damage detector on your own photos →</a></p>
+styles identical
+  border-radius: 6px; }
+
+a { color: var(--series-1); }
+```
+</details>
+
+## Claude
+
+The links are in. Next: README and design-doc sections, the third-party licence files, and a backend test for the new /inspect/ route. Then a final check against the live backend, commit and push.
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 37,72p README.md && sed -n 276,301p docs/DESIGN.md && grep -n "inspect\|onnx\|ONNX" docs/DESIGN.md | head
+# Read the README quick start and DESIGN dashboard section
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+## Quick start
+
+Python 3.11+. No hardware, no cloud account, no API keys.
+
+```bash
+make setup           # venv + core deps (simulator, backend, models, dashboard)
+make setup-vision    # + ultralytics/torch for the camera edge node (CPU is fine)
+make demo            # http://localhost:8000
+```
+
+Without `make` (e.g. on Windows):
+
+```bash
+python -m venv .venv && .venv/bin/pip install -r requirements.txt -r requirements-vision.txt
+.venv/bin/python -m scripts.demo
+```
+
+`make demo` starts the API server and a separate analysis worker on a fresh database, and backfills 8 simulated
+days through the real ingest API (~20 s). It then streams live at 120× real time (one simulated hour every 30 s), with the camera posting one pass
+per belt revolution. Scripted events happen during the demo, on top of random background faults:
+* **S18** (second curve) is in late-stage bearing failure and fails 9–20 simulated hours in (5–10 minutes at the
+  default speed).
+* **S12** (first curve) mistracks until the sway switch trips, 21–26 simulated hours in (~11–13 minutes).
+* **S07** is an earlier-stage bearing failure, still predicted but not yet failed when the run ends.
+* **Sensor faults:** a temperature se
+… [2886 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && python3 - $T/inspect_full.json <<'EOF'
+import json, sys
+d = json.load(open(sys.argv[1])); gt = json.load(open("docs/inspect/samples/labels.json"))
+def iou(a, b):
+    w = max(0, min(a[2], b[2]) - max(a[0], b[0])); h = max(0, min(a[3], b[3]) - max(a[1], b[1])); i = w * h
+    return i / ((a[2]-a[0])*(a[3]-a[1]) + (b[2]-b[0])*(b[3]-b[1]) - i)
+for model in ("deployed", "baseline"):
+    print("==", model)
+    for it in d[model]:
+        if it["name"] not in gt: continue
+        dets = [x for x in it["dets"] if x["conf"] >= 0.35]
+        out = []
+        for x in dets:
+            best = max(((iou(x["box"], g[1:]), g[0]) for g in gt[it["name"]]), default=(0, None))
+            out.append(f"{x['cls']} {x['conf']:.2f} -> best GT {best[1]} IoU {best[0]:.2f}")
+        print(f"  {it['name']} GT {[g[0] for g in gt[it['name']]][:4]}{'…' if len(gt[it['name']])>4 else ''}: {out or 'none'}")
+EOF
+# Check which labelled defects the sample detections overlap
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+== deployed
+  test_2261.jpg GT ['Wear']: ['Tear 0.40 -> best GT Wear IoU 0.92']
+  test_2264.jpg GT ['Hole']: none
+  train_0087.jpg GT ['Tear', 'Tear', 'Impact Damage', 'Impact Damage']: none
+  train_0293.jpg GT ['Tear', 'Puncture', 'Puncture', 'Puncture']…: ['Tear 0.61 -> best GT Tear IoU 0.84']
+  train_0560.jpg GT []: none
+  train_0598.jpg GT ['Tear']: ['Tear 0.36 -> best GT Tear IoU 0.68']
+  valid_1787.jpg GT []: none
+  valid_1982.jpg GT ['Tear']: ['Tear 0.44 -> best GT Tear IoU 0.71']
+== baseline
+  test_2261.jpg GT ['Wear']: ['Wear 0.60 -> best GT Wear IoU 0.91']
+  test_2264.jpg GT ['Hole']: none
+  train_0087.jpg GT ['Tear', 'Tear', 'Impact Damage', 'Impact Damage']: none
+  train_0293.jpg GT ['Tear', 'Puncture', 'Puncture', 'Puncture']…: ['Tear 0.55 -> best GT Tear IoU 0.82']
+  train_0560.jpg GT []: none
+  train_0598.jpg GT ['Tear']: ['Tear 0.57 -> best GT Tear IoU 0.70', 'Tear 0.52 -> best GT Tear IoU 0.08']
+  valid_1787.jpg GT []: none
+  valid_1982.jpg GT ['Tear']: ['Tear 0.55 -> best GT Tear IoU 0.06', 'Tear 0.48 -> best GT Tear IoU 0.75', 'Tear 0.37 -> best GT Tear IoU 0.40']
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cat Makefile && grep -rn "23 tests\|23 passing\|23 test" README.md docs/DESIGN.md ai_usage/README.md Makefile 2>/dev/null
+# Read the Makefile and find test-count mentions
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+PY ?= .venv/bin/python
+export OMP_NUM_THREADS ?= 2
+
+.PHONY: setup setup-vision demo demo-novision test train eval vision-data vision-audit vision-train vision-eval screenshots
+
+setup:                ## core deps (simulator, backend, models, dashboard)
+	python3 -m venv .venv && $(PY) -m pip install -q --upgrade pip && $(PY) -m pip install -q -r requirements.txt
+
+setup-vision:         ## + detector inference/training (torch via ultralytics)
+	$(PY) -m pip install -q -r requirements-vision.txt
+
+demo:                 ## whole system, dashboard on http://localhost:8000
+	$(PY) -m scripts.demo
+
+demo-novision:
+	$(PY) -m scripts.demo --no-vision
+
+test:
+	$(PY) -m pytest -q
+
+train:                ## simulate 5 belt-years, train + evaluate sensor models (~5 min)
+	OMP_NUM_THREADS=1 $(PY) -m ml.train
+
+vision-data:          ## fetch the public dataset (pinned commit) and audit/re-split it
+	$(PY) -m vision.fetch_dataset && $(PY) -m vision.audit
+
+vision-train:         ## YOLO11n on CPU (~3 h); the trained weights are committed in models/
+	$(PY) -m vision.train_detector --split clean
+
+vision-eval:          ## belt-loop evaluation with ground truth
+	$(PY) -m vision.loop_eval --passes 30
+README.md:67:|
+… [120 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ grep -n "def test_\|TestClient\|fixture\|import" tests/test_simulator_and_api.py | head -30
+# Look at the API test structure
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+1:from datetime import datetime, timezone
+3:import numpy as np
+4:from fastapi.testclient import TestClient
+6:from simulator import config as C
+7:from simulator.engine import BeltSimulator, ScheduledFault, Scenario
+8:from simulator.faults import MessyTransport, to_batches
+13:def test_simulator_is_deterministic():
+20:def test_bearing_signatures_follow_the_pf_curve():
+48:def test_api_roundtrip_with_messy_batch(tmp_path, monkeypatch):
+50:    import importlib
+51:    import backend.app as appmod
+52:    importlib.reload(appmod)
+54:    with TestClient(appmod.app) as client:
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 44,100p tests/test_simulator_and_api.py
+# Read the API round-trip test
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+t_env, t_rms, t_temp = first_departure(env, 0.5), first_departure(rms, 0.5), first_departure(temp, 0.5)
+    assert t_env < t_rms < t_temp < failed_at
+
+
+def test_api_roundtrip_with_messy_batch(tmp_path, monkeypatch):
+    monkeypatch.setenv("BELT_DB", str(tmp_path / "api.db"))
+    import importlib
+    import backend.app as appmod
+    importlib.reload(appmod)
+    sim, tr = BeltSimulator(START, seed=1), MessyTransport(1, start=START)
+    with TestClient(appmod.app) as client:
+        for _ in range(24):
+            o = sim.step()
+            recs, _ = tr.process(o.t, o.values, sim.has)
+            r = client.post("/api/ingest/bulk", json=to_batches(recs, o.t))
+            assert r.status_code == 200
+        bad = {"gateway_id": "GW-X", "sent_at": START.isoformat(), "readings": [
+            {"station_id": "S99", "sensor": "vib_rms", "ts": "2026-06-01T01:00:00Z", "value": 1, "unit": "mm/s"},
+            {"station_id": "S03", "sensor": "vib_rms", "ts": "2026-06-01T01:00:00", "value": 1, "unit": "mm/s"}]}
+        r = client.post("/api/ingest", json=bad).json()
+        assert r["rejected"] == 2
+        dq = client.get("/api/data-quality").json()
+        assert dq["ingest"]["accepted"] > 20
+… [171 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 1,40p vision/edge_sim.py | grep -n "^import\|^from\|^DEMO_IMG\|^CLEAN\|^ROOT"; grep -n "BELT_INPROCESS_ANALYSIS" backend/app.py | head -3
+# Check what the edge simulator imports at module level
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+20:from __future__ import annotations
+22:import base64
+23:import io
+24:import math
+25:import random
+26:from dataclasses import dataclass, field
+27:from pathlib import Path
+29:import numpy as np
+30:from PIL import Image, ImageDraw, ImageEnhance, ImageFilter
+32:from simulator import config as C
+33:from vision.loop import BeltRegister
+35:ROOT = Path(__file__).resolve().parents[1]
+36:CLEAN = ROOT / "data" / "processed" / "belt_damage_clean"
+37:DEMO_IMG = ROOT / "vision" / "demo_images"          # small committed subset so the demo runs without the dataset
+76:    if os.environ.get("BELT_INPROCESS_ANALYSIS", "1") != "0":
+```
+</details>
+
+## Claude
+
+I'm adding two backend tests: the page and its WebAssembly runtime are served correctly, and the sample list in the browser script matches the export script.
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cat >> tests/test_simulator_and_api.py <<'EOF'
+
+
+def test_inspection_page_is_served(tmp_path, monkeypatch):
+    """The live backend also serves the in-browser image inspection page (docs/inspect/)."""
+    monkeypatch.setenv("BELT_DB", str(tmp_path / "api.db"))
+    monkeypatch.setenv("BELT_INPROCESS_ANALYSIS", "0")
+    import importlib
+    import backend.app as appmod
+    importlib.reload(appmod)
+    with TestClient(appmod.app) as client:
+        page = client.get("/inspect/")
+        assert page.status_code == 200 and "inspect.js" in page.text
+        assert client.get("/demo/styles.css").status_code == 200           # the stylesheet the page borrows
+        wasm = client.get("/inspect/vendor/ort-wasm-simd-threaded.wasm")
+        assert wasm.headers["content-type"] == "application/wasm"           # needed for streaming compilation
+        assert client.get("/inspect/vendor/ort-wasm-simd-threaded.mjs").headers["content-type"].startswith("text/javascript")
+        assert client.get("/inspect/models/deployed.onnx").status_code == 200
+
+
+def test_inspection_samples_match_the_exporter():
+    """The page's sample list, the exporter's list and the committed labels must not drift apart."""
+    import json
+    import re
+    from pathlib import Path
+
+    from vision.export_web import SAMPLES, WEB
+    js = (WEB / "inspect.js").read_text()
+    in_js = re.findall(r'"([\w.]+\.jpg)"', js[js.index("const SAMPLES"):js.index("];", js.index("const SAMPLES"))])
+    labels = json.loads((WEB / "s
+… [337 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+/home/user/conveyor-belt-monitor/.venv/lib/python3.13/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+    from starlette.testclient import TestClient as TestClient  # noqa
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+25 passed, 1 warning in 4.83s
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("tests/test_simulator_and_api.py"); s = p.read_text()
+for old, new in (("    import re\n    from pathlib import Path\n\n    from vision.export_web", "    import re\n\n    from vision.export_web"),
+                 ('    assert Path(WEB / "models" / "baseline.onnx").exists()\n', '    assert (WEB / "models" / "baseline.onnx").exists()\n')):
+    assert s.count(old) == 1, old; s = s.replace(old, new)
+p.write_text(s)
+
+p = Path("Makefile"); s = p.read_text()
+old = ".PHONY: setup setup-vision demo demo-novision test train eval vision-data vision-audit vision-train vision-eval screenshots\n"
+new = ".PHONY: setup setup-vision demo demo-novision test train eval vision-data vision-audit vision-train vision-eval inspect-web screenshots\n"
+assert old in s; s = s.replace(old, new)
+s = s.rstrip("\n") + """
+
+inspect-web:          ## rebuild docs/inspect (ONNX models + samples) and check the page's maths against Ultralytics
+	$(PY) -m vision.export_web
+"""
+p.write_text(s)
+
+p = Path("requirements-vision.txt"); s = p.read_text()
+s = s.rstrip("\n") + "\n# `make inspect-web` (ONNX export for the in-browser page) also needs: pip install onnx onnxslim onnxruntime\n"
+p.write_text(s)
+print("ok")
+EOF
+tail -4 Makefile; cat requirements-vision.txt
+# Tidy the test, add a make target and note export dependencies
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+	$(PY) -m vision.loop_eval --passes 30
+
+inspect-web:          ## rebuild docs/inspect (ONNX models + samples) and check the page's maths against Ultralytics
+	$(PY) -m vision.export_web
+# Vision: detector training/inference on the edge node (CPU is fine).
+# For a CPU-only torch wheel, install torch first:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+ultralytics>=8.3
+# `make inspect-web` (ONNX export for the in-browser page) also needs: pip install onnx onnxslim onnxruntime
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("README.md"); s = p.read_text()
+
+def rep(old, new):
+    global s
+    assert s.count(old) == 1, (old[:100], s.count(old))
+    s = s.replace(old, new)
+
+rep("""**▶ Try it without installing anything:
+[recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)**: the real
+dashboard code replaying a 30-hour run of the system, with play/pause, scrubbing and drill-down. In it, a bearing
+fails, a belt trips on a curve, and a camera tracks belt damage. To run the live system yourself, see
+[Quick start](#quick-start).
+""", """**▶ Try it without installing anything:**
+* **[Recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)**: the
+  real dashboard code replaying a 30-hour run of the system, with play/pause, scrubbing and drill-down. In it, a
+  bearing fails, a belt trips on a curve, and a camera tracks belt damage.
+* **[Inspect your own belt photos](https://vivektalwar689.github.io/conveyor-belt-monitor/inspect/)**: upload
+  images of a conveyor belt, and the project's damage detector marks wear and tear with class, confidence and
+  severity. It runs in your browser, so nothing is uploaded. See [below](#inspect-your-own-belt-photos).
+
+To run the live system yourself, see [Quick start](#quick-start).
+""")
+rep("""- [Dashboard screenshots](#dashboard-screenshots)
+""", """- [Dashboard screenshots](#dashboard-screenshots)
+- [Inspect your own belt ph
+… [3799 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ T=<scratchpad> && OMP_NUM_THREADS=2 .venv/bin/python - $T/inspect_full.json <<'EOF' 2>&1 | grep -v -E "Loading|Using ONNX"
+import json, sys, cv2, numpy as np, onnxruntime as ort
+sys.path.insert(0, ".")
+from vision.export_web import letterbox, reference, _iou
+d = json.load(open(sys.argv[1]))
+web = next(i for i in d["baseline"] if i["name"] == "valid_1982.jpg")
+print("browser:", [(x["cls"], round(x["conf"], 3), [round(v) for v in x["box"]]) for x in web["dets"] if x["conf"] >= 0.3])
+sess = ort.InferenceSession("docs/inspect/models/baseline.onnx")
+bgr = cv2.imread("vision/demo_images/images/valid_1982.jpg"); H, W = bgr.shape[:2]
+x, r, l, t = letterbox(bgr)
+out = sess.run(None, {"images": x})[0]
+res = reference(out, 0.10, r, l, t, W, H)
+print("python (after NMS, ≥0.10):", [(c, round(s, 3), [round(v) for v in b]) for c, s, *b in [(r_[0], r_[1], *r_[2:]) for r_ in res] if s >= 0.3])
+# raw candidates near the browser's extra box, before NMS
+o = out[0].T; sc = o[:, 4:].max(1); keep = sc >= 0.3
+xy = np.column_stack([o[:, 0] - o[:, 2] / 2, o[:, 1] - o[:, 3] / 2, o[:, 0] + o[:, 2] / 2, o[:, 1] + o[:, 3] / 2])
+extra = next(x_ for x_ in web["dets"] if abs(x_["conf"] - 0.366) < 0.01)
+eb = [v * r + (l if k % 2 == 0 else t) for k, v in enumerate(extra["box"])]
+cands = [(float(sc[i]), [round(v) for v in xy[i]], round(_iou(xy[i], eb), 2)) for i in np.where(keep)[0]]
+best = sorted(cands, key=lambda c: -c[2])[:3]
+… [406 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+browser: [('Tear', 0.552, [286, 347, 639, 526]), ('Tear', 0.48, [149, 159, 479, 416]), ('Tear', 0.366, [146, 162, 631, 505])]
+python (after NMS, ≥0.10): [(3, 0.553, [285, 347, 639, 526]), (3, 0.483, [147, 160, 483, 416])]
+python raw candidates most like the browser's extra box (conf, box@512, IoU with it): [(0.3628607392311096, [115, 130, 505, 403], np.float32(0.99)), (0.31587982177734375, [116, 129, 466, 415], np.float32(0.87)), (0.4652537703514099, [116, 129, 495, 336], np.float32(0.73))]
+   its IoU with the boxes Python kept: [0.31, 0.51]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("README.md"); s = p.read_text()
+old = "  baseline. The median confidence difference is under 0.01. The mismatches are boxes right at the threshold.\n"
+new = ("  baseline. The median confidence difference is under 0.01. Each mismatch is a borderline box: right at the\n"
+       "  confidence threshold, or right at the 0.5 overlap limit where one box suppresses another.\n")
+assert s.count(old) == 1; s = s.replace(old, new); p.write_text(s)
+p = Path("docs/inspect/index.html"); s = p.read_text()
+old = """        Confidences therefore differ from the Python pipeline by about 0.01, and a box right at the threshold can
+        appear or disappear."""
+new = """        Confidences therefore differ from the Python pipeline by about 0.01, and a borderline box can appear or
+        disappear."""
+assert s.count(old) == 1; s = s.replace(old, new); p.write_text(s)
+print("ok")
+EOF
+sed -n '/^## Inspect your own belt photos/,/^## Problem breakdown/p' README.md
+# Make the parity wording precise and review the new README section
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+## Inspect your own belt photos
+
+**[Open the inspection page](https://vivektalwar689.github.io/conveyor-belt-monitor/inspect/)** and drop in one
+or more photos of a conveyor belt. The belt-damage detector draws each defect with its class, confidence and
+severity, and summarises the batch. You can:
+* switch between the deployed and the baseline model;
+* move the confidence threshold;
+* download the results as CSV.
+
+The model runs in the browser (ONNX Runtime Web), so images never leave your device. **Try 8 sample images** loads
+held-out test scenes with the dataset's own labels drawn as dashed boxes. You can see where the detector is right
+and where it is wrong.
+
+![Inspection page](docs/images/inspect_samples.jpg)
+
+* **What the samples show (deployed model, threshold 0.35).**
+  * It finds the tear in 3 of the 4 images labelled with tears, overlapping the labelled tear (IoU 0.68–0.84).
+  * It finds the worn patch but calls it a tear.
+  * It misses the hole, the punctures, and the impact damage.
+  * It stays quiet on both healthy belts.
+
+  This is the detector's real accuracy on unseen scenes (box mAP@0.5 0.06–0.12; see [Results](#results)).
+* **One photo is one look.** On the belt
+… [1032 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("README.md"); s = p.read_text()
+old = "  This is the detector's real accuracy on unseen scenes (box mAP@0.5 0.06–0.12; see [Results](#results)).\n"
+new = ("  The samples cover every class plus two healthy belts; eight images are an illustration, not a measurement. On\n"
+       "  unseen scenes the detector is weak overall (box mAP@0.5 0.06–0.12; see [Results](#results)).\n")
+assert s.count(old) == 1; s = s.replace(old, new); p.write_text(s)
+print("ok")
+EOF
+# Avoid over-claiming from eight sample images
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+```
+</details>
+
+## Claude
+
+The README is updated. Now the design-doc paragraph and the third-party licence files, then a final check against the live backend and the push.
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/DESIGN.md"); s = p.read_text()
+old = """controls. GitHub Pages serves it as a static site, so reviewers can try the system without installing anything.
+It is labelled as a recording everywhere it appears.
+"""
+new = """controls. GitHub Pages serves it as a static site, so reviewers can try the system without installing anything.
+It is labelled as a recording everywhere it appears.
+
+**Image inspection page (`docs/inspect/`).** A reviewer can also try the vision component on their own photos.
+Both detectors are exported to ONNX and run in the browser with ONNX Runtime Web (WebAssembly, single thread,
+because GitHub Pages is not cross-origin isolated). There is no server, so no upload endpoint to secure and no
+images leave the device. The live backend serves the same page at `/inspect/`.
+
+The page re-implements Ultralytics' pre- and post-processing in JavaScript:
+* letterbox to 512 px with grey padding;
+* best class per anchor;
+* per-class greedy NMS at IoU 0.5 (Ultralytics' predict default, not the 0.7 used in validation);
+* rescale and clip.
+
+`vision/export_web.py --check` runs the same steps in numpy against Ultralytics on the same ONNX file and gets
+identical boxes and confidences on 78 images. I checked the browser against Python separately in headless
+Chromium:
+* the JPEG decode is bit-identical;
+* the canvas resize differs from OpenCV's by under one grey level on 99 % of pixels;
+* detections at the 0.35 threshold 
+… [916 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+vision/demo_images/NOTICE.md:3:(commit b3e7f2e1880084724e0080247f679023020aeef7), MIT licence, Copyright (c) 2025 Fernando Navarrete.
+docs/inspect/vendor/NOTICE.md:2:[onnxruntime-web](https://www.npmjs.com/package/onnxruntime-web) 1.20.1, Copyright (c) Microsoft Corporation,
+docs/inspect/vendor/NOTICE.md:3:released under the MIT License (https://github.com/microsoft/onnxruntime/blob/main/LICENSE).
+docs/inspect/samples/NOTICE.md:3:(commit b3e7f2e1880084724e0080247f679023020aeef7), MIT licence, Copyright (c) 2025 Fernando Navarrete.
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ find data -maxdepth 3 -iname "LICENSE*" 2>/dev/null | head; ls data/ data/raw 2>/dev/null | head
+# Look for the dataset's licence file in the local download
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+data/:
+belt.db
+belt.db-shm
+belt.db-wal
+processed
+raw
+replay.db
+replay.db-shm
+replay.db-wal
+sim
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ ls data/raw | head; find data/raw -maxdepth 4 \( -iname "*licen*" -o -iname "README*" \) 2>/dev/null | head; grep -n "LICENSE\|licen" vision/fetch_dataset.py | head
+# Check the raw dataset folder and fetch script for licence handling
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+belt_damage
+data/raw/belt_damage/Dataset/README.md
+4:(MIT licence; images aggregated by the author from Roboflow Universe and academic
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 1,40p vision/fetch_dataset.py | head -50; grep -n -i "licen\|MIT" data/raw/belt_damage/Dataset/README.md | head
+# Read how the dataset was fetched and its README licence note
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+"""Fetch the public conveyor-belt damage dataset at a pinned commit.
+
+Source: https://github.com/FernandoN23/Implementation-of-Object-Detection-for-Conveyor-Belt-Defect-Detection
+(MIT licence; images aggregated by the author from Roboflow Universe and academic
+sources, homogenised to 5 classes, 640x640, YOLO labels).
+
+Only the ``Dataset/`` folder is checked out (sparse, blob-filtered clone), so the
+download is ~200 MB instead of the full ~765 MB repository.
+
+Usage:
+    python -m vision.fetch_dataset            # clones into data/raw/belt_damage
+"""
+from __future__ import annotations
+
+import argparse
+import subprocess
+from pathlib import Path
+
+REPO_URL = "https://github.com/FernandoN23/Implementation-of-Object-Detection-for-Conveyor-Belt-Defect-Detection"
+PINNED_COMMIT = "b3e7f2e1880084724e0080247f679023020aeef7"  # 2026-09-14, "Update README.md"
+ROOT = Path(__file__).resolve().parents[1]
+DEFAULT_DEST = ROOT / "data" / "raw" / "belt_damage"
+
+
+def run(cmd: list[str], cwd: Path | None = None) -> None:
+    print("+", " ".join(cmd))
+    subprocess.run(cmd, cwd=cwd, check=True)
+
+
+def fetch(dest: Path = DEFAULT_DEST) -> Path:
+    dataset_dir = dest / "Dataset"
+    if (dataset_dir / "data.
+… [848 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cd /home/user/conveyor-belt-monitor/data/raw/belt_damage && git ls-tree --name-only b3e7f2e1880084724e0080247f679023020aeef7 | head -20 && timeout 60 git show b3e7f2e1880084724e0080247f679023020aeef7:LICENSE 2>&1 | head -30
+# Read the dataset repository's licence file at the pinned commit
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+.gitattributes
+.gitignore
+DETR
+DINO
+Dataset
+Environment
+Informe_Memoria
+LICENSE
+README.md
+SSD
+YOLO
+master.py
+samples
+MIT License
+
+Copyright (c) 2025 Fernando Navarrete
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ cd /home/user/conveyor-belt-monitor && git -C data/raw/belt_damage show b3e7f2e1880084724e0080247f679023020aeef7:LICENSE > docs/inspect/samples/LICENSE && cp docs/inspect/samples/LICENSE vision/demo_images/LICENSE && { printf 'MIT License\n\nCopyright (c) Microsoft Corporation\n\n'; sed -n '/^Permission is hereby granted/,$p' docs/inspect/samples/LICENSE; } > docs/inspect/vendor/LICENSE && head -4 docs/inspect/vendor/LICENSE && wc -l docs/inspect/vendor/LICENSE docs/inspect/samples/LICENSE && cat > docs/inspect/models/NOTICE.md <<'EOF'
+`deployed.onnx` and `baseline.onnx` are this project's belt-damage detectors (`models/belt_damage_yolo11n.pt` and
+`models/belt_damage_yolo11n_baseline.pt`), exported with `make inspect-web` (`vision/export_web.py`).
+
+They were fine-tuned from Ultralytics YOLO11n (COCO-pretrained). Ultralytics distributes YOLO11 under the AGPL-3.0
+licence (https://github.com/ultralytics/ultralytics/blob/main/LICENSE). The training images come from the dataset
+credited in `../samples/NOTICE.md` (MIT licence).
+EOF
+python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/inspect/vendor/NOTICE.md"); s = p.read_text()
+old = "released under the MIT License (https://github.com/microsoft/onnxruntime/blob/main/LICENSE).\n"
+new = "released under the MIT License (full text in `LICENSE` in this folder).\n"
+assert s.count(old) == 1; p.write_text(s.replace(old, new))
+for f in ("docs/inspect/samples/NOTICE.md", "vision/demo_images/NOTICE.md"):
+    p = Path(f); s = p.read_te
+… [274 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+MIT License
+
+Copyright (c) Microsoft Corporation
+
+  21 docs/inspect/vendor/LICENSE
+  21 docs/inspect/samples/LICENSE
+  42 total
+`ort.wasm.min.js`, `ort-wasm-simd-threaded.mjs` and `ort-wasm-simd-threaded.wasm` are from
+[onnxruntime-web](https://www.npmjs.com/package/onnxruntime-web) 1.20.1, Copyright (c) Microsoft Corporation,
+released under the MIT License (full text in `LICENSE` in this folder).
+They are vendored so the page works without a CDN.
+
+Sample images: held-out test scenes from the dataset in
+https://github.com/FernandoN23/Implementation-of-Object-Detection-for-Conveyor-Belt-Defect-Detection
+(commit b3e7f2e1880084724e0080247f679023020aeef7), MIT licence, Copyright (c) 2025 Fernando Navarrete.
+They were never used to train the detector (scene-grouped split, see vision/audit.py).
+The licence text is in `LICENSE` in this folder.
+```
+</details>
+
+## Claude
+
+The page, docs and licence files are done. Now the final end-to-end check: the page served by the live FastAPI backend, and the links from the dashboard and replay.
+
+<details><summary>Tool: Write</summary>
+
+```
+file: <scratchpad> (2140 chars)
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+File created successfully at: <scratchpad> (file state is current in your context — no need to Read it back)
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ S=<scratchpad> && (BELT_DB=$S/links.db BELT_INPROCESS_ANALYSIS=0 OMP_NUM_THREADS=2 nohup .venv/bin/python -m uvicorn backend.app:app --port 8044 --log-level warning > $S/uvicorn8044.log 2>&1 &) && for i in $(seq 1 40); do curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8044/api/config | grep -q 200 && break; sleep 0.5; done && NODE_PATH=$(npm root -g) timeout 300 node $S/links_check.js http://127.0.0.1:8044 http://127.0.0.1:8033; cat $S/uvicorn8044.log | tail -5
+# Start the backend on a test port and check the page and links
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+{
+ "liveInspect": {
+  "status": "8 images analysed with the deployed model, on this device.",
+  "back": "/",
+  "backText": "← Live dashboard",
+  "cards": 8
+ },
+ "liveDashLink": "http://127.0.0.1:8044/inspect/",
+ "liveDashLinkLands": "http://127.0.0.1:8044/inspect/",
+ "replayBarLink": "http://127.0.0.1:8033/inspect/",
+ "replayPanelLink": "http://127.0.0.1:8033/inspect/",
+ "pagesBack": {
+  "href": "http://127.0.0.1:8033/",
+  "text": "← Live dashboard"
+ },
+ "errors": []
+}
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("docs/inspect/inspect.js"); s = p.read_text()
+old = """if (location.pathname.startsWith("/inspect/")) {      // served by the live backend (GitHub Pages adds a repo prefix)
+  $("back").href = "/";
+  $("back").textContent = "← Live dashboard";
+}
+"""
+assert s.count(old) == 1; s = s.replace(old, ""); p.write_text(s)
+p = Path("docs/inspect/index.html"); s = p.read_text()
+old = """<a id="back" href="../demo/">← Dashboard replay</a>"""
+new = """<a href="../demo/">← Dashboard</a>"""
+assert s.count(old) == 1; s = s.replace(old, new); p.write_text(s)
+p = Path("backend/app.py"); s = p.read_text()
+old = """@app.get("/demo/styles.css", include_in_schema=False)
+def inspect_stylesheet():
+    return FileResponse(DASH / "styles.css")
+"""
+new = """@app.get("/demo/styles.css", include_in_schema=False)
+def inspect_stylesheet():
+    return FileResponse(DASH / "styles.css")
+
+
+@app.get("/demo/", include_in_schema=False)
+def demo_to_live():
+    # the page's "Dashboard" link points at the recorded replay (../demo/); here the live dashboard is the target
+    return RedirectResponse("/")
+"""
+assert s.count(old) == 1; s = s.replace(old, new)
+old = "from fastapi.responses import FileResponse, Response\n"
+assert s.count(old) == 1; s = s.replace(old, "from fastapi.responses import FileResponse, RedirectResponse, Response\n")
+p.write_text(s)
+p = Path("tests/test_simulator_and_api.py"); s = p.read_text()
+old = """        assert client.get("/inspect/model
+… [593 more characters truncated]
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+ok
+29:// gen increments on Clear, so analyses still in flight drop their results instead of adding them back
+204:    el("td", {}, el("span", { class: "sw", style: `background:${CLASS_COLOR[CLASSES.indexOf(d.cls)]}` }), d.cls),
+240:  $("legend").replaceChildren(...CLASSES.map((c, k) => el("span", { class: "chip" }, el("span", { class: "sw", style: `background:${CLASS_COLOR[k]}` }), c)),
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+25 passed, 1 warning in 4.18s
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ S=<scratchpad> && python3 - "$S/links_check.js" <<'EOF'
+import sys
+from pathlib import Path
+p = Path(sys.argv[1]); s = p.read_text()
+s = s.replace("""  out.liveInspect = { status: await page.textContent('#status'), back: await page.getAttribute('#back', 'href'),
+    backText: await page.textContent('#back'), cards: await page.locator('.result').count() };
+""", """  out.liveInspect = { status: await page.textContent('#status'), cards: await page.locator('.result').count() };
+  await page.click('a[href="../demo/"]');
+  await page.waitForLoadState('load');
+  out.liveBackLands = page.url();
+""")
+s = s.replace("""  out.pagesBack = { href: await page.locator('#back').evaluate((a) => a.href), text: await page.textContent('#back') };
+""", """  await page.click('a[href="../demo/"]');
+  await page.waitForLoadState('load');
+  out.pagesBackLands = page.url();
+""")
+p.write_text(s)
+EOF
+pkill -f "uvicorn backend.app:app --port 8044"; sleep 1; (BELT_DB=$S/links.db BELT_INPROCESS_ANALYSIS=0 OMP_NUM_THREADS=2 nohup .venv/bin/python -m uvicorn backend.app:app --port 8044 --log-level warning > $S/uvicorn8044.log 2>&1 &) && for i in $(seq 1 40); do curl -s -o /dev/null -w "%{http_code}" http://127.0.0.1:8044/api/config | grep -q 200 && break; sleep 0.5; done && NODE_PATH=$(npm root -g) timeout 300 node $S/links_check.js http://127.0.0.1:8044 http://127.0.0.1:8033
+# Restart the test backend and recheck all links
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+{
+ "liveInspect": {
+  "status": "8 images analysed with the deployed model, on this device.",
+  "cards": 8
+ },
+ "liveBackLands": "http://127.0.0.1:8044/",
+ "liveDashLink": "http://127.0.0.1:8044/inspect/",
+ "liveDashLinkLands": "http://127.0.0.1:8044/inspect/",
+ "replayBarLink": "http://127.0.0.1:8033/inspect/",
+ "replayPanelLink": "http://127.0.0.1:8033/inspect/",
+ "pagesBackLands": "http://127.0.0.1:8033/demo/",
+ "errors": []
+}
+```
+</details>
+
+## Claude
+
+All links work in both setups with no errors. I'm retaking the screenshot, since the header link text changed, and stopping the test servers. Then I'll refresh the AI-usage transcript and push.
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ S=<scratchpad> && NODE_PATH=$(npm root -g) node $S/shot_inspect.js http://127.0.0.1:8033/inspect/ $S/inspect_2x.png 2 && .venv/bin/python -c "
+from PIL import Image; import os
+im = Image.open('$S/inspect_2x.png').convert('RGB'); print(im.size)
+im.save('docs/images/inspect_samples.jpg', quality=85, optimize=True, progressive=True)
+print(round(os.path.getsize('docs/images/inspect_samples.jpg')/1e3), 'kB jpg')" && pkill -f "uvicorn backend.app:app --port 8044"; pkill -f "http.server 8033"; sleep 1; ss -ltnp | grep -E ":8033|:8044" || echo "test servers stopped"; sed -n 1,30p scripts/export_transcript.py
+# Retake the screenshot, stop test servers, read the transcript exporter usage
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+{"errors":[],"perRow":3,"height":1129.25}
+(2880, 2258)
+471 kB jpg
+/bin/bash: line 9: ss: command not found
+test servers stopped
+"""Export a Claude Code session JSONL to a readable markdown transcript.
+
+Keeps: user messages, assistant text, tool calls (name + key inputs), tool results (truncated).
+Drops: hidden reasoning blocks, system attachments, internal bookkeeping records.
+Scrubs: e-mail addresses and the session's home/upload paths.
+"""
+import json
+import re
+import sys
+
+src, dst = sys.argv[1], sys.argv[2]
+MAX_RESULT = 1200
+MAX_INPUT = 1500
+EMAIL = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
+
+
+def scrub(s: str) -> str:
+    s = EMAIL.sub("<email removed>", s)
+    s = re.sub(r"<scratchpad>'\"]*", "<scratchpad>", s)
+    s = re.sub(r"/root/\.claude/uploads/[^\s'\"]*", "<uploaded file>", s)
+    return s
+
+
+def trunc(s: str, n: int) -> str:
+    s = s.strip()
+    return s if len(s) <= n else s[:n] + f"\n… [{len(s) - n} more characters truncated]"
+
+
+out = ["# Claude Code session transcript\n",
+       "Exported from the session log. Long tool outputs are truncated, internal reasoning blocks and system "
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ pgrep -af "http.server 8033|uvicorn backend.app" || echo "no test servers running"; J=/root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl; ls -la $J; tail -c 600 $J | head -c 600; echo; wc -l ai_usage/claude_code_session.md; grep -c "export_web" $J
+# Confirm servers stopped and the session log contains recent work
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+no test servers running
+-rw------- 1 root root 17764266 Nov 14 15:49 /root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl
+itor"}},"serverClassifierRequest":"0c541cf2-71d4-4f1f-bb05-5f51d5774498","apiBlockIndex":1,"requestId":"req_011Ch35rwWLEpfiqavvJdnkk","requestedModel":"claude-opus-5-5","promptCacheRequested":"1h","type":"assistant","uuid":"21e301fd-79cf-4572-8be1-3ac0652c4970","timestamp":"2026-11-14T15:49:23.066Z","advisorModel":"claude-opus-5-5","effort":"max","perTurnEffort":"max","madeBy":"model","userType":"external","entrypoint":"remote","cwd":"/home/user/conveyor-belt-monitor","sessionId":"51c75686-4237-55f8-99b1-79cf88427aac","version":"2.1.325","gitBranch":"main","slug":"modular-prancing-hollerith"}
+
+8361 ai_usage/claude_code_session.md
+15
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ J=/root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl && .venv/bin/python scripts/export_transcript.py $J ai_usage/claude_code_session.md && wc -l ai_usage/claude_code_session.md && grep -n -i -E "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}" ai_usage/claude_code_session.md | grep -v "<email removed>" | head -5; grep -c "<email removed>" ai_usage/claude_code_session.md; grep -n -E "ghp_|gho_|github_pat_|Bearer [A-Za-z0-9]|sk-ant|/root/\.claude/uploads" ai_usage/claude_code_session.md | head -5; grep -n "can we do a demo in which I upload" ai_usage/claude_code_session.md | head -3; tail -5 ai_usage/claude_code_session.md | cut -c1-200
+# Re-export the session transcript and scan it for private data
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+wrote ai_usage/claude_code_session.md
+12111 ai_usage/claude_code_session.md
+12
+5683:$ git grep --cached -n -i -E "vivek|gmail|@[a-z0-9.-]+\.(com|io)|ghp_|token|secret|password" -- . ':!*.jpg' ':!*.png' ':!*.joblib' | grep -v -E "noreply|avartanlabs|anthropic" | head -20; echo "--- scan done"
+6212:$ git add -A && git status --porcelain | awk '{print $1, $2}' && git grep --cached -n -i -E "vivek|gmail|ghp_" -- . ':!*.jpg' ':!*.png' ':!*.joblib' ':!*.pt' | head -3; git commit -q -F - <<'EOF'
+6800:$ cd /home/user && python3 <scratchpad> /root/.claude/projects/-home-user/51c75686-4237-55f8-99b1-79cf88427aac.jsonl <scratchpad> && F=<scratchpad> && du -h $F && grep -c "^## User" $F && grep -c "^## Claude" $F && grep -c "Tool:" $F && grep -n -i -E "gmail|<email removed>|@gmail|GH_TOKEN=|ghp_|sk-ant" $F | head -5; echo "--- scan done"; grep -n "^## User" -A3 $F | head -30
+6813:5756:$ git grep --cached -n -i -E "vivek|gmail|@[a-z0-9.-]+\.(com|io)|ghp_|token|secret|password" -- . ':!*.jpg' ':!*.png' ':!*.joblib' | grep -v -E "noreply|avartanlabs|anthropic" | head -20; echo "--- scan done"
+6814:6293:$ git add -A && git status --porcelain | awk '{print $1, $2}' && git grep --cached -n -i -E "vi
+… [1355 more characters truncated]
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ grep -o -n -E "[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}" ai_usage/claude_code_session.md | sort -t: -k2 -u | head -10; echo "---"; grep -c -i "gmail" ai_usage/claude_code_session.md; grep -n -i "gmail" ai_usage/claude_code_session.md | cut -c1-160 | head -5
+# List any e-mail-like strings left in the transcript
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+---
+7
+5683:$ git grep --cached -n -i -E "vivek|gmail|@[a-z0-9.-]+\.(com|io)|ghp_|token|secret|password" -- . ':!*.jpg' ':!*.png' ':!*.joblib' | grep -v -E "noreply|av
+6212:$ git add -A && git status --porcelain | awk '{print $1, $2}' && git grep --cached -n -i -E "vivek|gmail|ghp_" -- . ':!*.jpg' ':!*.png' ':!*.joblib' ':!*.p
+6800:$ cd /home/user && python3 <scratchpad> /root/.claude/projects/-home-user/51c75686-4237-55f8-99b1-79cf88427aac.jsonl <scratchpad> && F=<scratchpad> && du -
+6813:5756:$ git grep --cached -n -i -E "vivek|gmail|@[a-z0-9.-]+\.(com|io)|ghp_|token|secret|password" -- . ':!*.jpg' ':!*.png' ':!*.joblib' | grep -v -E "norep
+6814:6293:$ git add -A && git status --porcelain | awk '{print $1, $2}' && git grep --cached -n -i -E "vivek|gmail|ghp_" -- . ':!*.jpg' ':!*.png' ':!*.joblib' '
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ echo "in HEAD transcript: $(git show HEAD:ai_usage/claude_code_session.md | grep -c '<email removed>')"; git log --oneline -- ai_usage/claude_code_session.md | head; grep -n -o -E "[A-Za-z0-9._%+-]+@[^A-Za-z0-9 ]" ai_usage/claude_code_session.md | sort -u -t: -k2 | head
+# Check whether the e-mail hint was in the already-pushed transcript
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+in HEAD transcript: 3
+524f8bc Add the Claude Code session transcript to ai_usage/
+12065:+@[
+10245:-@\
+6819:6-@"
+8284:<email removed>[
+6800:<email removed>|
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ sed -n 8282,8286p ai_usage/claude_code_session.md | cut -c1-260; echo ...; sed -n 6800p ai_usage/claude_code_session.md | cut -c150-420
+# Show the transcript lines containing the e-mail fragment
+```
+</details>
+
+<details><summary>Result</summary>
+
+```
+```
+$ python3 <scratchpad> /root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl ai_usage/claude_code_session.md && F=ai_usage/claude_code_session.md && du -h $F && echo "user turns: $(grep -c '^## User' $F), claude msg
+# Export the transcript to ai_usage/ and scan it for personal data and secrets
+```
+...
+& du -h $F && grep -c "^## User" $F && grep -c "^## Claude" $F && grep -c "Tool:" $F && grep -n -i -E "gmail|<email removed>|@gmail|GH_TOKEN=|ghp_|sk-ant" $F | head -5; echo "--- scan done"; grep -n "^## User" -A3 $F | head -30
+```
+</details>
+
+<details><summary>Tool: Bash</summary>
+
+```
+$ python3 - <<'EOF'
+from pathlib import Path
+p = Path("scripts/export_transcript.py"); s = p.read_text()
+old = """def scrub(s: str) -> str:
+    s = EMAIL.sub("<email removed>", s)
+"""
+new = """# an address's local part on its own, e.g. inside a search pattern such as "<email removed>|@provider"
+EMAIL_LOCAL = re.compile(r"\\b[A-Za-z0-9][A-Za-z0-9._%+-]{2,}@(?![A-Za-z0-9-])")
+
+
+def scrub(s: str) -> str:
+    s = EMAIL.sub("<email removed>", s)
+    s = EMAIL_LOCAL.sub("<email removed>", s)
+"""
+assert s.count(old) == 1; s = s.replace(old, new)
+s = s.replace("Scrubs: e-mail addresses and the session's home/upload paths.",
+              "Scrubs: e-mail addresses (also bare local parts such as \\\"<email removed>\\\"), and the session's home/upload paths.")
+p.write_text(s)
+print("ok")
+EOF
+sed -n 1,25p scripts/export_transcript.py && J=/root/.claude/projects/-home-user-conveyor-belt-monitor/51c75686-4237-55f8-99b1-79cf88427aac.jsonl && .venv/bin/python scripts/export_transcript.py $J ai_usage/claude_code_session.md && echo "fragments left: $(grep -c '<email removed>' ai_usage/claude_code_session.md)"; grep -n -o -E "[A-Za-z0-9._%+-]+@[^A-Za-z0-9 ]" ai_usage/claude_code_session.md | sort -u -t: -k2 | head; grep -o -E "[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}" ai_usage/claude_code_session.md | sort -u | head -3; echo "removed markers: $(grep -c '<email removed>' ai_usage/claude_code_session.md)"
+# Scrub bare e-mail local parts and re-export the transcript
 ```
 </details>

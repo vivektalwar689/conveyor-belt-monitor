@@ -1,0 +1,27 @@
+.controls .drop { border: 2px dashed var(--axis); border-radius: 12px; padding: 22px; text-align: center; cursor: pointer;
+  background: var(--page); }
+.controls .drop.over, .controls .drop:hover, .controls .drop:focus-visible { border-color: var(--series-1); outline: none; }
+.linklike { color: var(--series-1); text-decoration: underline; }
+.controls .row { display: flex; align-items: center; gap: 22px; flex-wrap: wrap; margin-top: 14px; }
+.controls button { font: inherit; padding: 6px 14px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--surface-1); color: var(--text-primary); cursor: pointer; }
+.controls button:hover { background: var(--hover); }
+.controls fieldset.model { border: none; display: flex; gap: 14px; align-items: center; padding: 0; margin: 0; }
+.controls fieldset.model legend { float: left; margin-right: 6px; padding: 0; }
+.controls .thr { display: flex; align-items: center; gap: 8px; }
+.controls .thr input { accent-color: var(--series-1); }
+.results { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(420px, 100%), 1fr)); gap: 16px; }
+.result canvas { display: block; max-width: 100%; height: auto !important; border-radius: 8px; margin: 6px 0 8px; }
+.result h3 { font-size: 13px; font-weight: 600; margin: 0; word-break: break-all; }
+.sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; margin-right: 6px; vertical-align: middle; }
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px 12px; }
+.stats .n { font-size: 22px; font-weight: 600; }
+.stats .l { color: var(--text-secondary); font-size: 12px; }
+.notes ul { margin: 6px 0 0; padding-left: 18px; color: var(--text-secondary); }
+.notes li { margin-bottom: 6px; }
+a { color: var(--series-1); }
+.controls button:disabled { opacity: 0.5; cursor: default; }
+.linkbtn { font: inherit; background: none; border: none; padding: 0; color: var(--series-1); text-decoration: underline;
+  cursor: pointer; }
+.sw.gt { background: transparent; border: 1.5px dashed var(--text-primary); box-sizing: border-box; }
+.result .gt { margin: 0 0 6px; }

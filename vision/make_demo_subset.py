@@ -5,9 +5,11 @@ from __future__ import annotations
 
 import random
 import shutil
+import subprocess
 from pathlib import Path
 
 from vision.edge_sim import CLASSES, CLEAN, DEMO_IMG
+from vision.fetch_dataset import DEFAULT_DEST
 
 PER_CLASS = 8
 
@@ -38,7 +40,11 @@ def main() -> None:
         "Images in this folder are a subset of the held-out test split of the dataset in\n"
         "https://github.com/FernandoN23/Implementation-of-Object-Detection-for-Conveyor-Belt-Defect-Detection\n"
         "(commit b3e7f2e1880084724e0080247f679023020aeef7), MIT licence, Copyright (c) 2025 Fernando Navarrete.\n"
-        "That dataset aggregates public Roboflow Universe and academic conveyor-belt damage datasets.\n")
+        "That dataset aggregates public Roboflow Universe and academic conveyor-belt damage datasets.\n"
+        "The licence text is in `LICENSE` in this folder.\n")
+    lic = DEFAULT_DEST / "LICENSE"                   # MIT: the licence text travels with the images
+    (DEMO_IMG / "LICENSE").write_text(lic.read_text() if lic.exists() else subprocess.run(
+        ["git", "-C", str(DEFAULT_DEST), "show", "HEAD:LICENSE"], capture_output=True, text=True, check=True).stdout)
     print(f"copied {len(pick)} images ({len(healthy)} healthy) to {DEMO_IMG}")
 
 
