@@ -562,7 +562,7 @@ async function showFrame(i) {
   $("rp-slider").value = R.idx;
   await refresh();
   await renderDetail();
-  frame(R.idx + 1).catch(() => {});            // prefetch the next frame
+  if (R.idx + 1 < R.index.frames.length) frame(R.idx + 1).catch(() => {});   // prefetch the next frame
 }
 function setPlaying(on) {
   clearInterval(R.timer);
