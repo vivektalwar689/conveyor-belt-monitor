@@ -224,7 +224,41 @@ localisation and multi-pass association, which need history and are cheap.
 | 12 | Carry side vs. pulley side, belt turnover, motion blur at 5 m/s, lighting | Camera on the return strand after the cleaners (empty, cleaner belt), simulated blur and light; turnover not handled | Partly |
 
 ### 8.4 Evaluation
-{{VISION_EVAL}}
+Method (`vision/loop_eval.py`):
+* **Setup.** The simulated edge node runs for 30 revolutions over a register of 25 splices (segment lengths vary
+  ±10 %) on a belt 0.15 % longer than its record.
+* **Errors injected.** The odometer has +0.4 % bias with a random walk. 5 % of RFID reads are missed. 15 % of
+  passes have a 0.8–2.5 km imaging gap.
+* **Defects.** 11 true defects, one appearing at revolution 8 and one repaired at revolution 14. Each true defect
+  is always the same held-out test image, re-rendered each revolution with different light, motion blur, noise
+  and lateral wander.
+* **Distractors.** Each revolution adds 40 healthy frames (6 defect-free test images plus crops of test images away
+  from labelled boxes) and 4 frames with synthetic carry-back.
+* **Scoring.** Ground truth for each defect is every labelled box in its image, mapped to the belt the same way as
+  detections.
+
+Results:
+
+| | RFID tags | Dead reckoning per pass | No fiducials |
+|---|---|---|---|
+| Median / p95 localisation error | 0.02 m / 0.08 m | 46 m / 72 m | 1.1 km / 2.3 km (2.4 km at the last pass) |
+| Defects confirmed | 11/11 | 1/11 | 0/11 |
+| Confirmed tracks in total | 31 | 100 | 80 |
+
+Dead reckoning does not just mislocate defects. Because the error changes between passes, detections of one
+defect scatter, while unrelated detections coincide; both failure modes produce confident, wrong tracks.
+
+Tracker parameters: gates ±2.5 m along the belt and ±0.30 m across; confirm at 2 sightings on different passes; drop
+a tentative track after 2 imaged misses; mark a confirmed track repaired after 3 imaged misses. Lowering the gate is
+possible because tag-based localisation is good to ~0.1 m; the gate is wider than that because box centres
+jitter.
+
+Operating point. Replaying the same reports with a higher per-detection confidence floor trades recall for
+precision at the track level: 11/11 defects with 16 phantom tracks at 0.25, 9/11 with 8 at 0.35, 8/11 with 4 at
+0.45, 7/11 with 1 at 0.55. The per-frame false-positive rate on healthy belt (45 % at 0.25, 7.5 % at 0.55, 1.9 % at
+0.65) multiplied by ~12,050 frames per revolution is the binding constraint for a real deployment (§12). The fix is
+data, not tracking logic: site-specific healthy footage as hard negatives, which the loop provides continuously.
+{{NEG_DESIGN}}
 
 ## 9. Dashboard
 
@@ -283,4 +317,8 @@ text in ink colours, tooltips that never gate information, light and dark palett
   failure modes the simulator does not imagine.
 * The vision dataset is still photos, not video of the same belt, so the loop behaviour is simulated by
   re-rendering the same photo each revolution. Defect *growth* cannot be observed from real pixels here.
+* The detector is weak on unseen scenes (mAP@0.5 0.12 on the leakage-free split). Its false-positive rate on
+  healthy belt, multiplied by ~12,050 frames per revolution, would confirm phantom defects at full coverage. The
+  simulation images only a sample of healthy frames per revolution, so the system as demonstrated would not yet
+  hold up on a real belt without site-specific training data (§8.4).
 * One conveyor, one site, one camera. Fleet-wide models and transfer between conveyors are out of scope.

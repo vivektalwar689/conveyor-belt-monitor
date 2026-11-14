@@ -122,6 +122,7 @@ def run(passes: int, weights: Path, seed: int = 1) -> dict:
 
     # Track-level trade-off: replay the same reports through trackers with different confidence floors
     by_conf = {}
+    default_floor = BeltTracker.MIN_CONF
     for c in (0.25, 0.35, 0.45, 0.55):
         BeltTracker.MIN_CONF = c
         lc, tc = Localizer(reg, "tags"), BeltTracker(reg.L)
@@ -133,7 +134,7 @@ def run(passes: int, weights: Path, seed: int = 1) -> dict:
             tc.process_pass(p, [Detection(float(x), d["lateral_m"], d["cls"], d["conf"], d["length_m"], d["width_m"],
                                           d["ts"], p) for d, x in zip(rep["detections"], pos)], cov)
         by_conf[str(c)] = evaluate(tc)
-    BeltTracker.MIN_CONF = 0.25
+    BeltTracker.MIN_CONF = default_floor
 
     out = {
         "passes": passes, "raw_detections": raw,

@@ -202,7 +202,7 @@ class Track:
 
 
 class BeltTracker:
-    MIN_CONF = 0.25           # per-detection confidence floor (operating point chosen in vision/loop_eval.py)
+    MIN_CONF = 0.45           # per-detection confidence floor: operating point chosen from the sweep in vision/loop_eval.py
     GATE_POS_M = 2.5          # along-belt association gate (localisation error + box-centre jitter)
     GATE_LAT_M = 0.30
     MERGE_IN_PASS_M = 0.8     # boxes of the same defect within one pass
