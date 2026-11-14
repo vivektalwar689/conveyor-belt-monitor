@@ -1,0 +1,17 @@
+{
+  "split": "clean_neg",
+  "epochs": 8,
+  "imgsz": 512,
+  "test_mAP50": 0.0648,
+  "test_mAP50_95": 0.0263,
+  "test_precision": 0.1086,
+  "test_recall": 0.1272,
+  "per_class_AP50": {
+    "Hole": 0.0422,
+    "Impact Damage": 0.0,
+    "Puncture": 0.0328,
+    "Tear": 0.1923,
+    "Wear": 0.0569
+  },
+  "init": "models/belt_damage_yolo11n.pt"
+}

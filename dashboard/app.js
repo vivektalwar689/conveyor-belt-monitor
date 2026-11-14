@@ -57,11 +57,52 @@ function sv(tag, attrs = {}, text) {
   if (text !== undefined) e.textContent = text;
   return e;
 }
+// Replay mode (static hosting, e.g. GitHub Pages): the page sets window.BELT_REPLAY = {base: "data/"} and every
+// API call is answered from a recorded frame instead of the live backend. Same rendering code either way.
+const REPLAY = window.BELT_REPLAY || null;
+const R = { index: null, idx: 0, frames: {}, series: {}, timer: null, fps: 1 };
+async function loadJSON(url) {
+  const r = await fetch(url);
+  if (!r.ok) throw new Error(`${url}: ${r.status}`);
+  return r.json();
+}
+async function frame(i) {
+  if (!R.frames[i]) R.frames[i] = loadJSON(`${REPLAY.base}frames/${String(i).padStart(4, "0")}.json`);
+  return R.frames[i];
+}
+function sliceSeries(s, now, win) {
+  const t0 = now - win;
+  const cut = (d) => {
+    const keep = d.t.map((t, i) => (t >= t0 && t <= now ? i : -1)).filter((i) => i >= 0);
+    return { t: keep.map((i) => d.t[i]), v: keep.map((i) => d.v[i]) };
+  };
+  const out = { station: s.station, now, series: {}, predictions: {}, anomalies: [], stopped: [] };
+  for (const [k, d] of Object.entries(s.series)) out.series[k] = cut(d);
+  for (const [k, d] of Object.entries(s.predictions)) out.predictions[k] = cut(d);
+  out.stopped = (s.stopped || []).filter(([a, b]) => b >= t0 && a <= now).map(([a, b]) => [Math.max(a, t0), Math.min(b, now)]);
+  return out;
+}
+async function replayApi(path) {
+  if (path.startsWith("/api/config")) return loadJSON(`${REPLAY.base}config.json`);
+  const f = await frame(R.idx);
+  const m = path.match(/^\/api\/stations\/([A-Z0-9]+)\/series/);
+  if (m) {
+    if (!R.series[m[1]]) R.series[m[1]] = loadJSON(`${REPLAY.base}series/${m[1]}.json`);
+    return sliceSeries(await R.series[m[1]], f.overview.now, 72 * 3600);
+  }
+  const map = [["/api/overview", "overview"], ["/api/stations", "stations"], ["/api/predictions", "predictions"],
+    ["/api/anomalies", "anomalies"], ["/api/vision/tracks", "vision_tracks"], ["/api/vision/summary", "vision_summary"],
+    ["/api/data-quality", "dq"], ["/api/maintenance", "maintenance"]];
+  for (const [prefix, key] of map) if (path.startsWith(prefix)) return f[key];
+  throw new Error(`replay: no recording for ${path}`);
+}
 async function api(path) {
+  if (REPLAY) return replayApi(path);
   const r = await fetch(path, { cache: "no-store" });
   if (!r.ok) throw new Error(`${path}: ${r.status}`);
   return r.json();
 }
+const cropUrl = (t) => REPLAY ? `${REPLAY.base}crops/${t.track_id}.jpg` : `/api/vision/tracks/${t.track_id}/crop.jpg?v=${t.last_ts}`;
 function local(ts) { return new Date((ts + SITE_OFFSET_MIN * 60) * 1000); }
 const DAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
@@ -317,7 +358,7 @@ function renderVision(vis, summ) {
     const sev = SEVERITY[t.severity] || SEVERITY.low;
     const where = t.where_if_stopped ? `${t.where_if_stopped.strand} strand, km ${fmtN(t.where_if_stopped.chainage_m / 1000, 2)}` : "–";
     return el("tr", {},
-      el("td", {}, t.has_crop ? el("img", { class: "thumb", src: `/api/vision/tracks/${t.track_id}/crop.jpg?v=${t.last_ts}`, alt: `${t.cls} crop` }) : el("div", { class: "thumb" })),
+      el("td", {}, t.has_crop ? el("img", { class: "thumb", src: cropUrl(t), alt: `${t.cls} crop` }) : el("div", { class: "thumb" })),
       el("td", { text: `D-${t.track_id}` }, el("div", { class: "evid", text: t.status === "confirmed" ? "confirmed" : "unconfirmed" })),
       el("td", { text: t.cls }, el("div", { class: "evid", text: `${fmtN(t.length_m * 1000)} mm long · conf ${fmtN(t.conf_mean, 2)}` })),
       el("td", {}, chip(sev)),
@@ -511,11 +552,48 @@ async function refresh() {
     renderDetail().catch(console.error);
   }
   const a = ov.analysis || {};
-  $("footer").textContent = `Analysis cycle ${a.last ? `${a.last.seconds}s` : "–"}${a.error ? ` · analysis error: ${a.error}` : ""} · data up to ${fmtTime(ov.now)} · refreshes every ${REFRESH_MS / 1000}s`;
+  $("footer").textContent = REPLAY
+    ? `Recorded replay · frame ${R.idx + 1} of ${R.index.frames.length} · data up to ${fmtTime(ov.now)}`
+    : `Analysis cycle ${a.last ? `${a.last.seconds}s` : "–"}${a.error ? ` · analysis error: ${a.error}` : ""} · data up to ${fmtTime(ov.now)} · refreshes every ${REFRESH_MS / 1000}s`;
 }
 
+async function showFrame(i) {
+  R.idx = Math.max(0, Math.min(i, R.index.frames.length - 1));
+  $("rp-slider").value = R.idx;
+  await refresh();
+  await renderDetail();
+  frame(R.idx + 1).catch(() => {});            // prefetch the next frame
+}
+function setPlaying(on) {
+  clearInterval(R.timer);
+  R.timer = null;
+  $("rp-play").textContent = on ? "❚❚ Pause" : "▶ Play";
+  if (!on) return;
+  R.timer = setInterval(() => {
+    if (R.idx >= R.index.frames.length - 1) { setPlaying(false); return; }
+    showFrame(R.idx + 1).catch(console.error);
+  }, 1000 / R.fps);
+}
+async function initReplay() {
+  R.index = await loadJSON(`${REPLAY.base}index.json`);
+  const n = R.index.frames.length;
+  const bar = el("div", { class: "replay-bar", role: "region", "aria-label": "Replay controls" },
+    el("span", { class: "rp-tag", text: "Recorded replay" }),
+    el("span", { class: "muted small", text: `of a ${R.index.hours}-hour run of the simulator (not live). Clone the repo and run make demo for the live system.` }),
+    el("button", { id: "rp-play", type: "button", onclick: () => setPlaying(!R.timer) }, "▶ Play"),
+    el("input", { id: "rp-slider", type: "range", min: 0, max: n - 1, value: 0, "aria-label": "Replay position",
+      oninput: (e) => { setPlaying(false); showFrame(Number(e.target.value)).catch(console.error); } }),
+    el("label", { class: "muted small" }, "speed ",
+      (() => { const sel = el("select", { onchange: (e) => { R.fps = Number(e.target.value); if (R.timer) setPlaying(true); } },
+        ...[["0.5", "slow"], ["1", "1 frame/s"], ["2", "2 frames/s"], ["4", "4 frames/s"]].map(([v, l]) => el("option", { value: v, text: l })));
+      sel.value = "1"; return sel; })()));
+  document.querySelector(".viz-root").prepend(bar);
+  await showFrame(0);
+  setPlaying(true);
+}
 async function main() {
   CFG = await api("/api/config");
+  if (REPLAY) { await initReplay(); return; }
   const loop = async () => {
     try { await refresh(); } catch (e) { console.error(e); }
     setTimeout(loop, REFRESH_MS);

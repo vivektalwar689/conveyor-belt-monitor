@@ -158,3 +158,13 @@ details.tableview summary { cursor: pointer; color: var(--text-secondary); font-
 .dq-grid .l { color: var(--text-secondary); font-size: 12px; }
 .stale { opacity: 0.6; transition: opacity 0.2s; }
 footer { margin-top: 8px; }
+
+/* replay mode (static hosting) */
+.replay-bar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+  background: var(--surface-1); border: 1px solid var(--border); border-radius: 12px; padding: 10px 14px; margin-bottom: 14px; }
+.rp-tag { font-weight: 600; font-size: 12px; color: #fff; background: var(--series-1); border-radius: 6px; padding: 2px 8px; }
+.replay-bar button { font: inherit; padding: 4px 12px; border-radius: 8px; border: 1px solid var(--border);
+  background: var(--page); color: var(--text-primary); cursor: pointer; }
+.replay-bar input[type=range] { flex: 1; min-width: 200px; accent-color: var(--series-1); }
+.replay-bar select { font: inherit; color: var(--text-primary); background: var(--page); border: 1px solid var(--border);
+  border-radius: 6px; }

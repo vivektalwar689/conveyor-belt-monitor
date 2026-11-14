@@ -7,6 +7,12 @@ happen. It runs from simulated sensor data to a live belt-health dashboard:
 failure prediction (what, where, when) → camera edge node with a belt-damage detector → belt-loop defect
 tracking → dashboard.**
 
+**▶ Try it without installing anything:
+[recorded replay of the live dashboard](https://vivektalwar689.github.io/conveyor-belt-monitor/demo/)**: the real
+dashboard code replaying a 30-hour run of the system, with play/pause, scrubbing and drill-down. In it, a bearing
+fails, a belt trips on a curve, and a camera tracks belt damage. To run the live system yourself, see
+[Quick start](#quick-start).
+
 The full design document is **[docs/DESIGN.md](docs/DESIGN.md)**. This README is the summary: the decisions, the
 results, and what I would do differently.
 
@@ -47,9 +53,14 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt -r requirement
 
 `make demo` starts the backend on a fresh database and backfills 8 simulated days through the real ingest API
 (~20 s). It then streams live at 120× real time (one simulated hour every 30 s), with the camera posting one pass
-per belt revolution. Scripted events happen during the demo: a bearing on the second curve (S18) is in late-stage failure
-and fails during the live run (the exact time varies from run to run: degradation is stochastic and only advances
-while the belt runs), a belt on the first curve (S12) mistracks towards its sway switch, a temperature sensor drifts (S10), a sensor sticks (S03), and a station goes offline (S20). Without torch: `make demo-novision`.
+per belt revolution. Scripted events happen during the demo, on top of random background faults:
+* **S18** (second curve) is in late-stage bearing failure and fails 9–20 simulated hours in (5–10 minutes at the
+  default speed).
+* **S12** (first curve) mistracks until the sway switch trips, 21–26 simulated hours in (~11–13 minutes).
+* **S07** is an earlier-stage bearing failure, still predicted but not yet failed when the run ends.
+* **Sensor faults:** a temperature sensor drifts (S10), a sensor sticks (S03), and a station goes offline (S20).
+
+Scripted faults use low-noise degradation so these times hold whatever time of day you start. Without torch: `make demo-novision`.
 
 | Command | What it does | Time |
 |---|---|---|

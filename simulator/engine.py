@@ -89,6 +89,7 @@ class Degradation:
     drift_mm: float = 0.0
     failed: bool = False
     amp: tuple[float, float, float] = (1.0, 1.0, 1.0)    # signature strength: HF envelope, RMS, temperature
+    noise: float = 0.015        # random-walk noise on log(h) per step; scripted demo faults use less (predictable)
 
 
 @dataclass
@@ -158,8 +159,9 @@ class BeltSimulator:
         return float(med * math.exp(self.rng_deg.normal(0, sig)))
 
     def _start_degradation(self, i: int, mode: str, tpf_h: float | None = None,
-                           rate_mm_h: float | None = None, direction: int | None = None) -> dict:
-        d = Degradation(station=i, mode=mode, onset=self.t)
+                           rate_mm_h: float | None = None, direction: int | None = None,
+                           scripted: bool = False) -> dict:
+        d = Degradation(station=i, mode=mode, onset=self.t, noise=0.004 if scripted else 0.015)
         if mode == "misalignment":
             rate = rate_mm_h if rate_mm_h is not None else self.rng_deg.uniform(*self.sc.misalign_rate_mm_h)
             d.rate_mm_s = rate / 3600
@@ -194,7 +196,8 @@ class BeltSimulator:
             f = self.pending_scheduled.pop(0)
             i = C.STATION_INDEX[f.station]
             if (i, f.mode) not in self.degr:
-                events.append(self._start_degradation(i, f.mode, f.tpf_running_h, f.misalign_rate_mm_h, f.direction))
+                events.append(self._start_degradation(i, f.mode, f.tpf_running_h, f.misalign_rate_mm_h, f.direction,
+                                                      scripted=True))
         if self.sc.random_degradation:
             p_day = DT / 86400
             for i, s in enumerate(C.STATIONS):
@@ -253,14 +256,15 @@ class BeltSimulator:
         for (i, mode), d in list(self.degr.items()):
             if running and not d.failed:
                 if mode == "misalignment":
-                    d.drift_mm += d.direction * d.rate_mm_s * DT * float(self.rng_deg.uniform(0.6, 1.4))
+                    jitter = 0.4 if d.noise > 0.01 else 0.1
+                    d.drift_mm += d.direction * d.rate_mm_s * DT * float(self.rng_deg.uniform(1 - jitter, 1 + jitter))
                     d.h = min(1.0, abs(d.drift_mm) / MISALIGN_TRIP_MM)
                     eff = self.offset_bias[i] + d.drift_mm * (1.15 - 0.3 * lf[i])
                     if abs(eff) >= MISALIGN_TRIP_MM:
                         d.failed = True
                 else:
                     load_mult = 0.7 + 0.6 * (lf[i] if mode == "bearing" else lf_total)
-                    d.h *= math.exp(d.beta * DT * load_mult + self.rng_deg.normal(0, 0.015))
+                    d.h *= math.exp(d.beta * DT * load_mult + self.rng_deg.normal(0, d.noise))
                     if d.h >= 1.0:
                         d.h, d.failed = 1.0, True
                 if d.failed:

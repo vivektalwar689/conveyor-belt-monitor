@@ -34,9 +34,9 @@ def demo_scenario(backfill_h: float) -> tuple[Scenario, DataQuality]:
     b = backfill_h
     sc = Scenario(name="demo", random_degradation=False, trip_rate_per_day=0.3, scheduled=[
         ScheduledFault(0, "S05", "bearing", tpf_running_h=48),                 # failed on day ~3 (history)
-        ScheduledFault(b - 150, "S18", "bearing", tpf_running_h=125),         # late-stage at the start of the live demo
+        ScheduledFault(b - 150, "S18", "bearing", tpf_running_h=114),         # late-stage at the start; fails ~+10 h
         ScheduledFault(b - 96, "S07", "bearing", tpf_running_h=112),          # predicted failure ~2 days out
-        ScheduledFault(b - 40, "S12", "misalignment", 0, misalign_rate_mm_h=1.9, direction=1),
+        ScheduledFault(b - 40, "S12", "misalignment", 0, misalign_rate_mm_h=2.4, direction=1),  # trips ~+1 day
         ScheduledFault(b - 80, "S24", "gearbox", tpf_running_h=150),          # early stage, trend predictor
     ])
     dq = DataQuality(station_outage_rate=1 / 200, gateway_outage_rate=1 / 80, stuck_rate=1 / 6000,
@@ -51,10 +51,11 @@ def demo_scenario(backfill_h: float) -> tuple[Scenario, DataQuality]:
 
 
 class Streamer:
-    def __init__(self, url: str, backfill_days: float, speed: float, seed: int, vision: bool):
+    def __init__(self, url: str, backfill_days: float, speed: float, seed: int, vision: bool,
+                 live_start: datetime | None = None):
         self.url, self.speed = url.rstrip("/"), speed
         self.client = httpx.Client(timeout=120)
-        now = datetime.now(timezone.utc).replace(second=0, microsecond=0)
+        now = live_start or datetime.now(timezone.utc).replace(second=0, microsecond=0)
         now -= timedelta(minutes=now.minute % 5)
         self.start = now - timedelta(days=backfill_days)
         self.backfill_steps = int(backfill_days * 86400 / C.SAMPLE_PERIOD_S)
@@ -198,8 +199,10 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=2026)
     ap.add_argument("--no-vision", action="store_true")
     ap.add_argument("--backfill-only", action="store_true")
+    ap.add_argument("--live-start", default=None, help="ISO time (UTC) at which the live phase starts; default: now")
     a = ap.parse_args()
-    s = Streamer(a.url, a.backfill_days, a.speed, a.seed, not a.no_vision)
+    ls = datetime.fromisoformat(a.live_start).replace(tzinfo=timezone.utc) if a.live_start else None
+    s = Streamer(a.url, a.backfill_days, a.speed, a.seed, not a.no_vision, live_start=ls)
     s.backfill()
     if not a.no_vision:
         v = VisionThread(s)
