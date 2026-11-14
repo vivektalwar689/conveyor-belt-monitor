@@ -7,8 +7,8 @@
 2. Live: one 5-minute step every 300/speed wall seconds (speed 120 -> one simulated
    hour every 30 s), forever.
 
-The demo scenario is scripted so there is something to see (a bearing that fails
-within roughly the first simulated day of the live phase, a mistracking belt on a
+The demo scenario is scripted so there is something to see (a bearing in late-stage
+failure that fails during the live phase, a mistracking belt on a
 curve, an early-stage gearbox problem, a stuck and a drifting sensor, an offline
 station, a dust storm, ...) on top of random background faults. Failures and repairs are
 also posted to /api/maintenance, standing in for the CMMS work-order feed.
@@ -34,7 +34,7 @@ def demo_scenario(backfill_h: float) -> tuple[Scenario, DataQuality]:
     b = backfill_h
     sc = Scenario(name="demo", random_degradation=False, trip_rate_per_day=0.3, scheduled=[
         ScheduledFault(0, "S05", "bearing", tpf_running_h=48),                 # failed on day ~3 (history)
-        ScheduledFault(b - 150, "S18", "bearing", tpf_running_h=125),         # fails ~1 simulated day into the live demo
+        ScheduledFault(b - 150, "S18", "bearing", tpf_running_h=125),         # late-stage at the start of the live demo
         ScheduledFault(b - 96, "S07", "bearing", tpf_running_h=112),          # predicted failure ~2 days out
         ScheduledFault(b - 40, "S12", "misalignment", 0, misalign_rate_mm_h=1.9, direction=1),
         ScheduledFault(b - 80, "S24", "gearbox", tpf_running_h=150),          # early stage, trend predictor

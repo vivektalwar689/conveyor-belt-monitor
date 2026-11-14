@@ -47,9 +47,9 @@ python -m venv .venv && .venv/bin/pip install -r requirements.txt -r requirement
 
 `make demo` starts the backend on a fresh database and backfills 8 simulated days through the real ingest API
 (~20 s). It then streams live at 120× real time (one simulated hour every 30 s), with the camera posting one pass
-per belt revolution. Scripted events happen during the demo: a bearing on the second curve (S18) fails within
-roughly the first simulated day (~10 minutes of wall-clock time), a belt on the first curve (S12) slowly
-mistracks, a temperature sensor drifts (S10), a sensor sticks (S03), and a station goes offline (S20). Without torch: `make demo-novision`.
+per belt revolution. Scripted events happen during the demo: a bearing on the second curve (S18) is in late-stage failure
+and fails during the live run (the exact time varies from run to run: degradation is stochastic and only advances
+while the belt runs), a belt on the first curve (S12) mistracks towards its sway switch, a temperature sensor drifts (S10), a sensor sticks (S03), and a station goes offline (S20). Without torch: `make demo-novision`.
 
 | Command | What it does | Time |
 |---|---|---|
