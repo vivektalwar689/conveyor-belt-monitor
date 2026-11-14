@@ -173,7 +173,7 @@ The belt is a 12,050 m loop that passes the camera once every ~40 minutes. That 
 | 5 | Dirt, water and carry-back look like damage once | **Confirm** only after sightings on ≥ 2 revolutions at the same position; unconfirmed tracks missed twice are dropped | ✅ measured |
 | 6 | "Not seen" means nothing if that stretch was not imaged (fouled lens, skipped frames) | Misses count only inside each pass's **coverage**; a confirmed defect imaged 3 times without a detection is marked repaired | ✅ tested |
 | 7 | Sightings form a time series | Growth rate per defect escalates severity (a growing tear outranks a big stable patch) | ⚠️ built, but the dataset cannot show real growth |
-| 8 | The per-frame false-positive rate is multiplied by ~12,000 frames per revolution | Measured, and used to pick the operating threshold (see Results) | ⚠️ analysed |
+| 8 | The per-frame false-positive rate is multiplied by ~12,000 frames per revolution | Measured; detector chosen and confidence floor set by defects-vs-phantoms over many revolutions, not by mAP (see Results) | ⚠️ analysed, not solved |
 | 9 | When the belt stops, a fitter needs a place on the 6 km structure | "If stopped now": strand + chainage for every defect | ✅ |
 | 10 | The loop yields 12 km of fresh imagery every 40 min | Should become hard negatives and self-supervision (defects persist, dirt does not) | ❌ next step |
 | 11 | Re-splicing renumbers the belt | Belt register update and track migration | ❌ not handled |
@@ -227,12 +227,28 @@ pipeline are the transferable part.
 
 ### Vision (leakage-free test split, `make vision-eval`)
 
-**Detector on held-out scenes** (YOLO11n, COCO-pretrained, 512 px, trained on CPU): **mAP@0.5 = 0.12**. Per
-class: Wear 0.23, Tear 0.17, Puncture 0.14, Hole 0.04, Impact Damage 0.00; precision 0.46, recall 0.17. The thesis
-behind the dataset reports 0.90, measured on its leaky published split. Wear and tear have fuzzy extents, so
-IoU-based mAP understates what a belt camera needs. The examples below show the detector usually lands on the
-damaged region but often draws a different box or class, and sometimes misses a large patch entirely. In the loop
-simulation it fired on 88 % of damaged frames. **This is the weakest component**, and the evaluation is designed to
+**Two detectors, one honest metric.** Both are YOLO11n (COCO-pretrained, 512 px, trained on CPU) evaluated on held-out
+scenes:
+* the **baseline**, trained on the leakage-free split;
+* a version **fine-tuned with 1,199 mined hard negatives**: defect-free crops cut from training images, because the
+  dataset has only 39 healthy images.
+
+The thesis behind the dataset reports mAP@0.5 = 0.90 on its leaky published split.
+
+| | Baseline | **+ hard negatives (deployed)** |
+|---|---|---|
+| Box mAP@0.5, held-out test scenes | 0.12 | 0.06 |
+| Damaged frames detected (confidence ≥ 0.35) | 72 % | 45 % |
+| **Healthy frames with a false detection** (≥ 0.35) | 30 % | **8 %** |
+| **Belt defects confirmed / phantom defects confirmed** (floor 0.35, 30 revolutions) | 9 of 11 / 8 | **8 of 11 / 0** |
+| Same at floor 0.25 | 11 of 11 / 16 | 9 of 11 / 2 |
+
+Box mAP got *worse* and the system got *better*. mAP rewards box overlap and the right class on single photos. The
+loop needs "is there damage at this belt position, revolution after revolution", and the fine-tuned model finds
+about as many real defects with almost no phantoms. I chose the deployed model by the system-level metric, and the
+tracker runs at a 0.35 confidence floor. Wear and tear have fuzzy extents, so IoU-based mAP understates what a belt
+camera needs. The examples below (baseline model) show detections that land on the damaged region with a
+different box or class, and misses. **The detector is the weakest component**, and the evaluation is designed to
 show that rather than hide it.
 
 ![Detector examples](docs/images/detector_examples.jpg)
@@ -242,31 +258,25 @@ revolution with different light, blur, noise and lateral wander; transient dirt 
 
 | | **RFID splice tags (design)** | Dead reckoning per pass | No fiducials |
 |---|---|---|---|
-| Median position error | **0.02 m** (p95 0.08 m) | 46 m | 1.1 km, reaching 2.4 km by revolution 30 |
-| Real defects confirmed | **11 / 11** | 1 / 11 | 0 / 11 |
+| Median position error | **0.03 m** (p95 0.08 m) | 55 m | 1.2 km, reaching 2.4 km by revolution 30 |
+| Real defects confirmed (baseline detector, floor 0.25) | **11 / 11** | 1 / 11 | 0 / 11 |
 
-* Dedup: 1,588 raw detections over 30 revolutions (144 per real defect) become one tracked defect each.
-* Transients: 762 unconfirmed tracks (dirt, one-off false positives) were dropped.
-* Repairs: the defect repaired mid-run was retired after 3 imaged revolutions, and defects in stretches a fouled
-  lens skipped were not penalised.
+* Dedup: every raw detection would otherwise be an alert. That is 514 over 30 revolutions with the deployed model
+  (47 per real defect) and 1,588 with the baseline; the tracker raises one alert per defect.
+* Transients: dirt and one-off false positives become unconfirmed tracks and are dropped (105 with the deployed
+  model).
+* Repairs: in the baseline run, the defect repaired mid-run was retired after 3 imaged revolutions. Defects in
+  stretches a fouled lens skipped were not penalised.
 
 ![Localisation error](docs/images/loop_localisation_error.png)
 
-**The most important finding: the loop multiplies false positives.**
-
-| Confidence floor | Damaged frames detected | Healthy frames with a false detection | Defects confirmed | Phantom defects confirmed |
-|---|---|---|---|---|
-| 0.25 | 88 % | 45 % | 11 / 11 | 16 |
-| 0.35 | 72 % | 30 % | 9 / 11 | 8 |
-| 0.45 | 60 % | 16 % | 8 / 11 | 4 |
-| 0.55 | 43 % | 7.5 % | 7 / 11 | 1 |
-
-The simulation images about 40 healthy frames per revolution; a real camera images all ~12,050. Even at a 0.55
-floor that is ~900 false detections per revolution, enough for random coincidences across revolutions to confirm
-phantom defects. **Multi-pass confirmation in belt coordinates is necessary but not sufficient.** The per-frame
-false-positive rate must fall by roughly two orders of magnitude. That needs defect-free footage of *this* belt,
-which the loop supplies for free (see [What I would do differently](#what-i-would-do-differently)).
-{{NEG_RESULT}}
+**The most important finding: the loop multiplies false positives.** The simulation images ~40 healthy frames per
+revolution; a real camera images all ~12,050. Even the deployed model's 8 % healthy-frame false-positive rate means
+~960 false detections per revolution at full coverage, enough for random coincidences across revolutions to
+confirm phantom defects. **Multi-pass confirmation in belt coordinates is necessary but not sufficient.** The
+hard-negative experiment shows the way: generic crops alone cut false positives 3–4×. Defect-free footage of
+*this* belt should go much further, and the loop supplies it for free (see
+[What I would do differently](#what-i-would-do-differently)).
 
 ## Dashboard screenshots
 
@@ -326,8 +336,9 @@ The brief left these open, so I chose and documented them; details in [DESIGN §
   problem (failure coding in work orders), not a code problem.
 * **Use the loop as a data engine.** Every revolution gives 12 km of new belt images. Defects persist across
   revolutions and dirt does not, which is a free self-supervision signal: auto-label hard negatives and
-  high-confidence positives, and send the uncertain ones to a human. This also fixes the detector's main
-  weakness, which is that it has seen almost no healthy belt (39 images).
+  high-confidence positives, and send the uncertain ones to a human. This attacks the detector's main weakness,
+  which is that it has seen almost no healthy belt (39 images). Generic hard negatives already cut false positives
+  3–4× in the experiment above; site footage is the real fix.
 * **Add BeltCrack** (sequential frames from moving belts) for training and to test association on real
   sequences. Add a *splice* class so splices become both a fiducial and a monitored component.
 * **Treat alarms as a product.** Add ISA-18.2-style alarm management (shelving, flood suppression, priorities) and
@@ -375,6 +386,9 @@ places where a first version was wrong and was caught by an explicit check rathe
   assumed 2 consecutive hourly decisions. Fixed by applying the evaluated rule in the backend, with tests.
 * **Vision ground truth.** The first loop evaluation compared track positions with a lateral value that was never
   used when rendering images, inflating "false" tracks. Fixed by scoring against each image's labelled boxes.
+* **Choosing the detector by the wrong metric.** By box mAP the hard-negative fine-tune looked like a failure
+  (0.12 → 0.06). The belt-loop evaluation showed it was the better system component (0 phantom defects instead
+  of 8 at the same floor), so the deployed model was chosen on the system-level metric.
 * **Slow training run.** A training run took 10× too long because OpenMP and PyTorch were oversubscribing 4
   cores. Found with `py-spy` and fixed with `OMP_NUM_THREADS=1`.
 

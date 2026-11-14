@@ -253,12 +253,19 @@ a tentative track after 2 imaged misses; mark a confirmed track repaired after 3
 possible because tag-based localisation is good to ~0.1 m; the gate is wider than that because box centres
 jitter.
 
-Operating point. Replaying the same reports with a higher per-detection confidence floor trades recall for
-precision at the track level: 11/11 defects with 16 phantom tracks at 0.25, 9/11 with 8 at 0.35, 8/11 with 4 at
-0.45, 7/11 with 1 at 0.55. The per-frame false-positive rate on healthy belt (45 % at 0.25, 7.5 % at 0.55, 1.9 % at
+Operating point (baseline detector). Replaying the same reports with a higher per-detection confidence floor
+trades recall for precision at the track level: 11/11 defects with 16 phantom tracks at 0.25, 9/11 with 8 at 0.35,
+8/11 with 4 at 0.45, 7/11 with 1 at 0.55. The per-frame false-positive rate on healthy belt (45 % at 0.25, 7.5 % at 0.55, 1.9 % at
 0.65) multiplied by ~12,050 frames per revolution is the binding constraint for a real deployment (§12). The fix is
 data, not tracking logic: site-specific healthy footage as hard negatives, which the loop provides continuously.
-{{NEG_DESIGN}}
+
+**Hard-negative experiment.** The dataset has 39 defect-free images, so the detector had barely seen healthy
+belt. I mined 1,199 defect-free crops from *training* images (regions with no labelled box, 4 % margin) and
+fine-tuned the baseline for 8 epochs at a low learning rate. Box mAP@0.5 on held-out scenes fell from 0.12 to
+0.06, but the healthy-frame false-positive rate fell from 45 % to 17 % at a 0.25 floor (30 % → 8 % at 0.35). At
+the track level, 0.35 gives 8/11 defects with 0 phantoms versus the baseline's 9/11 with 8. The fine-tuned model
+is deployed with a 0.35 floor. Lesson: select the detector by the metric of the system it sits in. Caveat:
+unlabelled damage inside mined crops becomes wrong negatives, which probably explains part of the recall loss.
 
 ## 9. Dashboard
 
@@ -317,7 +324,8 @@ text in ink colours, tooltips that never gate information, light and dark palett
   failure modes the simulator does not imagine.
 * The vision dataset is still photos, not video of the same belt, so the loop behaviour is simulated by
   re-rendering the same photo each revolution. Defect *growth* cannot be observed from real pixels here.
-* The detector is weak on unseen scenes (mAP@0.5 0.12 on the leakage-free split). Its false-positive rate on
+* The detector is weak on unseen scenes (mAP@0.5 0.12 baseline, 0.06 for the deployed hard-negative model, which
+  trades box quality for far fewer false positives). Its false-positive rate on
   healthy belt, multiplied by ~12,050 frames per revolution, would confirm phantom defects at full coverage. The
   simulation images only a sample of healthy frames per revolution, so the system as demonstrated would not yet
   hold up on a real belt without site-specific training data (§8.4).

@@ -588,8 +588,11 @@ async function initReplay() {
         ...[["0.5", "slow"], ["1", "1 frame/s"], ["2", "2 frames/s"], ["4", "4 frames/s"]].map(([v, l]) => el("option", { value: v, text: l })));
       sel.value = "1"; return sel; })()));
   document.querySelector(".viz-root").prepend(bar);
-  await showFrame(0);
-  setPlaying(true);
+  // ?frame=N opens a specific moment, ?play=0 starts paused, ?station=S18 preselects a station (shareable links)
+  const q = new URLSearchParams(location.search);
+  if (q.get("station")) selected = q.get("station").toUpperCase();
+  await showFrame(Number(q.get("frame") || 0));
+  setPlaying(q.get("play") !== "0");
 }
 async function main() {
   CFG = await api("/api/config");

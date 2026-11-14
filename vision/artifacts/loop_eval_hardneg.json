@@ -1,0 +1,193 @@
+{
+  "passes": 30,
+  "raw_detections": 514,
+  "naive_alerts_per_true_defect": 46.7,
+  "frames": {
+    "defect": {
+      "frames": 305,
+      "with_detection": 0.652
+    },
+    "healthy": {
+      "frames": 1193,
+      "with_detection": 0.169
+    },
+    "dirt": {
+      "frames": 120,
+      "with_detection": 0.175
+    }
+  },
+  "localisation_error_m": {
+    "tags": {
+      "median": 0.03,
+      "p95": 0.08,
+      "last_pass_median": 0.0
+    },
+    "pass_start": {
+      "median": 54.6,
+      "p95": 75.83,
+      "last_pass_median": 52.6
+    },
+    "none": {
+      "median": 1187.56,
+      "p95": 2324.69,
+      "last_pass_median": 2409.2
+    }
+  },
+  "tracking": {
+    "tags": {
+      "confirmed_tracks": 4,
+      "true_defects": 11,
+      "defects_found": "4/11",
+      "recall": 0.364,
+      "tracks_on_labelled_damage": 4,
+      "tracks_on_damaged_frame_unlabelled": 0,
+      "false_tracks_from_healthy_or_dirty_belt": 0,
+      "precision_strict": 1.0,
+      "duplicate_tracks_same_box": 0,
+      "dropped_unconfirmed": 42,
+      "repaired_defects_retired": "0/1"
+    },
+    "pass_start": {
+      "confirmed_tracks": 15,
+      "true_defects": 11,
+      "defects_found": "0/11",
+      "recall": 0.0,
+      "tracks_on_labelled_damage": 0,
+      "tracks_on_damaged_frame_unlabelled": 0,
+      "false_tracks_from_healthy_or_dirty_belt": 15,
+      "precision_strict": 0.0,
+      "duplicate_tracks_same_box": 0,
+      "dropped_unconfirmed": 30,
+      "repaired_defects_retired": "0/1"
+    },
+    "none": {
+      "confirmed_tracks": 1,
+      "true_defects": 11,
+      "defects_found": "0/11",
+      "recall": 0.0,
+      "tracks_on_labelled_damage": 0,
+      "tracks_on_damaged_frame_unlabelled": 0,
+      "false_tracks_from_healthy_or_dirty_belt": 1,
+      "precision_strict": 0.0,
+      "duplicate_tracks_same_box": 0,
+      "dropped_unconfirmed": 97,
+      "repaired_defects_retired": "0/1"
+    }
+  },
+  "tracking_tags_by_min_conf": {
+    "0.25": {
+      "confirmed_tracks": 17,
+      "true_defects": 11,
+      "defects_found": "9/11",
+      "recall": 0.818,
+      "tracks_on_labelled_damage": 14,
+      "tracks_on_damaged_frame_unlabelled": 1,
+      "false_tracks_from_healthy_or_dirty_belt": 2,
+      "precision_strict": 0.824,
+      "duplicate_tracks_same_box": 1,
+      "dropped_unconfirmed": 227,
+      "repaired_defects_retired": "0/1"
+    },
+    "0.35": {
+      "confirmed_tracks": 10,
+      "true_defects": 11,
+      "defects_found": "8/11",
+      "recall": 0.727,
+      "tracks_on_labelled_damage": 9,
+      "tracks_on_damaged_frame_unlabelled": 1,
+      "false_tracks_from_healthy_or_dirty_belt": 0,
+      "precision_strict": 0.9,
+      "duplicate_tracks_same_box": 1,
+      "dropped_unconfirmed": 105,
+      "repaired_defects_retired": "0/1"
+    },
+    "0.45": {
+      "confirmed_tracks": 4,
+      "true_defects": 11,
+      "defects_found": "4/11",
+      "recall": 0.364,
+      "tracks_on_labelled_damage": 4,
+      "tracks_on_damaged_frame_unlabelled": 0,
+      "false_tracks_from_healthy_or_dirty_belt": 0,
+      "precision_strict": 1.0,
+      "duplicate_tracks_same_box": 0,
+      "dropped_unconfirmed": 42,
+      "repaired_defects_retired": "0/1"
+    },
+    "0.55": {
+      "confirmed_tracks": 3,
+      "true_defects": 11,
+      "defects_found": "3/11",
+      "recall": 0.273,
+      "tracks_on_labelled_damage": 3,
+      "tracks_on_damaged_frame_unlabelled": 0,
+      "false_tracks_from_healthy_or_dirty_belt": 0,
+      "precision_strict": 1.0,
+      "duplicate_tracks_same_box": 0,
+      "dropped_unconfirmed": 6,
+      "repaired_defects_retired": "0/1"
+    }
+  },
+  "confidence_sweep": [
+    {
+      "conf": 0.25,
+      "frame_recall": 0.652,
+      "frame_fp_rate": 0.1693,
+      "defects_confirmed_in_run": "9/11",
+      "median_passes_to_confirm": 2.0,
+      "false_detections_per_pass_full_coverage": 2040,
+      "chance_false_confirmations_per_pass_k2": 647.754
+    },
+    {
+      "conf": 0.35,
+      "frame_recall": 0.452,
+      "frame_fp_rate": 0.0796,
+      "defects_confirmed_in_run": "9/11",
+      "median_passes_to_confirm": 5.0,
+      "false_detections_per_pass_full_coverage": 960,
+      "chance_false_confirmations_per_pass_k2": 143.27
+    },
+    {
+      "conf": 0.45,
+      "frame_recall": 0.315,
+      "frame_fp_rate": 0.0293,
+      "defects_confirmed_in_run": "5/11",
+      "median_passes_to_confirm": 2.0,
+      "false_detections_per_pass_full_coverage": 354,
+      "chance_false_confirmations_per_pass_k2": 19.447
+    },
+    {
+      "conf": 0.55,
+      "frame_recall": 0.243,
+      "frame_fp_rate": 0.0042,
+      "defects_confirmed_in_run": "3/11",
+      "median_passes_to_confirm": 2.0,
+      "false_detections_per_pass_full_coverage": 51,
+      "chance_false_confirmations_per_pass_k2": 0.397
+    },
+    {
+      "conf": 0.65,
+      "frame_recall": 0.213,
+      "frame_fp_rate": 0.0,
+      "defects_confirmed_in_run": "3/11",
+      "median_passes_to_confirm": 2.0,
+      "false_detections_per_pass_full_coverage": 0,
+      "chance_false_confirmations_per_pass_k2": 0.0
+    },
+    {
+      "conf": 0.75,
+      "frame_recall": 0.148,
+      "frame_fp_rate": 0.0,
+      "defects_confirmed_in_run": "2/11",
+      "median_passes_to_confirm": 3.0,
+      "false_detections_per_pass_full_coverage": 0,
+      "chance_false_confirmations_per_pass_k2": 0.0
+    }
+  ],
+  "full_coverage_extrapolation": {
+    "frames_per_pass": 12050,
+    "false_detections_per_pass": 2036,
+    "chance_false_confirmations_per_pass_k2": 645.3,
+    "chance_false_confirmations_per_pass_k3": 204.4795
+  }
+}

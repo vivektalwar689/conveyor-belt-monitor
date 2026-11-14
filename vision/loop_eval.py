@@ -35,7 +35,7 @@ DOC_IMG = ROOT / "docs" / "images"
 MODES = ("tags", "pass_start", "none")
 
 
-def run(passes: int, weights: Path, seed: int = 1) -> dict:
+def run(passes: int, weights: Path, seed: int = 1, plot: bool = True) -> dict:
     reg = BeltRegister.default()
     defects = default_defects(reg)
     pool, healthy = image_pool()
@@ -181,7 +181,8 @@ def run(passes: int, weights: Path, seed: int = 1) -> dict:
         "chance_false_confirmations_per_pass_k2": round(n_fp * n_fp * gate_area / belt_area, 2),
         "chance_false_confirmations_per_pass_k3": round(n_fp ** 3 * (gate_area / belt_area) ** 2, 4),
     }
-    _plot_error(err, passes)
+    if plot:
+        _plot_error(err, passes)
     return out
 
 
@@ -220,8 +221,10 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--passes", type=int, default=30)
     ap.add_argument("--weights", type=Path, default=DETECTOR)
+    ap.add_argument("--out", type=Path, default=ART / "loop_eval.json")
+    ap.add_argument("--no-plot", action="store_true")
     a = ap.parse_args()
-    res = run(a.passes, a.weights)
-    ART.mkdir(parents=True, exist_ok=True)
-    (ART / "loop_eval.json").write_text(json.dumps(res, indent=2))
+    res = run(a.passes, a.weights, plot=not a.no_plot)
+    a.out.parent.mkdir(parents=True, exist_ok=True)
+    a.out.write_text(json.dumps(res, indent=2))
     print(json.dumps(res, indent=2))
