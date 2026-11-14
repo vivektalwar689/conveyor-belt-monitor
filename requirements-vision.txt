@@ -1,0 +1,4 @@
+# Vision: detector training/inference on the edge node (CPU is fine).
+# For a CPU-only torch wheel, install torch first:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+ultralytics>=8.3

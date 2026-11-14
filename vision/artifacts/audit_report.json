@@ -1,0 +1,100 @@
+{
+  "source": {
+    "repo": "FernandoN23/Implementation-of-Object-Detection-for-Conveyor-Belt-Defect-Detection",
+    "commit": "b3e7f2e1880084724e0080247f679023020aeef7"
+  },
+  "n_images": 2312,
+  "image_sizes": {
+    "640x640": 2312
+  },
+  "label_issues": {},
+  "exact_duplicate_sets": 8,
+  "exact_duplicate_images": 16,
+  "near_dup_pairs_phash": 11793,
+  "near_dup_pairs_embedding": 32749,
+  "thresholds": {
+    "phash_max_dist": 8,
+    "embed_min_cos": 0.97
+  },
+  "n_groups": 138,
+  "largest_groups": [
+    406,
+    232,
+    203,
+    106,
+    101,
+    89,
+    62,
+    46,
+    39,
+    38
+  ],
+  "singletons": 13,
+  "published_split_leakage": {
+    "valid": {
+      "images": 461,
+      "with_near_duplicate_in_train": 454,
+      "fraction": 0.985
+    },
+    "test": {
+      "images": 230,
+      "with_near_duplicate_in_train": 228,
+      "fraction": 0.991
+    }
+  },
+  "nearest_train_neighbour_similarity": {
+    "val": {
+      "median_max_cos_to_train": 0.939,
+      "frac_max_cos_ge_0.95": 0.281,
+      "frac_max_cos_ge_0.97": 0.0
+    },
+    "test": {
+      "median_max_cos_to_train": 0.94,
+      "frac_max_cos_ge_0.95": 0.241,
+      "frac_max_cos_ge_0.97": 0.0
+    },
+    "published_valid": {
+      "median_max_cos_to_train": 0.994,
+      "frac_max_cos_ge_0.95": 0.989,
+      "frac_max_cos_ge_0.97": 0.976
+    },
+    "published_test": {
+      "median_max_cos_to_train": 0.994,
+      "frac_max_cos_ge_0.95": 0.996,
+      "frac_max_cos_ge_0.97": 0.987
+    }
+  },
+  "one_nn_dominant_class_accuracy": {
+    "published_split": 0.961,
+    "clean_group_split": 0.764
+  },
+  "new_split": {
+    "train": {
+      "images": 1612,
+      "healthy_images": 27,
+      "Hole": 135,
+      "Tear": 2203,
+      "Wear": 454,
+      "Impact Damage": 116,
+      "Puncture": 837
+    },
+    "val": {
+      "images": 352,
+      "healthy_images": 6,
+      "Impact Damage": 35,
+      "Tear": 463,
+      "Wear": 71,
+      "Puncture": 245,
+      "Hole": 30
+    },
+    "test": {
+      "images": 348,
+      "healthy_images": 6,
+      "Wear": 72,
+      "Tear": 466,
+      "Impact Damage": 58,
+      "Puncture": 156,
+      "Hole": 29
+    }
+  }
+}

@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CV-01 belt health</title>
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+<div class="viz-root">
+  <header class="top">
+    <div>
+      <h1>Overland conveyor CV-01 · belt health</h1>
+      <p class="sub">6.0 km route · 12.05 km steel-cord loop · 1,600 mm · 5 m/s · 24 sensor stations · 1 belt camera</p>
+    </div>
+    <div class="clock">
+      <div id="clock-time">waiting for data…</div>
+      <div id="clock-state" class="muted"></div>
+    </div>
+  </header>
+
+  <section class="kpis" id="kpis" aria-label="Key figures"></section>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>Status of every sensor station</h2>
+      <div class="legend" id="map-legend"></div>
+    </div>
+    <div id="beltmap" class="beltmap"></div>
+    <details class="tableview"><summary>Table view</summary><div id="station-table"></div></details>
+  </section>
+
+  <div class="grid2">
+    <section class="card">
+      <div class="card-head"><h2>Model predictions: what may fail, where, when</h2></div>
+      <div id="predictions"></div>
+    </section>
+    <section class="card">
+      <div class="card-head"><h2>Active equipment anomalies</h2></div>
+      <div id="anomalies"></div>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="card-head">
+      <h2>Belt surface wear &amp; tear (vision)</h2>
+      <div class="legend" id="loop-legend"></div>
+    </div>
+    <p class="muted small" id="vision-summary"></p>
+    <div id="loopstrip" class="loopstrip"></div>
+    <div id="vision-table"></div>
+  </section>
+
+  <section class="card" id="detail-card">
+    <div class="card-head">
+      <h2 id="detail-title">Station detail</h2>
+      <span class="muted small">Click a station on the map or a row in a table · last 72 h · 30-min medians · site time</span>
+    </div>
+    <div id="detail"></div>
+  </section>
+
+  <div class="grid2">
+    <section class="card">
+      <div class="card-head"><h2>Data quality &amp; sensor health</h2></div>
+      <div id="dq"></div>
+    </section>
+    <section class="card">
+      <div class="card-head"><h2>Maintenance log (CMMS feed)</h2></div>
+      <div id="maint"></div>
+    </section>
+  </div>
+  <footer class="muted small" id="footer"></footer>
+</div>
+<div id="tooltip" role="tooltip" hidden></div>
+<script type="module" src="/static/app.js"></script>
+</body>
+</html>

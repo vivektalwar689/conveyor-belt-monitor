@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+logs/
+data/
+vision/runs/
+vision/artifacts/embeddings.npy
+vision/artifacts/explore/
+models/yolo11n.pt
+models/yolo11n-cls.pt
+*.db
+*.db-wal
+*.db-shm
+.DS_Store
