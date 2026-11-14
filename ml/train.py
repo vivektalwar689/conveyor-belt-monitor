@@ -2,7 +2,7 @@
 
     python -m ml.train            # simulate (if needed), build features, train, evaluate
 
-Splits are by *simulation run* (independent seeds = independent belt-years), never
+Splits are by *simulation run* (independent seeds = independent 120-day runs), never
 by random rows: neighbouring hours of the same degradation are near-duplicates and
 a random split would leak them (the same lesson as the vision dataset audit).
 
@@ -87,7 +87,7 @@ def fit_mode(mode: str, tr: pd.DataFrame) -> ModeModel:
 
 
 def conformal_width(mm: ModeModel, val: pd.DataFrame, alpha: float = 0.2) -> float:
-    """Conformalized quantile regression (Romano et al., 2019) on the validation belt-year.
+    """Conformalized quantile regression (Romano et al., 2019) on the validation run.
 
     The raw quantile models are overconfident (consecutive hours of one degradation are
     near-duplicates, so the trees fit trajectories too tightly). We measure how far the

@@ -1,7 +1,7 @@
 """Event-level evaluation of failure prediction (what operations actually cares about).
 
 Row-level AUC says little about a maintenance alarm. We instead replay the hourly
-decisions of each method over held-out belt-years and ask, per failure:
+decisions of each method over held-out 120-day runs and ask, per failure:
 
 * was it predicted at all, and how far ahead (lead time)?
 * was the warning early enough that the repair could be done in a *planned*
@@ -231,7 +231,7 @@ def _plot_tradeoff(mode: str, res: dict, chosen: dict | None = None) -> None:
     ax.set_xlabel("False alarms per 1,000 station-days", color=INK2, fontsize=9)
     ax.set_ylabel("Failures caught ≥ 24 h ahead", color=INK2, fontsize=9)
     ax.set_ylim(-0.03, 1.03)
-    ax.set_title(f"{mode.capitalize()}: early warning vs. false alarms (held-out belt-year)", color=INK, fontsize=10,
+    ax.set_title(f"{mode.capitalize()}: early warning vs. false alarms (held-out 120-day run)", color=INK, fontsize=10,
                  loc="left")
     ax.legend(frameon=False, fontsize=8, labelcolor=INK2, loc="lower right")
     fig.tight_layout()
@@ -286,7 +286,7 @@ def _plot_example(mode: str, mm, df: pd.DataFrame, events: list[dict]) -> None:
                      ha="right", va="bottom")
     axes[-1].set_xlabel("Hours before failure (decisions are only made while the belt runs; lines bridge the stops)",
                         color=INK2, fontsize=8)
-    fig.suptitle(f"{e['station']} {mode} failure on a held-out belt-year", color=INK, fontsize=10, x=0.01, ha="left")
+    fig.suptitle(f"{e['station']} {mode} failure in a held-out 120-day run", color=INK, fontsize=10, x=0.01, ha="left")
     fig.tight_layout()
     fig.savefig(DOC_IMG / f"example_{mode}.png", facecolor=SURF)
     plt.close(fig)

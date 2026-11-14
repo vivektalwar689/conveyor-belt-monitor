@@ -222,9 +222,12 @@ if __name__ == "__main__":
     ap.add_argument("--passes", type=int, default=30)
     ap.add_argument("--weights", type=Path, default=DETECTOR)
     ap.add_argument("--out", type=Path, default=ART / "loop_eval.json")
+    ap.add_argument("--min-conf", type=float, default=BeltTracker.MIN_CONF,
+                    help="tracker confidence floor for the main comparison (default: the deployed setting)")
     ap.add_argument("--no-plot", action="store_true")
     a = ap.parse_args()
-    res = run(a.passes, a.weights, plot=not a.no_plot)
+    BeltTracker.MIN_CONF = a.min_conf
+    res = {"detector": a.weights.name, "tracker_min_conf": a.min_conf, **run(a.passes, a.weights, plot=not a.no_plot)}
     a.out.parent.mkdir(parents=True, exist_ok=True)
     a.out.write_text(json.dumps(res, indent=2))
     print(json.dumps(res, indent=2))

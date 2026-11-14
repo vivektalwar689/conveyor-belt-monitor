@@ -297,7 +297,7 @@ function renderPredictions(preds) {
   $("predictions").replaceChildren(el("div", { class: "scroll" }, el("table", {},
     el("thead", {}, el("tr", {}, ...["P(fail ≤ 72 h)", "What", "Where", "When (median)", "Action · evidence"].map((h) => el("th", { text: h })))),
     el("tbody", {}, ...rows))),
-    el("p", { class: "muted small", text: "An alert needs two consecutive hourly predictions above the model's threshold (chosen on a validation belt-year to keep false alarms ≤ ~1 per 10 days). Rows without the ✕ are on watch. Times are when the component is expected to fail if nothing is done." }));
+    el("p", { class: "muted small", text: "An alert needs two consecutive hourly predictions above the model's threshold (chosen on a validation run to keep false alarms ≤ ~1 per 10 days). Rows without the ✕ are on watch. Times are when the component is expected to fail if nothing is done." }));
 }
 
 function renderAnomalies(list) {

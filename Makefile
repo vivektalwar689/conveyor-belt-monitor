@@ -18,7 +18,7 @@ demo-novision:
 test:
 	$(PY) -m pytest -q
 
-train:                ## simulate 5 belt-years, train + evaluate sensor models (~5 min)
+train:                ## simulate five 120-day runs, train + evaluate sensor models (~6 min)
 	OMP_NUM_THREADS=1 $(PY) -m ml.train
 
 vision-data:          ## fetch the public dataset (pinned commit) and audit/re-split it
@@ -27,8 +27,10 @@ vision-data:          ## fetch the public dataset (pinned commit) and audit/re-s
 vision-train:         ## YOLO11n on CPU (~3 h); the trained weights are committed in models/
 	$(PY) -m vision.train_detector --split clean
 
-vision-eval:          ## belt-loop evaluation with ground truth
-	$(PY) -m vision.loop_eval --passes 30
+vision-eval:          ## belt-loop evaluation with ground truth: deployed detector, then the baseline at a 0.25 floor (~10 min)
+	$(PY) -m vision.loop_eval --passes 30 --out vision/artifacts/loop_eval_hardneg.json
+	$(PY) -m vision.loop_eval --passes 30 --weights models/belt_damage_yolo11n_baseline.pt --min-conf 0.25 \
+		--no-plot --out vision/artifacts/loop_eval_clean.json
 
 inspect-web:          ## rebuild docs/inspect (ONNX models + samples) and check the page's maths against Ultralytics
 	$(PY) -m vision.export_web

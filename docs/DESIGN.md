@@ -159,9 +159,10 @@ failure. 72 h means "can it wait for one of the next three planned stops?"
 **Two methods, chosen by data availability:**
 
 * **ML for bearings and mistracking.** About 24 stations share the same physics, so a failure anywhere is a
-  training example for every station. Model: `HistGradientBoostingClassifier` on ~24 features (peer/self
-  deviations over 1/6/24 h, z-scores, 24 h and 72 h slopes, absolute levels, load, run fraction, data
-  completeness, station stress). Time to failure: three quantile regressors (P10/P50/P90) on log-hours.
+  training example for every station. Model: `HistGradientBoostingClassifier` on 24 features for bearings
+  (peer/self deviations over 1/6/24 h, z-scores, 24 h and 72 h slopes, absolute levels, load, run fraction, data
+  completeness, station stress) and 12 for mistracking (belt offset level, growth and spread, load, curve
+  flag). Time to failure: three quantile regressors (P10/P50/P90) on log-hours.
 * **Trend-to-threshold for the drive.** There is one gearbox and one drive pulley, so years of operation would
   yield a handful of failures: not a training set. The health indicator is load-normalised: gearbox vibration and
   oil temperature *in excess* of a regression on load fitted over a known-good period, and slip normalised to
@@ -170,7 +171,7 @@ failure. 72 h means "can it wait for one of the next three planned stops?"
   needed. Degradation only advances while the belt runs, so trends are fitted in running hours and converted to
   calendar time with the duty schedule.
 
-**Training data and splits.** Five independent simulated belt-years of 120 days, 24 stations each: train on
+**Training data and splits.** Five independent simulated runs of 120 days, 24 stations each: train on
 seeds 11 and 12, choose thresholds and calibration on seed 13, test on seed 21 (normal) and seed 22 (**harsh**:
 ~5× packet loss, outages, stuck/drifting sensors, spikes, error codes). The split is **by run, never by row**.
 Neighbouring hours of one degradation are near-duplicates, the same leakage problem as the vision dataset.
@@ -186,12 +187,12 @@ early version flipped a healthy station to "predicted failure" on a single 5-min
 **Calibrated ETA bands.** The raw P10–P90 bands from the quantile regressors were **overconfident**: on alerted
 test rows they covered only ~53 % of actual failure times instead of 80 %. Consecutive hours of one degradation
 are near-duplicates, so the trees fit trajectories too tightly. I fixed this with **conformalized quantile
-regression** on the validation belt-year: widen the band in log-hours by the 80th percentile of the validation
+regression** on the validation run: widen the band in log-hours by the 80th percentile of the validation
 miss. Test coverage is now 82 % for bearings (92–95 % for mistracking). The coverage guarantee is approximate,
 because validation rows are correlated within a degradation.
 
 **Evaluation is event-level.** Row AUC says little about a maintenance alarm. The evaluation replays hourly
-decisions over the held-out belt-years and asks, per failure, whether it was predicted, how far ahead, and
+decisions over the held-out runs and asks, per failure, whether it was predicted, how far ahead, and
 whether early enough to fix in a **planned** stop. Per alert episode, it asks whether the component really
 failed within 10 days. Results are in the [README](../README.md#results).
 

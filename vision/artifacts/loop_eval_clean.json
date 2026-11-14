@@ -1,4 +1,6 @@
 {
+  "detector": "belt_damage_yolo11n_baseline.pt",
+  "tracker_min_conf": 0.25,
   "passes": 30,
   "raw_detections": 1588,
   "naive_alerts_per_true_defect": 144.4,

@@ -71,10 +71,10 @@ The same server also hosts the image inspection page at http://localhost:8000/in
 | Command | What it does | Time |
 |---|---|---|
 | `make test` | 25 tests: ingestion, data quality, loop geometry, tracker, scheduling, alert rule, simulator, API | 5 s |
-| `make train` | simulate 5 belt-years, build features through the production code, train, evaluate, plot | ~5 min |
+| `make train` | simulate five 120-day runs, build features through the production code, train, evaluate, plot | ~6 min |
 | `make vision-data` | fetch the dataset at a pinned commit, audit it, re-split it | ~2 min |
 | `make vision-train` | train the YOLO11n damage detector on CPU (weights are committed) | ~3 h |
-| `make vision-eval` | belt-loop evaluation against ground truth, 30 revolutions | ~5 min |
+| `make vision-eval` | belt-loop evaluation against ground truth, 30 revolutions, both detectors | ~10 min |
 | `make inspect-web` | export both detectors to ONNX for the inspection page, and check its maths against Ultralytics | ~1 min |
 
 ## The approach in one picture
@@ -118,7 +118,7 @@ flowchart LR
    edges, so failures anywhere teach the model about everywhere: gradient boosting. There is one drive, so its
    failures are too rare to learn from: load-normalised trend extrapolation to alarm limits, no labels needed.
 6. **Evaluate like an operator.** Results are failures caught, hours of warning, whether a planned stop could be
-   used, and false alarms per 1,000 station-days, on held-out belt-years. The alarm threshold is set by a
+   used, and false alarms per 1,000 station-days, on held-out simulation runs. The alarm threshold is set by a
    false-alarm budget. ETA bands are calibrated with conformal prediction.
 7. **On a loop, a defect is a place on the belt, not a place on the structure.** Vision detections become
    persistent tracks in belt coordinates, re-zeroed by RFID tags in the splices and confirmed by repetition.
@@ -148,8 +148,9 @@ Roboflow Universe and academic datasets, and homogenised the classes.
 * Roboflow projects need an API key and have unclear provenance; this dataset already aggregates several of them.
 * I found no belt-damage dataset on Kaggle, only foreign-object and product-defect sets.
 
-**What the audit found (messy input on the vision side).** The thesis notes that its sources "already contained
-data augmentation", which is a red flag for train/test leakage. `vision/audit.py` measured it:
+**What the audit found (messy input on the vision side).** The thesis notes that its source datasets "already
+have data augmentation" (translated from Spanish), which is a red flag for train/test leakage. `vision/audit.py`
+measured it:
 
 | Check | Result |
 |---|---|
@@ -191,12 +192,13 @@ comes back through repetition: a defect missed on one revolution is seen on the 
 
 ## Results
 
-### Sensor-based prediction (held-out belt-years, `make train`)
+### Sensor-based prediction (held-out 120-day runs, `make train`)
 
-Two independent 120-day test belt-years, 24 stations. "Harsh" has ~5× the outages, stuck/drifting sensors, spikes
+Two independent 120-day test runs, 24 stations each. "Harsh" has ~5× the outages, stuck/drifting sensors, spikes
 and error codes. Bearing failures include 20 % *fast* failures with only ~1 day of warning, as real fleets do.
 
-**Bearing failures** (35 in the normal year, 33 in the harsh year):
+**Bearing failures** (34 scored in the normal run and 33 in the harsh run; one more failed on the first day, before
+any method had history):
 
 | Method | Caught ≥ 24 h ahead | Median warning | Fixable in a planned stop | False alarms / 1,000 station-days |
 |---|---|---|---|---|
@@ -207,22 +209,22 @@ and error codes. Bearing failures include 20 % *fast* failures with only ~1 day 
 **Mistracking trips** (17 / 14): ML catches 100 % at least 24 h ahead (median 75 h / 83 h) with zero false alarms.
 Fixed 75 mm limits catch 53 % / 57 % a day ahead.
 
-**Drive** (trend-to-threshold, no ML): all 3 gearbox failures were predicted 97–137 h ahead and all 3 slip trips
-36–39 h ahead. There were 3 and 1 false alarms over 240 days. With n = 3 these are anecdotes, not statistics.
+**Drive** (trend-to-threshold, no ML): all 3 gearbox failures were predicted 57–216 h ahead and all 3 slip trips
+32–45 h ahead. There were 3 and 1 false alarms over 240 days. With n = 3 these are anecdotes, not statistics.
 
 **When ("ETA") bands.** The raw P10–P90 bands from the quantile models covered only **53 %** of actual failure
-times on alerted rows, against 80 % nominal. After **conformal calibration** on the validation belt-year, test
+times on alerted rows, against 80 % nominal. After **conformal calibration** on the validation run, test
 coverage is **82 %** for bearings and 92–95 % for mistracking. Median ETA error is 11–13 h for bearings and 5–6 h
 for mistracking.
 
 What this means:
 * **Fixed limits are trustworthy but late.** They fire when vibration is already in zone C, so fewer than half the
-  failures can wait for a planned stop.
+  failures are caught a day ahead (44 %, and 21 % in the harsh run).
 * **The z-score sees trouble earliest but cries wolf** when data quality degrades (13.5 false alarms per 1,000
-  station-days in the harsh year, about one every 3 days on this belt).
+  station-days in the harsh run, about one every 3 days on this belt).
 * **The model**, trained on data that was damaged and repaired like production data, keeps the early warning and
-  holds false alarms near 1–3. It turns about 95 % of bearing repair hours from unplanned into planned (95 of
-  101 h, and 95 of 97 h in the harsh year). Fixed limits manage 58 % and 42 %.
+  holds false alarms near 1–3. It turns about 97 % of bearing repair hours from unplanned into planned (95 of
+  99 h, and 95 of 97 h in the harsh run). Fixed limits manage 60 % and 42 %.
 
 **Caveat:** these models are trained and scored on my own simulator. The absolute numbers say more about the
 simulator than about a real conveyor. The comparison between methods, the failure modes of each, and the
@@ -265,7 +267,7 @@ revolution with different light, blur, noise and lateral wander; transient dirt 
 
 | | **RFID splice tags (design)** | Dead reckoning per pass | No fiducials |
 |---|---|---|---|
-| Median position error | **0.03 m** (p95 0.08 m) | 55 m | 1.2 km, reaching 2.4 km by revolution 30 |
+| Median position error (deployed detector) | **0.03 m** (p95 0.08 m) | 55 m | 1.2 km, reaching 2.4 km by revolution 30 |
 | Real defects confirmed (baseline detector, floor 0.25) | **11 / 11** | 1 / 11 | 0 / 11 |
 
 * Dedup: every raw detection would otherwise be an alert. That is 514 over 30 revolutions with the deployed model
@@ -388,7 +390,7 @@ The brief left these open, so I chose and documented them; details in [DESIGN §
   sequences. Add a *splice* class so splices become both a fiducial and a monitored component.
 * **Treat alarms as a product.** Add ISA-18.2-style alarm management (shelving, flood suppression, priorities) and
   "confirm / false alarm" buttons that become training labels.
-* **Calibrate per site.** Thresholds, conformal widths and baseline windows were tuned on simulated belt-years.
+* **Calibrate per site.** Thresholds, conformal widths and baseline windows were tuned on simulated runs.
   A real deployment should re-fit them per conveyor in shadow mode before anyone acts on an alert.
 * **Smaller things:** a TimescaleDB backend; streaming feature updates instead of an 8-day recompute; a take-up
   travel forecast; an LLM shift-handover summary built on the existing API, with citations to the data it used.
@@ -397,7 +399,7 @@ The brief left these open, so I chose and documented them; details in [DESIGN §
 
 ```
 simulator/   config.py (belt, stations, channels) · engine.py (physics, failures) · faults.py (messy data)
-             generate.py (offline belt-years → Parquet) · stream.py (live HTTP stream + camera thread)
+             generate.py (offline 120-day runs → Parquet) · stream.py (live HTTP stream + camera thread)
 backend/     app.py (FastAPI) · worker.py (analysis process) · db.py (schema) · ingest.py · quality.py
              features.py · anomaly.py · predict.py (ML + trend + schedule) · analysis.py · vision_service.py
 ml/          dataset.py (features + labels) · train.py · evaluate.py (event-level, figures)
@@ -427,8 +429,8 @@ places where a first version was wrong and was caught by an explicit check rathe
   failure. Caught by plotting one failure end to end; replaced with a frozen, sequential baseline.
 * **Overconfident ETA bands.** They covered 53 % instead of 80 %. Fixed with conformal calibration. The first
   coverage check was itself biased (it selected on the outcome) and was corrected to score alerted rows only.
-* **Drive false alarms.** The drive trend method raised 12 false alarms per belt-year because it ignored load
-  and ambient. Fixed by load-normalising and requiring a significant slope.
+* **Drive false alarms.** The first drive trend method raised 12 and 9 false gearbox alarms in the two 120-day
+  test runs because it ignored load and ambient. Fixed by load-normalising and requiring a significant slope.
 * **Live alerts stricter on paper than in practice.** A healthy station showed "predicted failure" in the live
   demo after one 5-minute reading crossed the (deliberately low) threshold, while the evaluated false-alarm rate
   assumed 2 consecutive hourly decisions. Fixed by applying the evaluated rule in the backend, with tests.

@@ -80,7 +80,7 @@ class ModeModel:
     q50: object
     q90: object
     threshold: float
-    cqr: float = 0.0        # conformal widening of the P10-P90 band (log-hours), fitted on a held-out belt-year
+    cqr: float = 0.0        # conformal widening of the P10-P90 band (log-hours), fitted on the held-out validation run
 
     def ttf_quantiles(self, X: np.ndarray) -> np.ndarray:
         q = np.column_stack([self.q10.predict(X), self.q50.predict(X), self.q90.predict(X)])
