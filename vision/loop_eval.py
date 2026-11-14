@@ -25,7 +25,8 @@ from pathlib import Path
 import numpy as np
 from PIL import Image
 
-from vision.edge_sim import DETECTOR, Detector, EdgeNodeSim, default_defects, healthy_crops, image_pool
+from vision.edge_sim import (BELT_W_M, DETECTOR, FRAME_LEN_M, Detector, EdgeNodeSim, default_defects,
+                             healthy_crops, image_pool)
 from vision.loop import BeltRegister, BeltTracker, Detection, Localizer, circ_dist
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,9 +46,10 @@ def run(passes: int, weights: Path, seed: int = 1) -> dict:
     trk = {m: BeltTracker(reg.L) for m in MODES}
     err = {m: [] for m in MODES}             # (pass, abs error) for detections on real defects
     raw = 0
-    confirm_pass: dict[int, int] = {}
+    reports = []
     for p in range(passes):
         rep = edge.run_pass()
+        reports.append(rep)
         reads = [(r["tag"], r["odo_m"]) for r in rep["tag_reads"]]
         odos = np.array([d["odo_m"] for d in rep["detections"]])
         raw += len(rep["detections"])
@@ -75,45 +77,74 @@ def run(passes: int, weights: Path, seed: int = 1) -> dict:
     frames = {k: frame_rate(k) for k in ("defect", "healthy", "dirt")}
 
     # ---- track quality vs. ground truth
+    # Ground truth = every labelled box in each defect's image, mapped to the belt exactly like the
+    # edge node maps detections (frame centre at the defect position, image y along the belt).
+    gt = []
+    for d in defects:
+        lab = d.image.parent.parent / "labels" / f"{d.image.stem}.txt"
+        for line in lab.read_text().splitlines():
+            if line.strip():
+                _c, xc, yc, _w, _h = map(float, line.split())
+                gt.append((d, (d.pos + (yc - 0.5) * FRAME_LEN_M) % reg.L, (xc - 0.5) * BELT_W_M))
+
     def evaluate(tr: BeltTracker) -> dict:
         tracks = list(tr.tracks.values())
         conf = [t for t in tracks if t.status in ("confirmed", "resolved")]
-        should = [d for d in defects if d.appear_pass <= passes - 3]
-        matched_def, dup, false_tracks, ttc = set(), 0, 0, []
+        should = {d.id for d in defects if d.appear_pass <= passes - 3}
+        found, matched_gt = set(), {}
+        on_frame_unlabelled = false_tracks = 0
         for t in conf:
-            hits = [d for d in should if circ_dist(t.pos, d.pos, reg.L) <= 4.0 and abs(t.lateral - d.lateral) <= 0.6]
+            hits = [g for g in gt if circ_dist(t.pos, g[1], reg.L) <= 1.0 and abs(t.lateral - g[2]) <= 0.35]
             if hits:
-                d = hits[0]
-                if d.id in matched_def:
-                    dup += 1
-                matched_def.add(d.id)
-                ttc.append(sorted(set(t.passes_seen))[1] - d.appear_pass if len(set(t.passes_seen)) > 1 else None)
+                g = min(hits, key=lambda g: circ_dist(t.pos, g[1], reg.L))
+                found.add(g[0].id)
+                matched_gt[id(g)] = matched_gt.get(id(g), 0) + 1
+            elif any(circ_dist(t.pos, d.pos, reg.L) <= FRAME_LEN_M for d in defects):
+                on_frame_unlabelled += 1          # on a damaged frame, but not on a labelled box
             else:
-                false_tracks += 1
+                false_tracks += 1                 # from healthy or dirty belt: a real false alarm
         repaired = [d for d in defects if d.repair_pass is not None and d.repair_pass <= passes - 4]
-        retired = 0
-        for d in repaired:
-            near = [t for t in tracks if circ_dist(t.pos, d.pos, reg.L) <= 4.0]
-            retired += any(t.status == "resolved" for t in near)
+        retired = sum(any(t.status == "resolved" for t in tracks if circ_dist(t.pos, d.pos, reg.L) <= 2.0)
+                      for d in repaired)
+        n_true = len(conf) - on_frame_unlabelled - false_tracks
         return {
             "confirmed_tracks": len(conf), "true_defects": len(should),
-            "recall": round(len(matched_def) / max(len(should), 1), 3),
-            "precision": round((len(conf) - false_tracks) / max(len(conf), 1), 3),
-            "duplicate_tracks": dup, "false_confirmed_tracks": false_tracks,
-            "median_passes_to_confirm": float(np.median([x for x in ttc if x is not None])) if ttc else None,
+            "defects_found": f"{len(found & should)}/{len(should)}",
+            "recall": round(len(found & should) / max(len(should), 1), 3),
+            "tracks_on_labelled_damage": n_true,
+            "tracks_on_damaged_frame_unlabelled": on_frame_unlabelled,
+            "false_tracks_from_healthy_or_dirty_belt": false_tracks,
+            "precision_strict": round(n_true / max(len(conf), 1), 3),
+            "duplicate_tracks_same_box": sum(v - 1 for v in matched_gt.values()),
             "dropped_unconfirmed": sum(t.status == "dropped" for t in tracks),
             "repaired_defects_retired": f"{retired}/{len(repaired)}",
         }
 
+    # Track-level trade-off: replay the same reports through trackers with different confidence floors
+    by_conf = {}
+    for c in (0.25, 0.35, 0.45, 0.55):
+        BeltTracker.MIN_CONF = c
+        lc, tc = Localizer(reg, "tags"), BeltTracker(reg.L)
+        for p, rep in enumerate(reports):
+            reads = [(r["tag"], r["odo_m"]) for r in rep["tag_reads"]]
+            odos = np.array([d["odo_m"] for d in rep["detections"]])
+            pos = lc.map_pass(reads, odos) if len(odos) else np.array([])
+            cov = [tuple(float(x) for x in lc.map_pass(reads, np.array([a, b]))) for a, b in rep["imaged_odo_ranges"]]
+            tc.process_pass(p, [Detection(float(x), d["lateral_m"], d["cls"], d["conf"], d["length_m"], d["width_m"],
+                                          d["ts"], p) for d, x in zip(rep["detections"], pos)], cov)
+        by_conf[str(c)] = evaluate(tc)
+    BeltTracker.MIN_CONF = 0.25
+
     out = {
         "passes": passes, "raw_detections": raw,
-        "naive_alerts_per_true_defect": round(raw / max(len([d for d in defects]), 1), 1),
+        "naive_alerts_per_true_defect": round(raw / max(len(defects), 1), 1),
         "frames": frames,
         "localisation_error_m": {m: {"median": round(float(np.median([e for _p, e in err[m]])), 2),
                                      "p95": round(float(np.percentile([e for _p, e in err[m]], 95)), 2),
                                      "last_pass_median": round(float(np.median([e for p_, e in err[m] if p_ == passes - 1] or [np.nan])), 1)}
                                  for m in MODES if err[m]},
         "tracking": {m: evaluate(trk[m]) for m in MODES},
+        "tracking_tags_by_min_conf": by_conf,
     }
     # Operating point: the loop lets the per-frame threshold favour precision, because
     # recall is recovered by seeing the same defect again on later revolutions.
@@ -177,7 +208,7 @@ def _plot_error(err: dict, passes: int) -> None:
     ax.set_xlabel("Belt revolution (camera pass)", color=INK2, fontsize=9)
     ax.set_ylabel("Median position error (m, log scale)", color=INK2, fontsize=9)
     ax.set_title("Where on the belt is the defect? Localisation error per pass", color=INK, fontsize=10, loc="left")
-    ax.legend(frameon=False, fontsize=7.5, labelcolor=INK2, loc="upper left")
+    ax.legend(frameon=False, fontsize=7.5, labelcolor=INK2, loc="center right")
     fig.tight_layout()
     DOC_IMG.mkdir(parents=True, exist_ok=True)
     fig.savefig(DOC_IMG / "loop_localisation_error.png", facecolor=SURF)

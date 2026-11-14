@@ -1,0 +1,16 @@
+{
+  "split": "clean",
+  "epochs": 40,
+  "imgsz": 512,
+  "test_mAP50": 0.1155,
+  "test_mAP50_95": 0.0497,
+  "test_precision": 0.4584,
+  "test_recall": 0.1701,
+  "per_class_AP50": {
+    "Hole": 0.0387,
+    "Impact Damage": 0.0,
+    "Puncture": 0.138,
+    "Tear": 0.17,
+    "Wear": 0.2307
+  }
+}
